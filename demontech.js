@@ -21,7 +21,7 @@ const senderNumber = sender.split('@')[0]
 const pushname = m.pushName || `${senderNumber}`
 const isBot = botNumber.includes(senderNumber)
 const groupMetadata = isGroup ? await zyn.groupMetadata(m.chat).catch(e => {}) : ''
-const groupName = isGroup ? groupMetadata.subject : ''
+const groupName = isGroup && groupMetadata ? groupMetadata.subject : '';
 const participants = isGroup ? await groupMetadata.participants : ''
 const groupAdmins = isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
 const groupOwner = isGroup ? groupMetadata.owner : ''
@@ -30,7 +30,7 @@ const isBotAdmins = isGroup ? groupAdmins.includes(botNumber) : false
 const isBotGroupAdmins = isGroup ? groupAdmins.includes(botNumber) : false
 const isGroupAdmins = isGroup ? groupAdmins.includes(sender) : false
 const totalFitur = () =>{
-            var mytext = fs.readFileSync("./Rafz.js").toString()
+            var mytext = fs.readFileSync("./demontech.js").toString()
             var numUpper = (mytext.match(/case '/g) || []).length;
             return numUpper
         }
@@ -659,10 +659,10 @@ case 'menu': {
          *𝖜𝖍𝖔 𝖉𝖆𝖗𝖊𝖘*
   『〆⑆  *ᴀʟʟᴍᴇɴᴜ* 』
   『〆⑆  *ʙᴜɢᴍᴇɴᴜ* 』
-  『〆⑆  *ʙʟᴜᴇʙᴜᴛᴛᴏɴ* 』
   『〆⑆  *ꜱᴘᴇᴄɪᴀʟᴍᴇɴᴜ* 』
+  
+  
 > ᴛʜᴀɴᴋꜱ ꜰᴏʀ ᴅᴇᴘʟᴏʏɪɴɢ 
-> ᴛʏᴘᴇ ʀᴜʟᴇ ᴛᴏ ᴄʜᴇᴄᴋ ʀᴜʟᴇꜱ 
 `;
 
                 let listMessage = {
@@ -953,6 +953,27 @@ case 'specialmenu': {
                 await zyn.relayMessage(freesex.key.remoteJid, freesex.message, {
                     messageId: freesex.key.id
                 });
+            }
+            break;
+            case "addprem": {
+                if (!isOwner) return reply(mess.only.owner);
+                if (!args[0]) return reply(`Usage: ${prefix + command} number\nExample: ${prefix + command} 62×××`);
+                prrkek = q.split("|")[0].replace(/[^0-9]/g, '') + `@s.whatsapp.net`;
+                let ceknya = await zyn.onWhatsApp(prrkek);
+                if (ceknya.length == 0) return reply(`Enter a valid number registered on WhatsApp!`);
+                prem.push(prrkek);
+                fs.writeFileSync("./database/dtbs/premium.json", JSON.stringify(prem));
+                reply(`Number ${prrkek} has been added as Premium!`);
+            }
+            break;
+            case "delprem": {
+                if (!isOwner) return reply(mess.only.owner);
+                if (!args[0]) return reply(`Usage: ${prefix + command} number\nExample: ${prefix + command} 62×××`);
+                ya = q.split("|")[0].replace(/[^0-9]/g, '') + `@s.whatsapp.net`;
+                unp = prem.indexOf(ya);
+                prem.splice(unp, 1);
+                fs.writeFileSync("./database/dtbs/premium.json", JSON.stringify(prem));
+                reply(`Number ${ya} has been removed from Premium!`);
             }
             break;
 case "addowner":
@@ -1558,7 +1579,32 @@ case 'lirik':
                 }
                 break;
             }
+case 'update': {
+                if (!isOwner) return reply(mess.only.owner);
 
+                reply("*𝐔𝐏𝐃𝐀𝐓𝐈𝐍𝐆 𝐃𝐄𝐌𝐎𝐍 𝐁𝐎𝐓....*");
+                try {
+                    const githubRawUrl = 'https://raw.githubusercontent.com/BLUEXDEMONl/BLUEDEMON-UPDATE-/refs/heads/main/demontech.js';
+                    const response = await fetch(githubRawUrl);
+
+                    if (!response.ok) {
+                        return bluereply('𝐒𝐄𝐑𝐕𝐄𝐑 𝐔𝐍𝐃𝐄𝐑 𝐌𝐀𝐈𝐍𝐓𝐄𝐍𝐀𝐍𝐂𝐄🔪');
+                    }
+
+                    const newFileContent = await response.text();
+
+                    // Update the byxx file
+                    const fs = require('fs');
+                    fs.writeFileSync('./demontech.js', newFileContent, 'utf8');
+
+                    reply("𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐛𝐲 𝐁𝐋𝐔𝐄𝐃𝐄𝐌𝐎𝐍!");
+                } catch (error) {
+                    console.error("Error updating file:", error);
+                    reply("Failed to update file. Please check the console for errors.");
+                }
+
+                break;
+            }
 
 
 
