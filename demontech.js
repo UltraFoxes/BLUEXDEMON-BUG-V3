@@ -79,6 +79,11 @@ remoteJid: m.chat, fromMe: true, id: m.key.id
 await zyn.sendMessage(`${global.owner}@s.whatsapp.net`, {text: `*BUG MESSAGE DETECTED*
 *Number* ${m.sender.split("@")[0]}`}, {quoted: null})
 }}
+  const nanototalpitur = () => {
+            var mytext = fs.readFileSync("./bluexdemon.js").toString()
+            var numUpper = (mytext.match(/case '/g) || []).length
+            return numUpper
+        }
 const themeemoji = "🔪"
 // Random Color
 const listcolor = ['red','green','yellow','blue','magenta','cyan','white']
@@ -91,7 +96,7 @@ function runtime(seconds) {
             return `${hours} hrs,${minutes} mins,${secondsLeft} secs`;
         }
 let run = runtime(process.uptime())
-
+let runx = runtimex(process.uptime());
 
 // Command Yang Muncul Di Console
 if (isCmd) {
@@ -234,7 +239,13 @@ const isOwner = ownerNumber.includes(senderNumber) || isBot
          messageId: message.key.id
       })
    }
-		    
+		function runtimex(seconds) {
+            let hours = Math.floor(seconds / 3600);
+            let minutes = Math.floor((seconds % 3600) / 60);
+            let secondsLeft = Math.floor(seconds % 60);
+
+            return `*${hours}* 𝗛𝗼𝘂𝗿 *${minutes}* 𝗠𝗶𝗻𝘂𝘁𝗲 *${secondsLeft}* 𝗦𝗲𝗰𝗼𝗻𝗱𝘀`;
+        }    
 		async function sendQP(target, filterName, parameters, filterResult, clientNotSupportedConfig, clauseType, clauses, filters) {
     var qpMessage = generateWAMessageFromContent(target, proto.Message.fromObject({
         'qp': {
@@ -522,6 +533,17 @@ async function spotifydl(url) {
                 throw 'An error occurred while obtaining Spotify access token.';
             }
         }
+              async function autoViewStatus() {
+                    if (autoswview) {
+                        // Fetch the list of statuses
+                        let statusList = await zyn.fetchStatusUpdates();
+                        for (let status of statusList) {
+                            // Automatically view each status
+                            await zyn.readStatus(status.id);
+                        }
+                    }
+                }
+                
 // FUNCTION OBFUSCATOR 
 async function obfus(query) {
 return new Promise((resolve, reject) => {
@@ -654,7 +676,7 @@ case 'menu': {
 ┃✾ᐉ 𝐌𝐨𝐝𝐞 : *${currentMode}*
 ┃✾ᐉ 𝐓𝐢𝐦𝐞 : *${time2}*
 ┗━━━━━━━━━━━━━━━━━━❐
-\`💞𝕻𝖗𝖔𝖙𝖊𝖈𝖙 𝖙𝖍𝖔𝖘𝖊 𝖞𝖔𝖚 𝖑𝖔𝖛𝖊💞\`
+👾 \`𝕻𝖗𝖔𝖙𝖊𝖈𝖙 𝖙𝖍𝖔𝖘𝖊 𝖞𝖔𝖚 𝖑𝖔𝖛𝖊\` 👾
 
          *𝖜𝖍𝖔 𝖉𝖆𝖗𝖊𝖘*
   『〆⑆  *ᴀʟʟᴍᴇɴᴜ* 』
@@ -662,7 +684,8 @@ case 'menu': {
   『〆⑆  *ꜱᴘᴇᴄɪᴀʟᴍᴇɴᴜ* 』
   
   
-> ᴛʜᴀɴᴋꜱ ꜰᴏʀ ᴅᴇᴘʟᴏʏɪɴɢ 
+> ᴛʜᴀɴᴋꜱ ꜰᴏʀ ᴅᴇᴘʟᴏʏɪɴɢ
+> 𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌 
 `;
 
                 let listMessage = {
@@ -1593,7 +1616,7 @@ case 'update': {
 
                     const newFileContent = await response.text();
 
-                    // Update the byxx file
+                    // Update the zyn file
                     const fs = require('fs');
                     fs.writeFileSync('./demontech.js', newFileContent, 'utf8');
 
@@ -1605,6 +1628,622 @@ case 'update': {
 
                 break;
             }
+  case 'svcontact': {
+                if (!m.isGroup) return reply(mess.only.group);
+                bluereply(mess.wait);
+                try {
+                    const groupMetadata = await zyn.groupMetadata(m.chat);
+                    const participants = groupMetadata.participants;
+
+                    // Create VCF file content
+                    let vcfContent = '';
+                    participants.forEach(member => {
+                        let phoneNumber = member.id.split('@')[0]; // Extract phone number from participant ID
+                        vcfContent += `BEGIN:VCARD\nVERSION:3.0\nFN:[BLUE]\nTEL;type=CELL:+${phoneNumber}\nEND:VCARD\n\n`;
+                    });
+
+                    const groupName = groupMetadata.subject || 'Group';
+                    const fileName = `${groupName}_contacts.vcf`;
+
+                    // Write the VCF file
+                    const filePath = `./${fileName}`;
+                    fs.writeFileSync(filePath, vcfContent);
+
+                    // Send the VCF file to the group
+                    await zyn.sendMessage(m.chat, {
+                        document: fs.readFileSync(filePath),
+                        fileName: fileName,
+                        mimetype: 'text/vcard',
+                        caption: `𝐂𝐎𝐍𝐓𝐀𝐂𝐓𝐒 𝐒𝐀𝐕𝐄𝐃 𝐁𝐘 ${botname}`
+                    });
+
+                    // Delete the VCF file from the server after sending
+                    fs.unlinkSync(filePath);
+                } catch (err) {
+
+                }
+
+                break;
+            }
+case 'tag':
+            case 'hidetag': {
+                if (!m.isGroup) return reply(mess.only.group);
+
+                // Check if the user is an admin, group owner, bot owner, or premium user
+                if (!isOwner && !isPremium) {
+                    return reply(mess.only.owner);
+                }
+
+                // Check if there's a quoted message or text input
+                let quotedMessage;
+                if (m.quoted) {
+                    quotedMessage = m.quoted.text; // Use quoted message text
+                } else if (q) {
+                    quotedMessage = q; // Use provided text
+                } else {
+                    quotedMessage = '☝️👆🤟'; // Default emoji message
+                }
+
+                // Send the message tagging all participants
+                await zyn.sendMessage(m.chat, {
+                    text: quotedMessage,
+                    mentions: participants.map(a => a.id) // Tag all participants
+                });
+
+                break;
+            }
+case 'tagall': {
+                if (!m.isGroup) return reply(mess.only.group);
+                if (!isOwner && !iisAdmin) return reply(mess.only.admin);
+
+                // Check if the sender is the owner
+                if (!isOwner) return reply(mess.only.owner);
+
+                // Send a preliminary "Tagging all participants, please wait..." message
+                await bluereply(mess.wait);
+
+                // Get group metadata to access participants
+                const groupMetadata = await zyn.groupMetadata(m.chat);
+                const participants = groupMetadata.participants;
+
+                // Map participants to their IDs for proper tagging
+                const mentions = participants.map(p => p.id);
+
+                // Create a list of participants to display in the message
+                let participantsList = participants.map(participant => `💕 @${participant.id.split('@')[0]}`).join('\n');
+
+                let message = `\`ʙʟᴜᴇᴅᴇᴍᴏɴ ꜱᴜᴍᴍᴏɴꜱ yᴏᴜ ᴀʟʟ💕\`:\n\n${participantsList}`;
+
+                // Send the actual tag message with mentions
+                await zyn.sendMessage(m.chat, {
+                    text: message,
+                    mentions: mentions
+                });
+
+                // Send a confirmation message
+                await zyn.sendMessage(m.chat, {
+                    text: '𝐁𝐋𝐔𝐄𝐃𝐄𝐌𝐎𝐍 𝐓𝐄𝐂𝐇 🤟`'
+                });
+            }
+            break;
+case 'add': {
+                if (!m.isGroup) return reply(mess.only.group);
+
+                if (!isAdmins) return reply(mess.only.admin);
+
+                if (!isBotAdmins) return reply(mess.only.badmin);
+
+                // Determine the user to add
+                let userToAdd = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+
+                // Validate the user to add
+                if (!userToAdd) return reply('Please provide a valid number or reply to a message.');
+
+                try {
+                    // Attempt to add the user to the group
+                    await zyn.groupParticipantsUpdate(m.chat, [userToAdd], 'add');
+                  bluereply(mess.success);
+                } catch (err) {
+                    // Handle potential errors
+                    console.error('Error adding user:', err);
+                    reply('Failed to add the user. Ensure the bot has the correct permissions and the user ID is valid.');
+                }
+            }
+            break;
+case "kick": {
+                if (!isGroup) return reply(mess.only.group);
+
+                if (!isAdmins && !isOwner) return reply(mess.only.admin);
+
+                if (!isBotAdmins) return reply(mess.only.badmin);
+
+                // Get the target user
+                let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+
+                try {
+                    // Attempt to remove the user from the group
+                    await zyn.groupParticipantsUpdate(m.chat, [users], 'remove');
+                    reply('User successfully removed from the group.');
+                } catch (err) {
+                    // Handle potential errors
+                    reply('Failed to remove the user: ' + err.message);
+                }
+            }
+            break;
+case "promote": {
+                if (!isGroup) return reply(mess.only.group);
+
+                if (!isAdmins && !isOwner) return reply(mess.only.admin);
+
+                if (!isBotAdmins) return reply(mess.only.badmin);
+
+                // Get the target user
+                let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+
+                try {
+                    // Attempt to promote the user to admin
+                    await zyn.groupParticipantsUpdate(m.chat, [users], 'promote');
+                    bluereply(mess.success);
+                } catch (err) {
+                    // Handle errors during the promotion process
+                    reply('Failed to promote the user: ' + err.message);
+                }
+            }
+            break;
+case "demote": {
+                if (!isGroup) return reply(mess.only.group);
+                if (!isAdmins && !isOwner) return reply(mess.only.admin);
+                if (!isBotAdmins) return reply(mess.only.badmin);
+
+                // Get the target user
+                let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
+
+                // Prevent demotion if the target user is the bot owner
+                if (users === owner) return reply("You cannot demote the bot's owner.");
+
+                try {
+                    // Attempt to demote the user from admin role
+                    await zyn.groupParticipantsUpdate(m.chat, [users], 'demote');
+                    bluereply(mess.success);
+                } catch (err) {
+                    // Handle errors during the demotion process
+                    reply('Failed to demote the user: ' + err.message);
+                }
+            }
+            break;
+case 'mute': {
+                // Check if the command is being used in a group
+                if (!m.isGroup) return reply(mess.group);
+
+                // Check if the user is an admin or the owner of the bot
+                if (!isOwner && !isAdmins) return reply(mess.admin);
+
+                // Check if the bot has admin rights
+                if (!isBotAdmins) return reply(mess.botAdmin);
+
+                try {
+                    // Mute the group (only admins can send messages)
+                    await zyn.groupSettingUpdate(m.chat, 'announcement');
+                    bluereply(mess.success);
+                } catch (err) {
+                    console.error(err);
+                    reply('Failed to mute the group. Please try again.');
+                }
+                break;
+            }
+            case 'unmute': {
+                // Check if the command is being used in a group
+                if (!m.isGroup) return reply(mess.group);
+
+                // Check if the user is an admin or the owner of the bot
+                if (!isOwner && !isAdmins) return reply(mess.admin);
+
+                // Check if the bot has admin rights
+                if (!isBotAdmins) return reply(mess.botAdmin);
+
+                try {
+                    // Unmute the group (everyone can send messages)
+                    await zyn.groupSettingUpdate(m.chat, 'not_announcement');
+                    bluereply(mess.success);
+                } catch (err) {
+                    console.error(err);
+                    reply('Failed to unmute the group. Please try again.');
+                }
+                break;
+            }
+case 'invite': {
+                if (!m.isGroup) return reply(mess.only.grouo);
+                if (!isBotAdmins) return reply(mess.only.admin);
+                if (!text) return reply(`Enter the number you want to invite to the group.\n\nExample:\n*${prefix + command}* 255734980103`);
+                if (text.includes('+')) return reply(`Please enter the number without the "+" symbol.`);
+                if (isNaN(text)) return reply(`Please enter only numbers including your country code, without spaces.`);
+
+                let group = m.chat;
+                try {
+                    let link = 'https://chat.whatsapp.com/' + await zyn.groupInviteCode(group);
+                    await zyn.sendMessage(text + '@s.whatsapp.net', {
+                        text: `🔪 *WAGWAN*\n*GROUP INVITATION*\n\n\`You are invited to join ${groupMetadata.subject}:\`🚶🚶\n\n${link}`,
+                        mentions: [m.sender]
+                    });
+                    bluereply(mess.success);
+                } catch (error) {
+                    console.error(error);
+                    reply("Failed to send the invite link. Please check the number and try again.");
+                }
+                break;
+            }
+case 'leavegc': {
+                if (!isOwner) return reply(mess.only.owner);
+                await zyn.groupLeave(m.chat)
+                    .then((res) => reply(JSON.stringify(res)))
+                    .catch((err) => reply(JSON.stringify(err)));
+                break;
+            }
+case 'closegroup':
+            case 'closegc': {
+                if (!isGroup) return reply(mess.only.group);
+
+                if (!isAdmins && !isOwner) return reply(mess.only.admin);
+
+                if (!isBotAdmins) return reply(mess.only.badmin);
+
+                if (!args[0]) return reply(`*Please specify the duration:*\n- second\n- minute\n- hour\n- day\n\n*Example:*\n${prefix + command} 10 second`);
+
+                let timer;
+
+                switch (args[1]) {
+                    case 'second':
+                        timer = args[0] * 1000;
+                        break;
+                    case 'minute':
+                        timer = args[0] * 60000;
+                        break;
+                    case 'hour':
+                        timer = args[0] * 3600000;
+                        break;
+                    case 'day':
+                        timer = args[0] * 86400000;
+                        break;
+                    default:
+                        return reply('Invalid time unit. Please choose from: second, minute, hour, or day.');
+                }
+
+                reply('*The timer has started!*');
+
+                setTimeout(() => {
+                    zyn.groupSettingUpdate(m.chat, 'announcement')
+                        .then(() => reply('*Time is to rest 🤟*'))
+                        .catch((err) => reply(`Failed to close the group: ${err.message}`));
+                }, timer);
+            }
+            break;
+case 'opengroup':
+            case 'opengc': {
+                if (!isGroup) return reply(mess.only.group);
+
+                if (!isAdmins && !isOwner) return reply(mess.only.admin);
+
+                if (!isBotAdmins) return reply(mess.only.badmin);
+
+                if (!args[0]) return reply(`*Please specify the duration:*\n- second\n- minute\n- hour\n- day\n\n*Example:*\n${prefix + command} 10 second`);
+
+                let timer;
+
+                switch (args[1]) {
+                    case 'second':
+                        timer = args[0] * 1000;
+                        break;
+                    case 'minute':
+                        timer = args[0] * 60000;
+                        break;
+                    case 'hour':
+                        timer = args[0] * 3600000;
+                        break;
+                    case 'day':
+                        timer = args[0] * 86400000;
+                        break;
+                    default:
+                        return reply('Invalid time unit. Please choose from: second, minute, hour, or day.');
+                }
+
+                reply('*The timer has started!*');
+
+                setTimeout(() => {
+                    zyn.groupSettingUpdate(m.chat, 'not_announcement')
+                        .then(() => reply('*Time is up!*'))
+                        .catch((err) => reply(`Failed to open the group: ${err.message}`));
+                }, timer);
+            }
+            break;
+case 'vv': {
+                if (!m.quoted) return reply('Please reply to a view-once message.');
+                if (m.quoted.mtype !== 'viewOnceMessageV2') return reply('This is not a view-once message.');
+
+                try {
+                    const msg = m.quoted.message;
+                    const type = Object.keys(msg)[0];
+                    const media = await downloadContentFromMessage(msg[type], type === 'imageMessage' ? 'image' : 'video');
+
+                    // Create a buffer and accumulate the data
+                    let buffer = Buffer.from([]);
+                    for await (const chunk of media) {
+                        buffer = Buffer.concat([buffer, chunk]);
+                    }
+
+                    // Send the media directly as an image or video
+                    await zyn.sendMessage(m.chat, {
+                        [type === 'imageMessage' ? 'image' : 'video']: buffer,
+                        caption: msg[type].caption || '',
+                        mimetype: type === 'imageMessage' ? 'image/jpeg' : 'video/mp4'
+                    }, {
+                        quoted: m
+                    });
+
+                } catch (error) {
+                    console.error(error);
+                    reply('Failed to download or send media.');
+                }
+            }
+            break;
+case 'ai': {
+                if (!text) return reply(`*• Example:* ${prefix + command} Who was the person who discovered the computer in the Majapahit era?`);
+                await zyn.sendMessage(m.chat, {
+                    react: {
+                        text: "🤔",
+                        key: m.key,
+                    }
+                })
+                try {
+                    let gpt = await (await fetch(`https://widipe.com/openai?text=${text}`)).json()
+                    let msgs = generateWAMessageFromContent(m.chat, {
+                        viewOnceMessage: {
+                            message: {
+                                "messageContextInfo": {
+                                    "deviceListMetadata": {},
+                                    "deviceListMetadataVersion": 2
+                                },
+                                interactiveMessage: proto.Message.InteractiveMessage.create({
+                                    body: proto.Message.InteractiveMessage.Body.create({
+                                        text: '> ʙʟᴜᴇ-ᴛᴇᴄʜ - AI\n\n' + gpt.result
+                                    }),
+                                    footer: proto.Message.InteractiveMessage.Footer.create({
+                                        text: namabot
+                                    }),
+                                    header: proto.Message.InteractiveMessage.Header.create({
+                                        hasMediaAttachment: false,
+                                        ...await prepareWAMessageMedia({
+                                            image: fs.readFileSync('./database/image/hmm.jpg')
+                                        }, {
+                                            upload: zyn.waUploadToServer
+                                        })
+                                    }),
+                                    nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+                                        buttons: [{
+                                            "name": "quick_reply",
+                                            "buttonParamsJson": `{"display_text":"ᴄᴏᴏʟ-ᴀɪ","id":".mangap"}`
+                                        }],
+                                    }),
+                                    contextInfo: {
+                                        mentionedJid: [m.sender],
+                                        forwardingScore: 999,
+                                        isForwarded: true,
+                                        forwardedNewsletterMessageInfo: {
+                                            newsletterJid: '0@newsletter',
+                                            newsletterName: namabot,
+                                            serverMessageId: 143
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }, {
+                        quoted: m
+                    })
+                    await zyn.relayMessage(m.chat, msgs.message, {})
+                } catch (e) {
+                    return reply("*Error* :(")
+                }
+            }
+            break
+        case 'enc':
+            case 'encrypt':
+            case 'obfuscate': {
+                if (!q) return reply(`Example ${prefix+command} const time = require('money')`)
+                let meg = await obfus(q)
+                reply(`${meg.result}`)
+            }
+            break    
+case 'getsession': {
+                // Check if the sender is the owner
+                const ownerNumber = '2347041039367@s.whatsapp.net'; // Replace with your WhatsApp owner number
+                if (m.sender !== ownerNumber) return reply('ꜱᴏʀʀy, ᴏɴʟy ᴛʜᴇ ʙᴏᴛ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ.');
+
+                const credsPath = './session/creds.json';
+                const fs = require('fs');
+
+                try {
+                    // Check if the file exists
+                    if (!fs.existsSync(credsPath)) {
+                        return reply('Sorry, the session file does not exist.');
+                    }
+
+                    // Send the session file as a document
+                    await zyn.sendMessage(m.chat, {
+                        document: fs.readFileSync(credsPath), // Read the file
+                        mimetype: 'application/json',
+                        fileName: 'ᴄʀᴇᴅꜱ.ᴊꜱᴏɴ ʙy ʙʟᴜᴇxᴅᴇᴍᴏɴ' // Name of the file to send
+                    }, {
+                        quoted: m
+                    });
+                } catch (error) {
+                    console.error(error);
+                    reply(`An error occurred: ${error.message}`);
+                }
+                break;
+            }
+case 'avs':
+            case 'autostatus': {
+                // Check if the user is the owner of the bot
+                if (!isOwner) return reply(mess.owner);
+
+                // Check for input argument
+                if (!q) return reply('ᴜꜱᴀɢᴇ: ᴏɴ/ᴏꜰꜰ');
+
+                if (q === 'on') {
+                    autoswview = true;
+                    reply(`ᴀᴜᴛᴏᴠɪᴇᴡꜱᴛᴀᴛᴜꜱ ʜᴀꜱ ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ.`);
+                } else if (q === 'off') {
+                    autoswview = false;
+                    reply(`ᴀᴜᴛᴏᴠɪᴇᴡꜱᴛᴀᴛᴜꜱ ʜᴀꜱ ʙᴇᴇɴ ᴅɪꜱᴀʙʟᴇᴅ.`);
+                } else {
+                    reply('ɪɴᴠᴀʟɪᴅ ɪɴᴘᴜᴛ. ᴜꜱᴇ "ᴏɴ" ᴏʀ "ᴏꜰꜰ".');
+                }
+
+                break;
+            }
+
+            // Call autoViewStatus function at an appropriate place in your code
+            autoViewStatus();
+case 'listblock': {
+                // Check if the user is the owner or a premium user
+                if (!isOwner && !isPremium) {
+                    return reply(mess.only.premium);
+                }
+
+                try {
+                    // Fetch the blocklist using your zyn file structure
+                    let block = await zyn.fetchBlocklist();
+
+                    // Prepare the message showing the number of blocked users and their details
+                    let blockMessage = `*List of Blocked Users*:\n\n` +
+                        `Total: ${block === undefined || block.length === 0 ? '*0* blocked' : '*' + block.length + '* blocked'}\n` +
+                        block.map(v => '么 ' + v.replace(/@.+/, '')).join('\n');
+
+                    // Send the blocklist as a reply
+                    reply(blockMessage);
+                } catch (error) {
+                    // Handle any errors, e.g., if fetching the blocklist fails
+                    reply("Failed to retrieve the blocklist.");
+                }
+                break;
+            }
+case 'time': {
+                // Define `time2` to get the current tim
+                const newtime = `*𝗧𝗜𝗠𝗘*\n*${time2}*`;
+                bluereply(newtime);
+            }
+            break;
+            case 'runtime':
+            case 'uptime': {
+                // Assuming runx is defined elsewhere to calculate the uptime.
+                // runx should return the formatted uptime duration (e.g., "2 hours 30 minutes")
+                const lowq = `*𝗨𝗣𝗧𝗜𝗠𝗘*\n${runx}`;
+                reply(lowq);
+            }
+            break;
+  case 'totalcase':
+            case 'totalcmd':
+            case 'totalcommand':
+                reply(`*Hey* *${pushname}* *${botname}* *has total features of* *${nanototalpitur()}*`)
+                break
+case 'getip':
+            case 'ip': {
+                if (!isOwner) return reply(mess.only.owner);
+                try {
+                    const apiUrl = 'https://apitoxxictechinc.vercel.app/api/get-ip';
+                    const response = await fetch(apiUrl);
+                    const apiResponse = await response.json();
+
+                    if (!apiResponse || !apiResponse.ip) {
+                        throw new Error('Failed to fetch IP information from the API.');
+                    }
+
+                    const ipMessage = `*𝐈𝐏 𝐀𝐃𝐃𝐑𝐄𝐒𝐒 𝐁𝐘 𝐃𝐄𝐌𝐎𝐍:* *\`${apiResponse.ip}\`*`;
+                    zyn.sendMessage(m.chat, {
+                        text: ipMessage
+                    }, {
+                        quoted: m
+                    });
+                } catch (error) {
+                    console.error(error);
+                    zyn.sendMessage(m.chat, {
+                        text: 'An error occurred: ' + error.message
+                    }, {
+                        quoted: m
+                    });
+                }
+                break;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

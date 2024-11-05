@@ -31,10 +31,10 @@ global.location = '1'
 //GLOBAL THUMB
 
 global.codeInvite = ""
-global.imageurl = 'https://pomf2.lain.la/f/miuqdl.jpg'
-global.isLink = 'https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v'
-global.packname = "Rafz"
-global.author = "Rafz"
+global.imageurl = 'https://l.top4top.io/p_32188bbq00.jpg'
+global.isLink = 'https://whatsapp.com/channel/0029Vah3fKtCnA7oMPTPJm1h'
+global.packname = "𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌"
+global.author = "👾"
 global.jumlah = "5"
 
 // MESS
