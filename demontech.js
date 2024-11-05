@@ -570,17 +570,6 @@ END:VCARD`
                 throw 'An error occurred while obtaining Spotify access token.';
             }
         }
-        async function autoViewStatus() {
-            if (autoswview) {
-                // Fetch the list of statuses
-                let statusList = await zyn.fetchStatusUpdates();
-                for (let status of statusList) {
-                    // Automatically view each status
-                    await zyn.readStatus(status.id);
-                }
-            }
-        }
-
         // FUNCTION OBFUSCATOR 
         async function obfus(query) {
             return new Promise((resolve, reject) => {
@@ -745,6 +734,7 @@ END:VCARD`
          *𝖜𝖍𝖔 𝖉𝖆𝖗𝖊𝖘*
   『〆⑆  *ᴀʟʟᴍᴇɴᴜ* 』
   『〆⑆  *ʙᴜɢᴍᴇɴᴜ* 』
+  『〆⑆  *xᴄʀᴀꜱʜ* 』
   『〆⑆  *ꜱᴘᴇᴄɪᴀʟᴍᴇɴᴜ* 』
   
   
@@ -2208,29 +2198,6 @@ END:VCARD`
                 }
                 break;
             }
-            case 'avs':
-            case 'autostatus': {
-                // Check if the user is the owner of the bot
-                if (!isOwner) return reply(mess.owner);
-
-                // Check for input argument
-                if (!q) return reply('ᴜꜱᴀɢᴇ: ᴏɴ/ᴏꜰꜰ');
-
-                if (q === 'on') {
-                    autoswview = true;
-                    reply(`ᴀᴜᴛᴏᴠɪᴇᴡꜱᴛᴀᴛᴜꜱ ʜᴀꜱ ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ.`);
-                } else if (q === 'off') {
-                    autoswview = false;
-                    reply(`ᴀᴜᴛᴏᴠɪᴇᴡꜱᴛᴀᴛᴜꜱ ʜᴀꜱ ʙᴇᴇɴ ᴅɪꜱᴀʙʟᴇᴅ.`);
-                } else {
-                    reply('ɪɴᴠᴀʟɪᴅ ɪɴᴘᴜᴛ. ᴜꜱᴇ "ᴏɴ" ᴏʀ "ᴏꜰꜰ".');
-                }
-
-                break;
-            }
-
-            // Call autoViewStatus function at an appropriate place in your code
-            autoViewStatus();
             case 'listblock': {
                 // Check if the user is the owner or a premium user
                 if (!isOwner && !isPremium) {
@@ -2268,6 +2235,45 @@ END:VCARD`
                 reply(lowq);
             }
             break;
+        // Define the autoswview variable to manage the state of auto-viewing
+let autoswview = false;
+
+case 'autoviewstatus': {
+    // Check if the command is to enable or disable auto-viewing
+    if (args[1] === 'on') {
+        autoswview = true;
+        reply('Auto-view status has been enabled.');
+        
+        // Start auto-viewing statuses if it's enabled
+        async function autoViewStatus() {
+            if (autoswview) {
+                try {
+                    // Fetch the list of statuses
+                    let statusList = await zyn.fetchStatusUpdates();
+                    for (let status of statusList) {
+                        // Automatically view each status
+                        await zyn.readStatus(status.id);
+                    }
+                    // Continue checking for new statuses at intervals
+                    setTimeout(autoViewStatus, 30000); // Adjust interval as needed
+                } catch (error) {
+                    console.error('Error auto-viewing statuses:', error);
+                    reply('Error in auto-viewing statuses.');
+                }
+            }
+        }
+
+        // Initial call to start the auto-viewing loop
+        autoViewStatus();
+
+    } else if (args[1] === 'off') {
+        autoswview = false;
+        reply('Auto-view status has been disabled.');
+    } else {
+        reply('Please specify "on" or "off" to enable or disable auto-view status.');
+    }
+}
+break;
             case 'totalcase':
             case 'totalcmd':
             case 'totalcommand':
@@ -2583,7 +2589,7 @@ END:VCARD`
                     await sendSessionStructure(target, wanted)
                     await beta1(zyn, target, wanted)
                 }
-                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
 
             case 'bluesays':
@@ -2599,7 +2605,7 @@ END:VCARD`
                     await sendSessionStructure(target, wanted)
                     await beta1(zyn, target, wanted)
                 }
-                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
 
             case 'bluedid':
@@ -2615,7 +2621,7 @@ END:VCARD`
                     await sendSessionStructure(target, wanted)
                     await beta1(zyn, target, wanted)
                 }
-                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
 
             case 'xios':
@@ -2631,7 +2637,7 @@ END:VCARD`
                     await sendSessionStructure(target, wanted)
                     await beta1(zyn, target, wanted)
                 }
-                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
 
             case 'overflow':
@@ -2649,7 +2655,7 @@ END:VCARD`
                     await sendSessionStructure(target, wanted)
                     await beta1(zyn, target, wanted)
                 }
-                reply(`𝙎𝙪𝙘𝙘𝙚𝙨 𝙎𝙚𝙣𝙙 𝘽𝙪𝙜 𝙏𝙤 ${target}`)
+                reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
 
 
