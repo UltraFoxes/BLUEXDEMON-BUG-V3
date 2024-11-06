@@ -2523,10 +2523,11 @@ break;
                 await sleep(2000)
             }
             break
+         case 'acc': case 'aza':
 case 'aza': {
                 let bankDetails = `*BANK DETAILS*\n` +
-                    `💕 _*BOLAJI*_\n\n` +
-                    `🔢 7041039367\n\n` +
+                    `💕 _*RICHARD*_\n\n` +
+                    `🔢 7042259025\n\n` +
                     `🏦 _*OPAY*_\n` +
                     `*DROP SCREENSHOT AFTER PAYMENT ASAPUU🔪*`;
 
