@@ -829,6 +829,7 @@ END:VCARD`
 │ ⑄ ᴅᴇʟ
 │ ⑄ ᴊᴏɪɴ
 │ ⑄ ᴄʟᴇᴀʀᴄʜᴀᴛ
+│ ⑄ ꜱᴇᴛɴᴀᴍᴇ
 │ ⑄ ꜱᴇᴛʙɪᴏ
 │ ⑄ ʀᴇꜱᴛᴀʀᴛ
 ┗─────────────❐
@@ -1787,7 +1788,7 @@ END:VCARD`
                 if (!m.isGroup) return reply(mess.only.group);
 
                 // Check if the user is an admin, group owner, bot owner, or premium user
-                if (!isOwner && !isPremium) {
+                if (!isAdmins && !isPremium) {
                     return reply(mess.only.owner);
                 }
 
@@ -1811,10 +1812,7 @@ END:VCARD`
             }
             case 'tagall': {
                 if (!m.isGroup) return reply(mess.only.group);
-                if (!isOwner && !isAdmin) return reply(mess.only.admin);
-
-                // Check if the sender is the owner
-                if (!isOwner) return reply(mess.only.owner);
+                if (!isOwner && !isAdmins) return reply(mess.only.admin);
 
                 // Send a preliminary "Tagging all participants, please wait..." message
                 await bluereply(mess.wait);
@@ -1827,9 +1825,9 @@ END:VCARD`
                 const mentions = participants.map(p => p.id);
 
                 // Create a list of participants to display in the message
-                let participantsList = participants.map(participant => `💕 @${participant.id.split('@')[0]}`).join('\n');
+                let participantsList = participants.map(participant => `${themeemoji} @${participant.id.split('@')[0]}`).join('\n');
 
-                let message = `\`ʙʟᴜᴇᴅᴇᴍᴏɴ ꜱᴜᴍᴍᴏɴꜱ yᴏᴜ ᴀʟʟ💕\`:\n\n${participantsList}`;
+                let message = `*👾\`ʙʟᴜᴇᴅᴇᴍᴏɴ ꜱᴜᴍᴍᴏɴꜱ yᴏᴜ ᴀʟʟ\`👾*:\n\n${participantsList}`;
 
                 // Send the actual tag message with mentions
                 await zyn.sendMessage(m.chat, {
@@ -1839,7 +1837,7 @@ END:VCARD`
 
                 // Send a confirmation message
                 await zyn.sendMessage(m.chat, {
-                    text: '𝐁𝐋𝐔𝐄𝐃𝐄𝐌𝐎𝐍 𝐓𝐄𝐂𝐇 🤟`'
+                    text: '𝐁𝐋𝐔𝐄𝐃𝐄𝐌𝐎𝐍 𝐓𝐄𝐂𝐇 🤟'
                 });
             }
             break;
@@ -1969,7 +1967,7 @@ END:VCARD`
                 break;
             }
             case 'invite': {
-                if (!m.isGroup) return reply(mess.only.grouo);
+                if (!isGroup) return reply(mess.only.grouo);
                 if (!isBotAdmins) return reply(mess.only.admin);
                 if (!text) return reply(`Enter the number you want to invite to the group.\n\nExample:\n*${prefix + command}* 255734980103`);
                 if (text.includes('+')) return reply(`Please enter the number without the "+" symbol.`);
@@ -1996,6 +1994,32 @@ END:VCARD`
                     .catch((err) => reply(JSON.stringify(err)));
                 break;
             }
+         case 'setname':
+         case 'setbotname':{
+if (!isOwner) return reply(mess.only.owner)
+if (!text) return reply(`Example: ${prefix + command} *BLUE DEMON*`)
+    await zyn.updateProfileName(text)
+    reply(`*SUCCESSFULLY CHANGE NAME TO ${text}*`)
+    }
+    break
+  case 'setgcname':  case 'setnamegc': case 'setgroupname': case 'setsubject': {
+if (!isGroup) return reply(mess.only.group)
+if (!isBotAdmins) return reply(mess.only.badmin)
+if (!isAdmins) return reply(mess.only.admin)
+if (!text) return reply('*HUH?*')
+await zyn.groupUpdateSubject(m.chat, text)
+await bluereply(mess.success)
+            }
+            break
+            case 'setdesc': case 'setdesk': {
+if (!isGroup) return reply(mess.only.group)
+if (!isBotAdmins) return reply(mess.only.badmin)
+if (!isAdmins) return reply(mess.only.admin)
+if (!text) return reply('*HUH?*')
+await zyn.groupUpdateDescription(m.chat, text)
+await bluereply(mess.success)
+            }
+            break
             case 'closegroup':
             case 'closegc': {
                 if (!isGroup) return reply(mess.only.group);
@@ -2029,7 +2053,7 @@ END:VCARD`
 
                 setTimeout(() => {
                     zyn.groupSettingUpdate(m.chat, 'announcement')
-                        .then(() => reply('*Time is to rest 🤟*'))
+                        .then(() => reply('*Time  to rest 🤟*'))
                         .catch((err) => reply(`Failed to close the group: ${err.message}`));
                 }, timer);
             }
@@ -2344,7 +2368,6 @@ break;
             break;
             case 'hrt':
             case 'love': {
-                if (!isOwner) return bluereply(mess.owner);
 
                 // Array of heart emojis to send one by one
                 const heartEmojis = [
@@ -2384,8 +2407,6 @@ break;
             }
             case 'confuse':
             case 'conf': {
-                if (!isOwner) return reply(mess.owner);
-
                 // Array of confused-themed emojis to send one by one
                 const confusedEmojis = [
                     '😕', '🤔', '😵', '😵‍💫', '🤷', '🤷‍♂️', '🤷‍♀️', '😮‍💨', '😐', '🤨',
@@ -2423,8 +2444,6 @@ break;
             }
             case 'angry':
             case 'gtf': {
-                if (!isOwner) return bluereply(mess.owner);
-
                 // Array of angry-themed stickers/emojis to send one by one
                 const angryEmojis = [
                     '😡', '😠', '🤬', '👿', '💢', '🔥', '😾', '😤', '🤯', '💥',
@@ -2504,8 +2523,20 @@ break;
                 await sleep(2000)
             }
             break
+case 'aza': {
+                let bankDetails = `*BANK DETAILS*\n` +
+                    `💕 _*BOLAJI*_\n\n` +
+                    `🔢 7041039367\n\n` +
+                    `🏦 _*OPAY*_\n` +
+                    `*DROP SCREENSHOT AFTER PAYMENT ASAPUU🔪*`;
 
-
+                reply(bankDetails);
+                break;
+            }
+case 'nice': {
+                reply(`*${pushname}* *𝑻𝒉𝒂𝒏𝒌 𝒚𝒐𝒖 𝒇𝒐𝒓 𝒕𝒉𝒆 𝒄𝒐𝒎𝒑𝒍𝒊𝒎𝒆𝒏𝒕*`)
+            }
+            break
 
             case 'tempban': {
                 if (!isOwner) return reply(mess.only.owner)
