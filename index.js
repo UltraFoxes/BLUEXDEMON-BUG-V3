@@ -27,16 +27,16 @@ auth: state,
 browser: [ "Ubuntu", "Chrome", "20.0.04" ]   
 // browser: ['Chrome (Linux)', '', '']
 }
-const zyn = func.makeWASocket(connectionOptions)
-if(usePairingCode && !zyn.authState.creds.registered) {
+const blue = func.makeWASocket(connectionOptions)
+if(usePairingCode && !blue.authState.creds.registered) {
 		const phoneNumber = await question(chalk.blue('\nEnter Your whatsapp number\nNumber : '));
-		const code = await zyn.requestPairingCode(phoneNumber.trim())
+		const code = await blue.requestPairingCode(phoneNumber.trim())
 		console.log(chalk.green(`Your Pairing Code : ${code} `))
 
 	}
-store.bind(zyn.ev)
+store.bind(blue.ev)
 
-zyn.ev.on('connection.update', async (update) => {
+blue.ev.on('connection.update', async (update) => {
 const { connection, lastDisconnect } = update
 if (connection === 'close') {
 const reason = new Boom(lastDisconnect?.error)?.output.statusCode
@@ -54,10 +54,10 @@ console.log(color('[SYSTEM]', 'white'), color('Connection lost, trying to reconn
 process.exit()
 } else if (reason === DisconnectReason.connectionReplaced) {
 console.log(color('Connection Replaced, Another New Session Opened, Please Close Current Session First'))
-zyn.logout()
+blue.logout()
 } else if (reason === DisconnectReason.loggedOut) {
 console.log(color(`Device Logged Out, Please Scan Again And Run.`))
-zyn.logout()
+blue.logout()
 } else if (reason === DisconnectReason.restartRequired) {
 console.log(color('Restart Required, Restarting...'))
 await startSesi()
@@ -69,40 +69,40 @@ startSesi()
 start(`1`, `Connecting...`)
 } else if (connection === "open") {
 success(`1`, `CONNECTED🤡`)
-zyn.sendMessage(`2347041039367@s.whatsapp.net`, { text: `\`𝗛𝗶 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿\`
+blue.sendMessage(`2347041039367@s.whatsapp.net`, { text: `\`𝗛𝗶 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗿\`
   *BOT CONNECTED SUCCESSFULLY*`})
 if (autoJoin) {
-zyn.groupAcceptInvite(codeInvite)
+blue.groupAcceptInvite(codeInvite)
 }
 }
 })
 
-zyn.ev.on('messages.upsert', async (chatUpdate) => {
+blue.ev.on('messages.upsert', async (chatUpdate) => {
 try {
 m = chatUpdate.messages[0]
 if (!m.message) return
 m.message = (Object.keys(m.message)[0] === 'ephemeralMessage') ? m.message.ephemeralMessage.message : m.message
-if (m.key && m.key.remoteJid === 'status@broadcast') return zyn.readMessages([m.key])
-if (!zyn.public && !m.key.fromMe && chatUpdate.type === 'notify') return
+if (m.key && m.key.remoteJid === 'status@broadcast') return blue.readMessages([m.key])
+if (!blue.public && !m.key.fromMe && chatUpdate.type === 'notify') return
 if (m.key.id.startsWith('BAE5') && m.key.id.length === 16) return
-m = func.smsg(zyn, m, store)
-require("./demontech")(zyn, m, store)
+m = func.smsg(blue, m, store)
+require("./demontech")(blue, m, store)
 } catch (err) {
 console.log(err)
 }
 })
 
-zyn.ev.on('contacts.update', (update) => {
+blue.ev.on('contacts.update', (update) => {
 for (let contact of update) {
-let id = zyn.decodeJid(contact.id)
+let id = blue.decodeJid(contact.id)
 if (store && store.contacts) store.contacts[id] = { id, name: contact.notify }
 }
 })
 
-zyn.public = true
+blue.public = true
 
-zyn.ev.on('creds.update', saveCreds)
-return zyn
+blue.ev.on('creds.update', saveCreds)
+return blue
 }
 
 startSesi()
