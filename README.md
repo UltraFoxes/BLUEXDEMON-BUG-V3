@@ -10,11 +10,8 @@
   
 </p>
 <p align="center">
-<a href="https://github.com/EMMYHENZ-TECH"><img title="Author" src="[[https://i.ibb.co/nBJY4Ny/IMG-20241017-WA0195-1.jpg?style=for-the-badge&logo=twitter](https://i.ibb.co/nBJY4Ny/IMG-20241017-WA0195-1.jpg)](https://i.ibb.co/nBJY4Ny/IMG-20241017-WA0195-1.jpg)"></a>
-<p/>
-<p align="center">
-<a href="https://github.com/EMMYHENZ-TECH?tab=followers"><img title="Followers" src="https://img.shields.io/github/followers/EMMYHENZ-TECH?label=Followers&style=social"></a>
-<a href="https://github.com/EMMYHENZ-TECH/ERROR-X.2/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/EMMYHENZ-TECH/ERROR-X.2?&style=social"></a>
+<a href="https://github.com/BLUEXDEMONl/BLUEXDEMON-BUG-V3?tab=followers"><img title="Followers" src="https://img.shields.io/github/followers/EMMYHENZ-TECH?label=Followers&style=social"></a>
+<a href="https://github.com/EMMYHENZ-TECH/ERROR-X.2/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/BLUEXDEMONl/BLUEXDEMON-BUG-V3?&style=social"></a>
 <a href="https://github.com/EMMYHENZ-TECH/ERROR-X.2/network/members"><img title="Fork" src="https://img.shields.io/github/forks/EMMYHENZ-TECH/ERROR-X.2?style=social"></a>
 <a href="https://github.com/EMMYHENZ-TECH/ERROR-X.2/watchers"><img
 </p>
