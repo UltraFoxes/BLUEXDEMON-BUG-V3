@@ -624,12 +624,14 @@ END:VCARD`
 
         async function loading () {
 var baralod = [
+"𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡", 
+"𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡", 
 "👾", 
-"👾👾", 
+"👾👾",
 "👾👾👾", 
-"👾👾👾👾",
-"👾👾👾👾👾", 
-"👾👾👾👾👾👾", 
+"👾👾👾👾", 
+"👾👾👾👾👾",
+"👾👾👾👾👾👾",
 "🤡𝕴 𝖐𝖓𝖔𝖜 𝖞𝖔𝖚𝖗 𝖘𝖊𝖈𝖗𝖊𝖙🤡", 
 ]
             let {
@@ -1631,6 +1633,29 @@ break;
                 }
                 break;
             }
+   case 'repo':
+case 'channel':
+case 'script':
+case 'sc': {
+    const repo = `
+╭━━━「 *🔹 𝔅𝔏𝔘𝔈 𝔇𝔈𝔐𝔒𝔑 🔹* 」━━━╮
+┃  
+┃ 👾 *Script Repository* 👾
+┃    🔗 [GitHub Repository](https://github.com/BLUEXDEMONl/BLUEXDEMON-BUG-V3.git)
+┃
+┃ 📢 *WhatsApp Channel* 📢
+┃    🔗 [Join Channel](https://whatsapp.com/channel/0029Vah3fKtCnA7oMPTPJm1h)
+┃
+┃ 💬 *Message* 💬
+┃    *Stay updated with the latest news and features. Be part of the BLUE DEMON community.*
+┃ 
+╰━━━━━━━━━━━━━━━━━━━━━━━╯
+`;
+
+    // Send the message
+    await blue.sendMessage(m.chat, { text: repo });
+    break;
+}
             case 'update': {
                 if (!isOwner) return reply(mess.only.owner);
 
