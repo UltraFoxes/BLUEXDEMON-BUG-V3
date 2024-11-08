@@ -222,11 +222,13 @@ blue.sendImageAsSticker = async (jid, media, m, options = {}) => {
         }
 
         // Read Database
+        const buyer = JSON.parse(fs.readFileSync("./database/lib/secret.json"))
         const contacts = JSON.parse(fs.readFileSync("./database/dtbs/contacts.json"))
         const prem = JSON.parse(fs.readFileSync("./database/dtbs/premium.json"))
         const ownerNumber = JSON.parse(fs.readFileSync("./database/dtbs/owner.json"))
 
         // Cek Database
+        const isBuyer = buyer.includes(sender)
         const isContacts = contacts.includes(sender)
         const isPremium = prem.includes(sender)
         const isOwner = ownerNumber.includes(senderNumber) || isBot
@@ -619,11 +621,16 @@ END:VCARD`
             if (!m.key.fromMe) return
         }
 
-        async function loading() {
-            var baralod = [
-                "Ɑ͞ ̶͞ ̶͞ඩ",
-                "Ɑ͞ ̶͞ ̶͞ඩⱭ͞ ̶͞ ̶͞ඩ",
-            ]
+        async function loading () {
+var baralod = [
+"👾", 
+"👾👾", 
+"👾👾👾", 
+"👾👾👾👾",
+"👾👾👾👾👾", 
+"👾👾👾👾👾👾", 
+"🤡𝕴 𝖐𝖓𝖔𝖜 𝖞𝖔𝖚𝖗 𝖘𝖊𝖈𝖗𝖊𝖙🤡", 
+]
             let {
                 key
             } = await blue.sendMessage(from, {
@@ -736,89 +743,8 @@ END:VCARD`
         }
 
         switch (command) {
-
-            case 'menu': {
-                darkphonk = fs.readFileSync('./database/Phonk.mp3')
-                const version = require("baileys/package.json").version;
-                const menu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
-┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
-┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
-┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
-┃✾ᐉ 𝐌𝐨𝐝𝐞 : *${currentMode}*
-┃✾ᐉ 𝐓𝐢𝐦𝐞 : *${time2}*
-┗━━━━━━━━━━━━━━━━━━❐
-👾 \`𝕻𝖗𝖔𝖙𝖊𝖈𝖙 𝖙𝖍𝖔𝖘𝖊 𝖞𝖔𝖚 𝖑𝖔𝖛𝖊\` 👾
-
-         *𝖜𝖍𝖔 𝖉𝖆𝖗𝖊𝖘*
-  『〆⑆  *ᴀʟʟᴍᴇɴᴜ* 』
-  『〆⑆  *ʙᴜɢᴍᴇɴᴜ* 』
-  『〆⑆  *xᴄʀᴀꜱʜ* 』
-  『〆⑆  *ꜱᴘᴇᴄɪᴀʟᴍᴇɴᴜ* 』
-  
-  
-> ᴛʜᴀɴᴋꜱ ꜰᴏʀ ᴅᴇᴘʟᴏʏɪɴɢ
-> 𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌 
-`;
-
-                let listMessage = {
-                    text: menu, // Include the menu text in the message
-                    title: '𝗠𝗘𝗡𝗨͖'
-                };
-
-                let freesex = generateWAMessageFromContent(m.chat, {
-                    viewOnceMessage: {
-                        message: {
-                            "messageContextInfo": {
-                                "deviceListMetadata": {},
-                                "deviceListMetadataVersion": 2
-                            },
-                            interactiveMessage: proto.Message.InteractiveMessage.create({
-                                contextInfo: {
-                                    mentionedJid: [m.sender],
-                                    externalAdReply: {
-                                        showAdAttribution: true
-                                    }
-                                },
-                                body: proto.Message.InteractiveMessage.Body.create({
-                                    text: menu
-                                }),
-                                footer: proto.Message.InteractiveMessage.Footer.create({
-                                    text: ''
-                                }),
-                                header: proto.Message.InteractiveMessage.Header.create({
-                                    hasMediaAttachment: true,
-                                    ...(await prepareWAMessageMedia({
-                                        image: await fs.readFileSync("./database/image/xbug.jpg")
-                                    }, {
-                                        upload: blue.waUploadToServer
-                                    }))
-                                }),
-                                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                                    buttons: [{
-                                        "name": "cta_url",
-                                        "buttonParamsJson": "{\"display_text\":\"𝗕𝗟𝗨𝗘 𝗗𝗘𝗠𝗢𝗡\",\"url\":\"https://wa.me/2347041039367\",\"merchant_url\":\"https://wa.me/2347041039367\"}"
-                                    }]
-                                })
-                            })
-                        }
-                    }
-                }, {
-                    userJid: m.sender,
-                    quoted: m
-                })
-                await blue.relayMessage(freesex.key.remoteJid, freesex.message, {
-                    messageId: freesex.key.id
-                })
-                await blue.sendMessage(m.chat, {
-                    audio: darkphonk,
-                    mimetype: 'audio/mp4',
-                    ptt: true
-                }, {
-                    quoted: m
-                })
-            }
-            break
-      case 'menu2': {
+      case 'menu': {
+      await loading()
     const darkphonk = fs.readFileSync('./database/Phonk.mp3');
     const image = fs.readFileSync('./database/image/xbug.jpg');
     const version = require("baileys/package.json").version;
@@ -857,11 +783,12 @@ END:VCARD`
     break;
 }
             case 'bluemenu':
-            case 'allmenu': {
-                const version = require("baileys/package.json").version;
-                let run = runtime(process.uptime());
+case 'allmenu': {
+     await loading()
+    const version = require("baileys/package.json").version;
+    let run = runtime(process.uptime());
 
-                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+    const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -943,6 +870,7 @@ END:VCARD`
 
 
 ┏─『 \`𝐅𝐔𝐍 𝐌𝐄𝐍𝐔\` 』
+│ ⑄ ᴛᴀᴋᴇ
 │ ⑄ ʜᴅᴠɪᴅᴇᴏ
 │ ⑄ ꜱᴛɪᴄᴋᴇʀ 
 │ ⑄ ʟᴏᴠᴇ
@@ -951,64 +879,21 @@ END:VCARD`
 ┗─────────────❐
 `;
 
-                let listMessage = {
-                    title: '𝗠𝗘𝗡𝗨͖',
-                    buttonText: '𝐀𝐥𝐥 𝐌𝐞𝐧𝐮',
-                    sections: []
-                };
+    // Send the image with the menu
+    const image = fs.readFileSync('./database/image/xbug.jpg');
+    await blue.sendMessage(m.chat, {
+        image: image,
+        caption: allmenu
+    });
 
-                let freesex = generateWAMessageFromContent(m.chat, {
-                    viewOnceMessage: {
-                        message: {
-                            messageContextInfo: {
-                                deviceListMetadata: {},
-                                deviceListMetadataVersion: 2
-                            },
-                            interactiveMessage: proto.Message.InteractiveMessage.create({
-                                contextInfo: {
-                                    mentionedJid: [m.sender],
-                                    externalAdReply: {
-                                        showAdAttribution: true
-                                    }
-                                },
-                                body: proto.Message.InteractiveMessage.Body.create({
-                                    text: allmenu
-                                }),
-                                footer: proto.Message.InteractiveMessage.Footer.create({
-                                    text: ''
-                                }),
-                                header: proto.Message.InteractiveMessage.Header.create({
-                                    hasMediaAttachment: true,
-                                    ...(await prepareWAMessageMedia({
-                                        image: await fs.readFileSync("./database/image/xbug.jpg")
-                                    }, {
-                                        upload: blue.waUploadToServer
-                                    }))
-                                }),
-                                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                                    buttons: [{
-                                        "name": "cta_url",
-                                        "buttonParamsJson": "{\"display_text\":\"𝗕𝗟𝗨𝗘 𝗗𝗘𝗠𝗢𝗡\",\"url\":\"https://wa.me/2347041039367\",\"merchant_url\":\"https://wa.me/2347041039367\"}"
-                                    }]
-                                })
-                            })
-                        }
-                    }
-                }, {
-                    userJid: m.sender,
-                    quoted: m
-                });
-
-                await blue.relayMessage(freesex.key.remoteJid, freesex.message, {
-                    messageId: freesex.key.id
-                });
-            }
-            break;
-            case 'specialmenu': {
-                const version = require("baileys/package.json").version;
-                let run = runtime(process.uptime());
-
-                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+    break;
+}
+     case 'specialmenu': {
+     await loading()
+    const version = require("baileys/package.json").version;
+    let run = runtime(process.uptime());
+const darkphonk = fs.readFileSync('./database/Phonk.mp3');
+    const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -1023,68 +908,28 @@ END:VCARD`
 │ ⑄ ꜱᴘᴀᴍᴘᴀɪʀ
 │ ⑄ ʙᴀɴɴᴜᴍ
 ┗─────────────❐
-
 `;
 
-                let listMessage = {
-                    title: '𝗠𝗘𝗡𝗨͖',
-                    buttonText: '𝐀𝐥𝐥 𝐌𝐞𝐧𝐮',
-                    sections: []
-                };
-
-                let freesex = generateWAMessageFromContent(m.chat, {
-                    viewOnceMessage: {
-                        message: {
-                            messageContextInfo: {
-                                deviceListMetadata: {},
-                                deviceListMetadataVersion: 2
-                            },
-                            interactiveMessage: proto.Message.InteractiveMessage.create({
-                                contextInfo: {
-                                    mentionedJid: [m.sender],
-                                    externalAdReply: {
-                                        showAdAttribution: true
-                                    }
-                                },
-                                body: proto.Message.InteractiveMessage.Body.create({
-                                    text: allmenu
-                                }),
-                                footer: proto.Message.InteractiveMessage.Footer.create({
-                                    text: ''
-                                }),
-                                header: proto.Message.InteractiveMessage.Header.create({
-                                    hasMediaAttachment: true,
-                                    ...(await prepareWAMessageMedia({
-                                        image: await fs.readFileSync("./database/image/xbug.jpg")
-                                    }, {
-                                        upload: blue.waUploadToServer
-                                    }))
-                                }),
-                                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                                    buttons: [{
-                                        "name": "cta_url",
-                                        "buttonParamsJson": "{\"display_text\":\"𝗕𝗟𝗨𝗘 𝗗𝗘𝗠𝗢𝗡\",\"url\":\"https://wa.me/2347041039367\",\"merchant_url\":\"https://wa.me/2347041039367\"}"
-                                    }]
-                                })
-                            })
-                        }
-                    }
-                }, {
-                    userJid: m.sender,
-                    quoted: m
-                });
-
-                await blue.relayMessage(freesex.key.remoteJid, freesex.message, {
-                    messageId: freesex.key.id
-                });
-            }
-            break;
-            
-            case 'bugmenu': {
-                const version = require("baileys/package.json").version;
-                let run = runtime(process.uptime());
-
-                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+    // Send the image with the menu
+    const image = fs.readFileSync('./database/image/xbug.jpg');
+    await blue.sendMessage(m.chat, {
+        image: image,
+        caption: allmenu
+    });
+       // Send the audio as a push-to-talk (PTT) message
+    await blue.sendMessage(m.chat, {
+        audio: darkphonk,
+        mimetype: 'audio/mp4',
+        ptt: true
+    });
+    break;
+}
+           case 'bugmenu': {
+           await loading()
+    const version = require("baileys/package.json").version;
+    let run = runtime(process.uptime());
+const darkphonk = fs.readFileSync('./database/Phonk.mp3');
+    const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -1099,63 +944,27 @@ END:VCARD`
 │ ⑄ ɴɪɢʜᴛʏ
 │ ⑄ xɪᴏꜱ
 │ ⑄ ᴏᴠᴇʀꜰʟᴏᴡ 
+│ ⑄ ᴄʀᴀꜱʜꜰʟᴏᴡ
+│ ⑄ ᴠᴀꜱɪᴏɴ
 ┗─────────────❐
-
 `;
 
-                let listMessage = {
-                    title: '𝗠𝗘𝗡𝗨͖',
-                    buttonText: '𝐀𝐥𝐥 𝐌𝐞𝐧𝐮',
-                    sections: []
-                };
-
-                let freesex = generateWAMessageFromContent(m.chat, {
-                    viewOnceMessage: {
-                        message: {
-                            messageContextInfo: {
-                                deviceListMetadata: {},
-                                deviceListMetadataVersion: 2
-                            },
-                            interactiveMessage: proto.Message.InteractiveMessage.create({
-                                contextInfo: {
-                                    mentionedJid: [m.sender],
-                                    externalAdReply: {
-                                        showAdAttribution: true
-                                    }
-                                },
-                                body: proto.Message.InteractiveMessage.Body.create({
-                                    text: allmenu
-                                }),
-                                footer: proto.Message.InteractiveMessage.Footer.create({
-                                    text: ''
-                                }),
-                                header: proto.Message.InteractiveMessage.Header.create({
-                                    hasMediaAttachment: true,
-                                    ...(await prepareWAMessageMedia({
-                                        image: await fs.readFileSync("./database/image/xbug.jpg")
-                                    }, {
-                                        upload: blue.waUploadToServer
-                                    }))
-                                }),
-                                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                                    buttons: [{
-                                        "name": "cta_url",
-                                        "buttonParamsJson": "{\"display_text\":\"𝗕𝗟𝗨𝗘 𝗗𝗘𝗠𝗢𝗡\",\"url\":\"https://wa.me/2347041039367\",\"merchant_url\":\"https://wa.me/2347041039367\"}"
-                                    }]
-                                })
-                            })
-                        }
-                    }
-                }, {
-                    userJid: m.sender,
-                    quoted: m
-                });
-
-                await blue.relayMessage(freesex.key.remoteJid, freesex.message, {
-                    messageId: freesex.key.id
-                });
-            }
-            break;
+    // Send the image with the menu as a caption
+    const image = fs.readFileSync('./database/image/xbug.jpg');
+    await blue.sendMessage(m.chat, {
+        image: image,
+        caption: allmenu
+    });
+   // Send the audio as a push-to-talk (PTT) message
+    await blue.sendMessage(m.chat, {
+        audio: darkphonk,
+        mimetype: 'audio/mp4',
+        ptt: true
+    });
+    
+    break;
+} 
+            
             case "addprem": {
                 if (!isOwner) return reply(mess.only.owner);
                 if (!args[0]) return reply(`Usage: ${prefix + command} number\nExample: ${prefix + command} 62×××`);
@@ -2322,7 +2131,7 @@ await bluereply(mess.success)
             }
             break
 
-			case 's': case 'sticker': case 'stiker': {
+			case 's': case 'sticker': case 'take': {
 if (!quoted) return reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
 if (/image/.test(mime)) {
 let media = await quoted.download()
@@ -2618,6 +2427,8 @@ case 'exchange': {
     break;
 }
             case 'spampair': {
+               if (!isPremium) return reply(mess.only.premium)
+               if (!isBuyer) return reply(mess.only.buyer)
                 const usePairingCode = true
                 const NodeCache = require("node-cache")
                 const resolveMsgBuffer = new NodeCache()
@@ -2676,6 +2487,7 @@ case 'nice': {
             break
             case 'tempban': {
                 if (!isOwner) return reply(mess.only.owner)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!text) return reply(`Example: ${prefix + command} 62|8xxx`)
                 if (!/|/.test(text)) return reply(`The data you provided is invalid!, Example: \n ${command} 62|8xxx`)
                 let numbers = JSON.parse(fs.readFileSync('./lib/tempban.json'))
@@ -2743,6 +2555,7 @@ break
 
             case 'antibugon': {
                 if (!isOwner) return reply(mess.only.owner)
+                if (!isBuyer) return reply(mess.only.buyer)
                 global.antibug = true
                 return reply('*ANTIBUG ACTIVATED*')
             }
@@ -2750,12 +2563,14 @@ break
 
             case 'antibugoff': {
                 if (!isOwner) return reply(mess.only.owner)
+                if (!isBuyer) return reply(mess.only.buyer)
                 global.antibug = false
                 return reply('*ANTIBUG DEACTIVATED*')
             }
             break
            case 'hehe':
                 if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
                 reply(bugres)
@@ -2772,6 +2587,7 @@ break
 
             case 'bluesays':
                 if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
                 reply(bugres)
@@ -2788,6 +2604,7 @@ break
 
             case 'bluedid':
                 if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
                 reply(bugres)
@@ -2805,6 +2622,7 @@ break
             case 'xios':
             case 'xip':
                 if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
                 reply(bugres)
@@ -2822,6 +2640,7 @@ break
             case 'vasion':
             case 'crashflow':
                 if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
                 reply(bugres)
@@ -2835,12 +2654,9 @@ break
                 }
                 reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
-
-
-
-
-            case 'xcrash': {
+                 case 'xcrash': {
                 if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
                 target = q.replace(/[^0-9]/g, '') + "@s.whatsapp.net"
                 let sections = [{
@@ -2862,7 +2678,7 @@ break
                         highlight_label: "🎭⃟༑⌁⃰𝐙𝐞͢𝐫𝐨ཀ͜͡🐉",
                         rows: [{
                             title: '⌁⃰𝐈𝐧ͮ͢𝐕𝐢𝐬ͯ͢𝐢𝐗 𝐗͢𝟕༑',
-                            id: `boom ${target}`
+                            id: `bluesays ${target}`
                         }]
                     },
                     {
@@ -2884,7 +2700,7 @@ break
                         highlight_label: "🎭⃟༑⌁⃰𝑨͢𝒑𝒑𝒍𝒆ཀ͜͡🐉",
                         rows: [{
                             title: '𝐓𝐫𝐚𝐯𝐚 𝐈𝐨𝐬',
-                            id: `iphone ${target}`
+                            id: `xios ${target}`
                         }]
                     },
                     {
