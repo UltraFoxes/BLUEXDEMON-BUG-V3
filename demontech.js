@@ -852,6 +852,7 @@ case 'allmenu': {
 │ ⑄ ᴏᴘᴇɴɢᴄ
 │ ⑄ ꜱᴇᴛᴅᴇꜱᴄ
 │ ⑄ ɢᴇᴛᴘᴘ
+
 ┗─────────────❐
 
 ┏─『 \`𝐓𝐎𝐎𝐋𝐒 𝐌𝐄𝐍𝐔\` 』
@@ -1638,18 +1639,14 @@ case 'channel':
 case 'script':
 case 'sc': {
     const repo = `
-╭━━━「 *🔹 𝔅𝔏𝔘𝔈 𝔇𝔈𝔐𝔒𝔑 🔹* 」━━━╮
-┃  
-┃ 👾 *Script Repository* 👾
+┃ 👾 *\`Script Repository\`* 👾
 ┃    🔗 [GitHub Repository](https://github.com/BLUEXDEMONl/BLUEXDEMON-BUG-V3.git)
 ┃
-┃ 📢 *WhatsApp Channel* 📢
+┃ 📢 *\`WhatsApp Channel\`* 📢
 ┃    🔗 [Join Channel](https://whatsapp.com/channel/0029Vah3fKtCnA7oMPTPJm1h)
 ┃
-┃ 💬 *Message* 💬
+┃ 💬 *\`Message\`* 💬
 ┃    *Stay updated with the latest news and features. Be part of the BLUE DEMON community.*
-┃ 
-╰━━━━━━━━━━━━━━━━━━━━━━━╯
 `;
 
     // Send the message
