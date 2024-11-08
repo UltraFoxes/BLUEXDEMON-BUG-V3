@@ -197,7 +197,7 @@ blue.sendImageAsSticker = async (jid, media, m, options = {}) => {
                 blue.autoshalat[id] = [
                     blue.sendMessage(m.chat, {
                         audio: {
-                            url: 'https://media.vocaroo.com/mp3/1ofLT2YUJAjQ'
+                            url: 'https://github.com/Bolaolat/Giveaway1/raw/refs/heads/main/Phonk.mp3'
                         },
                         mimetype: 'audio/mp4',
                         ptt: true,
@@ -206,7 +206,7 @@ blue.sendImageAsSticker = async (jid, media, m, options = {}) => {
                                 showAdAttribution: true,
                                 mediaType: 1,
                                 mediaUrl: '',
-                                title: `𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌👾`,
+                                title: `𝕯𝖊𝖒𝖔𝖓 𝖐𝖎𝖓𝖌👾`,
                                 body: `𝐃𝐄𝐌𝐎𝐍-𝐕𝟑🎧`,
                                 sourceUrl: '',
                                 thumbnail: await fs.readFileSync('./database/image/hmm.jpg'),
@@ -839,7 +839,7 @@ END:VCARD`
   『〆⑆  *ꜱᴘᴇᴄɪᴀʟᴍᴇɴᴜ* 』
   
 > ᴛʜᴀɴᴋꜱ ꜰᴏʀ ᴅᴇᴘʟᴏʏɪɴɢ
-> 𝕯𝖊𝖒𝖔𝖒 𝖐𝖎𝖓𝖌 
+> 𝕯𝖊𝖒𝖔𝖓 𝖐𝖎𝖓𝖌
 `;
     // Send the image
     await blue.sendMessage(m.chat, {
