@@ -50,7 +50,8 @@ module.exports = async (blue, m, store) => {
             mediafireDl
         } = require('./database/dtbs/mediafire.js')
         let db_saldo = JSON.parse(fs.readFileSync("./database/dtbs/saldo.json"));
-        const {
+       const fetch = require('node-fetch');
+         const {
             beta1,
             beta2,
             buk1
@@ -634,7 +635,7 @@ var baralod = [
             let {
                 key
             } = await blue.sendMessage(from, {
-                text: '𝐑'
+                text: '𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡'
             })
 
             for (let i = 0; i < baralod.length; i++) {
@@ -976,6 +977,47 @@ const darkphonk = fs.readFileSync('./database/Phonk.mp3');
                 reply(`Number ${prrkek} has been added as Premium!`);
             }
             break;
+case "addbuyer": {
+    if (!isOwner) return reply(mess.only.owner);
+
+    // Prompt for password and validate
+    if (args[0] !== "bluedemon-solos") {
+        return reply(`Incorrect password! Example: ${prefix + command} password 234×××\n*MESSAGE wa.me/2347041039367 FOR PASSWORD*.`);
+    }
+
+    // Remove the password argument from args and proceed with the rest
+    const numberArg = args.slice(1).join(" ");
+    
+    // Check if the number argument is missing or empty
+    if (!numberArg) {
+        return reply(`Usage: ${prefix + command} password number\nExample: ${prefix + command} password 62×××`);
+    }
+
+    // Clean the phone number and check its format (only numbers allowed)
+    const cleanedNumber = numberArg.split("|")[0].replace(/[^0-9]/g, '');
+    
+    // Validate phone number format (e.g., check length or country code)
+    if (cleanedNumber.length < 10) {
+        return reply("Invalid number format! Please enter a valid phone number in the correct format.\nExample: 62XXXXXXXXXX");
+    }
+
+    // Check if the number is registered on WhatsApp
+    prrkek = cleanedNumber + `@s.whatsapp.net`;
+    let ceknya = await blue.onWhatsApp(prrkek);
+    
+    // If the number is not registered on WhatsApp
+    if (ceknya.length == 0) {
+        return reply(`The number ${cleanedNumber} is not registered on WhatsApp! Please enter a valid number.`);
+    }
+
+    // Add to premium list
+    prem.push(prrkek);
+    fs.writeFileSync("./database/lib/secret.json", JSON.stringify(prem));
+    
+    // Success message
+    reply(`Number ${prrkek} has been successfully added as Premium!`);
+}
+break;
             case "delprem": {
                 if (!isOwner) return reply(mess.only.owner);
                 if (!args[0]) return reply(`Usage: ${prefix + command} number\nExample: ${prefix + command} 62×××`);
