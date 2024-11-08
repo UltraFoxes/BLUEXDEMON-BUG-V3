@@ -2322,22 +2322,17 @@ await bluereply(mess.success)
             }
             break
 
-case "sticker": 
-case "stiker":
-case "s": {
-if (!isOwner) return reply(mess.only.owner)
-if (!quoted) return reply(`Kirim/Reply Gambar/Video/Gifs Dengan Caption ${prefix+command}\nDurasi Video 1-9 Detik`)
+			case 's': case 'sticker': case 'stiker': {
+if (!quoted) return reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
 if (/image/.test(mime)) {
 let media = await quoted.download()
-let encmedia = await blue.sendStimg(from, media, m, { packname: global.packname, author: global.author })
-await fs.unlinkSync(encmedia)
+let encmedia = await blue.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
 } else if (/video/.test(mime)) {
-if ((quoted.msg || quoted).seconds > 11) return reply('Kirim/Reply Gambar/Video/Gifs Dengan Caption ${prefix+command}\nDurasi Video 1-9 Detik')
+if ((quoted.msg || quoted).seconds > 11) return replyg('Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds')
 let media = await quoted.download()
-let encmedia = await blue.sendStvid(from, media, m, { packname: global.packname, author: global.author })
-await fs.unlinkSync(encmedia)
+let encmedia = await blue.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
 } else {
-reply(`Kirim/Reply Gambar/Video/Gifs Dengan Caption ${prefix+command}\nDurasi Video 1-9 Detik`)
+reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
 }
 }
 break
