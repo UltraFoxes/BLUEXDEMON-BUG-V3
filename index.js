@@ -1,6 +1,4 @@
 /*DO NOT EDIT IN ANY WAY TO AVOID ERRORS*/
-
-
 require("./database/global")
 
 const func = require("./database/place")
