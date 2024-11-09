@@ -50,8 +50,8 @@ module.exports = async (blue, m, store) => {
             mediafireDl
         } = require('./database/dtbs/mediafire.js')
         let db_saldo = JSON.parse(fs.readFileSync("./database/dtbs/saldo.json"));
-       const fetch = require('node-fetch');
-         const {
+        const fetch = require('node-fetch');
+        const {
             beta1,
             beta2,
             buk1
@@ -99,26 +99,33 @@ module.exports = async (blue, m, store) => {
                 })
             }
         }
-blue.sendImageAsSticker = async (jid, media, m, options = {}) => {
-    let { Sticker, StickerTypes } = require('wa-sticker-formatter')
-    const getRandom = (ext) => {
-            return `${Math.floor(Math.random() * 10000)}${ext}`
+        blue.sendImageAsSticker = async (jid, media, m, options = {}) => {
+            let {
+                Sticker,
+                StickerTypes
+            } = require('wa-sticker-formatter')
+            const getRandom = (ext) => {
+                return `${Math.floor(Math.random() * 10000)}${ext}`
+            }
+            let jancok = new Sticker(media, {
+                pack: global.packname, // The pack name
+                author: global.author, // The author name
+                type: StickerTypes.FULL, // The sticker type
+                categories: ['🤩', '🎉'], // The sticker category
+                id: '12345', // The sticker id
+                quality: 50, // The quality of the output file
+                background: '#FFFFFF00' // The sticker background color (only for full stickers)
+            })
+            let stok = getRandom(".webp")
+            let nono = await jancok.toFile(stok)
+            let nah = fs.readFileSync(nono)
+            await blue.sendMessage(jid, {
+                sticker: nah
+            }, {
+                quoted: m
+            })
+            return await fs.unlinkSync(stok)
         }
-    let jancok = new Sticker(media, {
-        pack: global.packname, // The pack name
-        author: global.author, // The author name
-        type: StickerTypes.FULL, // The sticker type
-        categories: ['🤩', '🎉'], // The sticker category
-        id: '12345', // The sticker id
-        quality: 50, // The quality of the output file
-        background: '#FFFFFF00' // The sticker background color (only for full stickers)
-    })
-    let stok = getRandom(".webp")
-    let nono = await jancok.toFile(stok)
-    let nah = fs.readFileSync(nono)
-    await blue.sendMessage(jid,{sticker: nah},{quoted: m})
-    return await fs.unlinkSync(stok)
-     }
         const nanototalpitur = () => {
             var mytext = fs.readFileSync("./demontech.js").toString()
             var numUpper = (mytext.match(/case '/g) || []).length
@@ -622,18 +629,18 @@ END:VCARD`
             if (!m.key.fromMe) return
         }
 
-        async function loading () {
-var baralod = [
-"𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡", 
-"𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡", 
-"👾", 
-"👾👾",
-"👾👾👾", 
-"👾👾👾👾", 
-"👾👾👾👾👾",
-"👾👾👾👾👾👾",
-"🤡𝕴 𝖐𝖓𝖔𝖜 𝖞𝖔𝖚𝖗 𝖘𝖊𝖈𝖗𝖊𝖙🤡", 
-]
+        async function loading() {
+            var baralod = [
+                "𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡",
+                "𝐆𝐮𝐞𝐬𝐬 𝐰𝐡𝐚𝐭🤡",
+                "👾",
+                "👾👾",
+                "👾👾👾",
+                "👾👾👾👾",
+                "👾👾👾👾👾",
+                "👾👾👾👾👾👾",
+                "🤡𝕴 𝖐𝖓𝖔𝖜 𝖞𝖔𝖚𝖗 𝖘𝖊𝖈𝖗𝖊𝖙🤡",
+            ]
             let {
                 key
             } = await blue.sendMessage(from, {
@@ -746,13 +753,13 @@ var baralod = [
         }
 
         switch (command) {
-      case 'menu': {
-      await loading()
-    const darkphonk = fs.readFileSync('./database/Phonk.mp3');
-    const image = fs.readFileSync('./database/image/xbug.jpg');
-    const version = require("baileys/package.json").version;
+            case 'menu': {
+                await loading()
+                const darkphonk = fs.readFileSync('./database/Phonk.mp3');
+                const image = fs.readFileSync('./database/image/xbug.jpg');
+                const version = require("baileys/package.json").version;
 
-    const menu2 = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+                const menu2 = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -770,28 +777,28 @@ var baralod = [
 > ᴛʜᴀɴᴋꜱ ꜰᴏʀ ᴅᴇᴘʟᴏʏɪɴɢ
 > 𝕯𝖊𝖒𝖔𝖓 𝖐𝖎𝖓𝖌
 `;
-    // Send the image
-    await blue.sendMessage(m.chat, {
-        image: image,
-        caption: menu2
-    });
+                // Send the image
+                await blue.sendMessage(m.chat, {
+                    image: image,
+                    caption: menu2
+                });
 
-    // Send the audio as a push-to-talk (PTT) message
-    await blue.sendMessage(m.chat, {
-        audio: darkphonk,
-        mimetype: 'audio/mp4',
-        ptt: true
-    });
-    
-    break;
-}
+                // Send the audio as a push-to-talk (PTT) message
+                await blue.sendMessage(m.chat, {
+                    audio: darkphonk,
+                    mimetype: 'audio/mp4',
+                    ptt: true
+                });
+
+                break;
+            }
             case 'bluemenu':
-case 'allmenu': {
-     await loading()
-    const version = require("baileys/package.json").version;
-    let run = runtime(process.uptime());
+            case 'allmenu': {
+                await loading()
+                const version = require("baileys/package.json").version;
+                let run = runtime(process.uptime());
 
-    const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -883,21 +890,21 @@ case 'allmenu': {
 ┗─────────────❐
 `;
 
-    // Send the image with the menu
-    const image = fs.readFileSync('./database/image/xbug.jpg');
-    await blue.sendMessage(m.chat, {
-        image: image,
-        caption: allmenu
-    });
+                // Send the image with the menu
+                const image = fs.readFileSync('./database/image/xbug.jpg');
+                await blue.sendMessage(m.chat, {
+                    image: image,
+                    caption: allmenu
+                });
 
-    break;
-}
-     case 'specialmenu': {
-     await loading()
-    const version = require("baileys/package.json").version;
-    let run = runtime(process.uptime());
-const darkphonk = fs.readFileSync('./database/Phonk.mp3');
-    const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+                break;
+            }
+            case 'specialmenu': {
+                await loading()
+                const version = require("baileys/package.json").version;
+                let run = runtime(process.uptime());
+                const darkphonk = fs.readFileSync('./database/Phonk.mp3');
+                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -914,26 +921,26 @@ const darkphonk = fs.readFileSync('./database/Phonk.mp3');
 ┗─────────────❐
 `;
 
-    // Send the image with the menu
-    const image = fs.readFileSync('./database/image/xbug.jpg');
-    await blue.sendMessage(m.chat, {
-        image: image,
-        caption: allmenu
-    });
-       // Send the audio as a push-to-talk (PTT) message
-    await blue.sendMessage(m.chat, {
-        audio: darkphonk,
-        mimetype: 'audio/mp4',
-        ptt: true
-    });
-    break;
-}
-           case 'bugmenu': {
-           await loading()
-    const version = require("baileys/package.json").version;
-    let run = runtime(process.uptime());
-const darkphonk = fs.readFileSync('./database/Phonk.mp3');
-    const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
+                // Send the image with the menu
+                const image = fs.readFileSync('./database/image/xbug.jpg');
+                await blue.sendMessage(m.chat, {
+                    image: image,
+                    caption: allmenu
+                });
+                // Send the audio as a push-to-talk (PTT) message
+                await blue.sendMessage(m.chat, {
+                    audio: darkphonk,
+                    mimetype: 'audio/mp4',
+                    ptt: true
+                });
+                break;
+            }
+            case 'bugmenu': {
+                await loading()
+                const version = require("baileys/package.json").version;
+                let run = runtime(process.uptime());
+                const darkphonk = fs.readFileSync('./database/Phonk.mp3');
+                const allmenu = `┏━━ ｢ \`ᏰᏝᏬᏋ ᎴᏋᎷᎧᏁ\` ｣ ━━❐
 ┃✾ᐉ 𝐍𝐚𝐦𝐞 : *${pushname}*
 ┃✾ᐉ 𝐑𝐮𝐧 : *${run}*
 ┃✾ᐉ 𝐏𝐫𝐞𝐟𝐢𝐱 : *${prefix}*
@@ -953,22 +960,22 @@ const darkphonk = fs.readFileSync('./database/Phonk.mp3');
 ┗─────────────❐
 `;
 
-    // Send the image with the menu as a caption
-    const image = fs.readFileSync('./database/image/xbug.jpg');
-    await blue.sendMessage(m.chat, {
-        image: image,
-        caption: allmenu
-    });
-   // Send the audio as a push-to-talk (PTT) message
-    await blue.sendMessage(m.chat, {
-        audio: darkphonk,
-        mimetype: 'audio/mp4',
-        ptt: true
-    });
-    
-    break;
-} 
-            
+                // Send the image with the menu as a caption
+                const image = fs.readFileSync('./database/image/xbug.jpg');
+                await blue.sendMessage(m.chat, {
+                    image: image,
+                    caption: allmenu
+                });
+                // Send the audio as a push-to-talk (PTT) message
+                await blue.sendMessage(m.chat, {
+                    audio: darkphonk,
+                    mimetype: 'audio/mp4',
+                    ptt: true
+                });
+
+                break;
+            }
+
             case "addprem": {
                 if (!isOwner) return reply(mess.only.owner);
                 if (!args[0]) return reply(`Usage: ${prefix + command} number\nExample: ${prefix + command} 62×××`);
@@ -980,47 +987,47 @@ const darkphonk = fs.readFileSync('./database/Phonk.mp3');
                 reply(`Number ${prrkek} has been added as Premium!`);
             }
             break;
-case "addbuyer": {
-    if (!isOwner) return reply(mess.only.owner);
+            case "addbuyer": {
+                if (!isOwner) return reply(mess.only.owner);
 
-    // Prompt for password and validate
-    if (args[0] !== "bluedemon-solos") {
-        return reply(`Incorrect password! Example: ${prefix + command} password 234×××\n*MESSAGE wa.me/2347041039367 FOR PASSWORD*.`);
-    }
+                // Prompt for password and validate
+                if (args[0] !== "bluedemon-solos") {
+                    return reply(`Incorrect password! Example: ${prefix + command} password 234×××\n*MESSAGE wa.me/2347041039367 FOR PASSWORD*.`);
+                }
 
-    // Remove the password argument from args and proceed with the rest
-    const numberArg = args.slice(1).join(" ");
-    
-    // Check if the number argument is missing or empty
-    if (!numberArg) {
-        return reply(`Usage: ${prefix + command} password number\nExample: ${prefix + command} password 62×××`);
-    }
+                // Remove the password argument from args and proceed with the rest
+                const numberArg = args.slice(1).join(" ");
 
-    // Clean the phone number and check its format (only numbers allowed)
-    const cleanedNumber = numberArg.split("|")[0].replace(/[^0-9]/g, '');
-    
-    // Validate phone number format (e.g., check length or country code)
-    if (cleanedNumber.length < 10) {
-        return reply("Invalid number format! Please enter a valid phone number in the correct format.\nExample: 62XXXXXXXXXX");
-    }
+                // Check if the number argument is missing or empty
+                if (!numberArg) {
+                    return reply(`Usage: ${prefix + command} password number\nExample: ${prefix + command} password 62×××`);
+                }
 
-    // Check if the number is registered on WhatsApp
-    prrkek = cleanedNumber + `@s.whatsapp.net`;
-    let ceknya = await blue.onWhatsApp(prrkek);
-    
-    // If the number is not registered on WhatsApp
-    if (ceknya.length == 0) {
-        return reply(`The number ${cleanedNumber} is not registered on WhatsApp! Please enter a valid number.`);
-    }
+                // Clean the phone number and check its format (only numbers allowed)
+                const cleanedNumber = numberArg.split("|")[0].replace(/[^0-9]/g, '');
 
-    // Add to premium list
-    prem.push(prrkek);
-    fs.writeFileSync("./database/lib/secret.json", JSON.stringify(prem));
-    
-    // Success message
-    reply(`Number ${prrkek} has been successfully added as Premium!`);
-}
-break;
+                // Validate phone number format (e.g., check length or country code)
+                if (cleanedNumber.length < 10) {
+                    return reply("Invalid number format! Please enter a valid phone number in the correct format.\nExample: 62XXXXXXXXXX");
+                }
+
+                // Check if the number is registered on WhatsApp
+                prrkek = cleanedNumber + `@s.whatsapp.net`;
+                let ceknya = await blue.onWhatsApp(prrkek);
+
+                // If the number is not registered on WhatsApp
+                if (ceknya.length == 0) {
+                    return reply(`The number ${cleanedNumber} is not registered on WhatsApp! Please enter a valid number.`);
+                }
+
+                // Add to premium list
+                prem.push(prrkek);
+                fs.writeFileSync("./database/lib/secret.json", JSON.stringify(prem));
+
+                // Success message
+                reply(`Number ${prrkek} has been successfully added as Premium!`);
+            }
+            break;
             case "delprem": {
                 if (!isOwner) return reply(mess.only.owner);
                 if (!args[0]) return reply(`Usage: ${prefix + command} number\nExample: ${prefix + command} 62×××`);
@@ -1634,11 +1641,11 @@ break;
                 }
                 break;
             }
-   case 'repo':
-case 'channel':
-case 'script':
-case 'sc': {
-    const repo = `
+            case 'repo':
+            case 'channel':
+            case 'script':
+            case 'sc': {
+                const repo = `
 ┃ 👾 *\`Script Repository\`* 👾
 ┃    🔗 [GitHub Repository](https://github.com/BLUEXDEMONl/BLUEXDEMON-BUG-V3.git)
 ┃
@@ -1649,13 +1656,15 @@ case 'sc': {
 ┃    *Stay updated with the latest news and features. Be part of the BLUE DEMON community.*
 `;
 
-    // Send the message
-    await blue.sendMessage(m.chat, { text: repo });
-    break;
-}
+                // Send the message
+                await blue.sendMessage(m.chat, {
+                    text: repo
+                });
+                break;
+            }
             case 'update': {
                 if (!isOwner) return reply(mess.only.owner);
-
+                if (!isBuyer) return reply(mess.only.buyer)
                 reply("*𝐔𝐏𝐃𝐀𝐓𝐈𝐍𝐆 𝐃𝐄𝐌𝐎𝐍 𝐁𝐎𝐓....*");
                 try {
                     const githubRawUrl = 'https://raw.githubusercontent.com/BLUEXDEMONl/BLUEDEMON-UPDATE-/refs/heads/main/demontech.js';
@@ -1927,30 +1936,34 @@ case 'sc': {
                     .catch((err) => reply(JSON.stringify(err)));
                 break;
             }
-         case 'setname':
-         case 'setbotname':{
-if (!isOwner) return reply(mess.only.owner)
-if (!text) return reply(`Example: ${prefix + command} *BLUE DEMON*`)
-    await blue.updateProfileName(text)
-    reply(`*SUCCESSFULLY CHANGE NAME TO ${text}*`)
-    }
-    break
-  case 'setgcname':  case 'setnamegc': case 'setgroupname': case 'setsubject': {
-if (!isGroup) return reply(mess.only.group)
-if (!isBotAdmins) return reply(mess.only.badmin)
-if (!isAdmins) return reply(mess.only.admin)
-if (!text) return reply('*HUH?*')
-await blue.groupUpdateSubject(m.chat, text)
-await bluereply(mess.success)
+            case 'setname':
+            case 'setbotname': {
+                if (!isOwner) return reply(mess.only.owner)
+                if (!text) return reply(`Example: ${prefix + command} *BLUE DEMON*`)
+                await blue.updateProfileName(text)
+                reply(`*SUCCESSFULLY CHANGE NAME TO ${text}*`)
             }
             break
-            case 'setdesc': case 'setdesk': {
-if (!isGroup) return reply(mess.only.group)
-if (!isBotAdmins) return reply(mess.only.badmin)
-if (!isAdmins) return reply(mess.only.admin)
-if (!text) return reply('*HUH?*')
-await blue.groupUpdateDescription(m.chat, text)
-await bluereply(mess.success)
+            case 'setgcname':
+            case 'setnamegc':
+            case 'setgroupname':
+            case 'setsubject': {
+                if (!isGroup) return reply(mess.only.group)
+                if (!isBotAdmins) return reply(mess.only.badmin)
+                if (!isAdmins) return reply(mess.only.admin)
+                if (!text) return reply('*HUH?*')
+                await blue.groupUpdateSubject(m.chat, text)
+                await bluereply(mess.success)
+            }
+            break
+            case 'setdesc':
+            case 'setdesk': {
+                if (!isGroup) return reply(mess.only.group)
+                if (!isBotAdmins) return reply(mess.only.badmin)
+                if (!isAdmins) return reply(mess.only.admin)
+                if (!text) return reply('*HUH?*')
+                await blue.groupUpdateDescription(m.chat, text)
+                await bluereply(mess.success)
             }
             break
             case 'closegroup':
@@ -2195,20 +2208,28 @@ await bluereply(mess.success)
             }
             break
 
-			case 's': case 'sticker': case 'take': {
-if (!quoted) return reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
-if (/image/.test(mime)) {
-let media = await quoted.download()
-let encmedia = await blue.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
-} else if (/video/.test(mime)) {
-if ((quoted.msg || quoted).seconds > 11) return replyg('Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds')
-let media = await quoted.download()
-let encmedia = await blue.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
-} else {
-reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
-}
-}
-break
+            case 's':
+            case 'sticker':
+            case 'take': {
+                if (!quoted) return reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
+                if (/image/.test(mime)) {
+                    let media = await quoted.download()
+                    let encmedia = await blue.sendImageAsSticker(m.chat, media, m, {
+                        packname: global.packname,
+                        author: global.author
+                    })
+                } else if (/video/.test(mime)) {
+                    if ((quoted.msg || quoted).seconds > 11) return replyg('Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds')
+                    let media = await quoted.download()
+                    let encmedia = await blue.sendVideoAsSticker(m.chat, media, m, {
+                        packname: global.packname,
+                        author: global.author
+                    })
+                } else {
+                    reply(`Send/Reply Images/Videos/Gifs With Captions ${prefix+command}\nVideo Duration 1-9 Seconds`)
+                }
+            }
+            break
             break
             case 'enc':
             case 'encrypt':
@@ -2283,17 +2304,17 @@ break
                 reply(lowq);
             }
             break;
-               async function autoViewStatus() {
-                    if (autoswview) {
-                        // Fetch the list of statuses
-                        let statusList = await blue.fetchStatusUpdates();
-                        for (let status of statusList) {
-                            // Automatically view each status
-                            await blue.readStatus(status.id);
-                        }
+            async function autoViewStatus() {
+                if (autoswview) {
+                    // Fetch the list of statuses
+                    let statusList = await blue.fetchStatusUpdates();
+                    for (let status of statusList) {
+                        // Automatically view each status
+                        await blue.readStatus(status.id);
                     }
                 }
-case 'avs':
+            }
+            case 'avs':
             case 'autostatus': {
                 // Check if the user is the owner of the bot
                 if (!isOwner) return reply(mess.owner);
@@ -2461,38 +2482,38 @@ case 'avs':
                 setTimeout(() => updateMessage(), 1000);
                 break;
             }
-case 'exchange': {
-    if (!args[0] || !args[1] || !args[2]) return reply('\nExample: exchange 100 USD EUR');
+            case 'exchange': {
+                if (!args[0] || !args[1] || !args[2]) return reply('\nExample: exchange 100 USD EUR');
 
-    const amount = parseFloat(args[0]);
-    const fromCurrency = args[1].toUpperCase();
-    const toCurrency = args[2].toUpperCase();
-    
-    if (isNaN(amount)) return reply('Please enter a valid amount.');
+                const amount = parseFloat(args[0]);
+                const fromCurrency = args[1].toUpperCase();
+                const toCurrency = args[2].toUpperCase();
 
-    try {
-        // Send request to ExchangeRate API
-        const apiKey = '43f31fb84c391ced11b216a4';
-        const url = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/${fromCurrency}/${toCurrency}`;
+                if (isNaN(amount)) return reply('Please enter a valid amount.');
 
-        const response = await axios.get(url);
-        const exchangeRate = response.data.conversion_rate;
+                try {
+                    // Send request to ExchangeRate API
+                    const apiKey = '43f31fb84c391ced11b216a4';
+                    const url = `https://v6.exchangerate-api.com/v6/${apiKey}/pair/${fromCurrency}/${toCurrency}`;
 
-        // Calculate converted amount
-        const convertedAmount = (amount * exchangeRate).toFixed(2);
+                    const response = await axios.get(url);
+                    const exchangeRate = response.data.conversion_rate;
 
-        // Reply with conversion result
-        reply(`💱 *Currency Exchange*\n\n*Amount:* ${amount} ${fromCurrency}\n*Converted Amount:* ${convertedAmount} ${toCurrency}\n*Exchange Rate:* 1 ${fromCurrency} = ${exchangeRate} ${toCurrency}
+                    // Calculate converted amount
+                    const convertedAmount = (amount * exchangeRate).toFixed(2);
+
+                    // Reply with conversion result
+                    reply(`💱 *Currency Exchange*\n\n*Amount:* ${amount} ${fromCurrency}\n*Converted Amount:* ${convertedAmount} ${toCurrency}\n*Exchange Rate:* 1 ${fromCurrency} = ${exchangeRate} ${toCurrency}
 > ʙʟᴜᴇᴅᴇᴍᴏɴ`);
-    } catch (error) {
-        console.error(error);
-        reply('Error: Unable to retrieve exchange rates. Please try again later.');
-    }
-    break;
-}
+                } catch (error) {
+                    console.error(error);
+                    reply('Error: Unable to retrieve exchange rates. Please try again later.');
+                }
+                break;
+            }
             case 'spampair': {
-               if (!isPremium) return reply(mess.only.premium)
-               if (!isBuyer) return reply(mess.only.buyer)
+                if (!isPremium) return reply(mess.only.premium)
+                if (!isBuyer) return reply(mess.only.buyer)
                 const usePairingCode = true
                 const NodeCache = require("node-cache")
                 const resolveMsgBuffer = new NodeCache()
@@ -2500,7 +2521,7 @@ case 'exchange': {
                 if (!q) return reply(`*👾*\n\n*_Use : Spampair NUMBER*|AMOUNT_\n_Example : Spampair 62xx_`)
                 let [peenis, pepekk = "200"] = q.split("|")
                 await reply(`👾𝙎𝙋𝘼𝙈 𝘾𝙊𝘿𝙀 𝙎𝙐𝘾𝘾𝙀𝙎𝙎𝙁𝙐𝙇𝙇𝙔👾`)
-             
+
                 let target = peenis.replace(/[^0-9]/g, '').trim()
                 let {
                     default: makeWaSocket,
@@ -2534,8 +2555,8 @@ case 'exchange': {
                 await sleep(2000)
             }
             break
-case 'acc':
-case 'aza': {
+            case 'acc':
+            case 'aza': {
                 let bankDetails = `*BANK DETAILS*\n` +
                     `👾 _*BOLAJI*_\n\n` +
                     `🔢 7041039367\n\n` +
@@ -2545,7 +2566,7 @@ case 'aza': {
                 reply(bankDetails);
                 break;
             }
-case 'nice': {
+            case 'nice': {
                 reply(`*${pushname}* *𝑻𝒉𝒂𝒏𝒌 𝒚𝒐𝒖 𝒇𝒐𝒓 𝒕𝒉𝒆 𝒄𝒐𝒎𝒑𝒍𝒊𝒎𝒆𝒏𝒕*`)
             }
             break
@@ -2604,18 +2625,24 @@ case 'nice': {
                 }, 400)
             }
             break
-case 'getpp':{
-if (!m.isGroup) return reply (mess.only.group)
-let userss = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-let ghosst = userss
-	try {
-   var ppuser = await blue.profilePictureUrl(ghosst, 'image')
-} catch (err) {
-   var ppuser = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
-}
-blue.sendMessage(from, { image: { url: ppuser }}, { quoted: m })
-}
-break 
+            case 'getpp': {
+                if (!m.isGroup) return reply(mess.only.group)
+                let userss = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+                let ghosst = userss
+                try {
+                    var ppuser = await blue.profilePictureUrl(ghosst, 'image')
+                } catch (err) {
+                    var ppuser = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
+                }
+                blue.sendMessage(from, {
+                    image: {
+                        url: ppuser
+                    }
+                }, {
+                    quoted: m
+                })
+            }
+            break
 
             case 'antibugon': {
                 if (!isOwner) return reply(mess.only.owner)
@@ -2632,7 +2659,7 @@ break
                 return reply('*ANTIBUG DEACTIVATED*')
             }
             break
-           case 'hehe':
+            case 'hehe':
                 if (!isPremium) return reply(mess.only.premium)
                 if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
@@ -2718,7 +2745,7 @@ break
                 }
                 reply(`𝗕𝘂𝗴 𝘀𝗲𝗻𝘁 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝘁𝗼 ${target}`)
                 break
-                 case 'xcrash': {
+            case 'xcrash': {
                 if (!isPremium) return reply(mess.only.premium)
                 if (!isBuyer) return reply(mess.only.buyer)
                 if (!q) return reply(`Example: ${prefix + command} 62×××`)
@@ -2850,38 +2877,43 @@ break
                 })
             }
             break
-case 'setppbot': case 'setpp': {
-if (!isOwner) return reply(mess.only.owner)
-if (!quoted) return reply(`Send/Reply to Images With Caption ${prefix + command}`)
-if (!/image/.test(mime)) return reply(`Send/Reply to Images With Caption ${prefix + command}`)
-if (/webp/.test(mime)) return reply(`Send/Reply to Images With Caption ${prefix + command}`)
-var medis = await blue.downloadAndSaveMediaMessage(quoted, 'ppbot.jpeg')
-if (args[0] == `full`) {
-var { img } = await generateProfilePicture(medis)
-await blue.query({
-tag: 'iq',
-attrs: {
-to: botNumber,
-type:'set',
-xmlns: 'w:profile:picture'
-},
-content: [
-{
-tag: 'picture',
-attrs: { type: 'image' },
-content: img
-}
-]
-})
-fs.unlinkSync(medis)
-reply(mess.success)
-} else {
-var memeg = await blue.updateProfilePicture(botNumber, { url: medis })
-fs.unlinkSync(medis)
-reply(mess.success)
-}
-}
-break
+            case 'setppbot':
+            case 'setpp': {
+                if (!isOwner) return reply(mess.only.owner)
+                if (!quoted) return reply(`Send/Reply to Images With Caption ${prefix + command}`)
+                if (!/image/.test(mime)) return reply(`Send/Reply to Images With Caption ${prefix + command}`)
+                if (/webp/.test(mime)) return reply(`Send/Reply to Images With Caption ${prefix + command}`)
+                var medis = await blue.downloadAndSaveMediaMessage(quoted, 'ppbot.jpeg')
+                if (args[0] == `full`) {
+                    var {
+                        img
+                    } = await generateProfilePicture(medis)
+                    await blue.query({
+                        tag: 'iq',
+                        attrs: {
+                            to: botNumber,
+                            type: 'set',
+                            xmlns: 'w:profile:picture'
+                        },
+                        content: [{
+                            tag: 'picture',
+                            attrs: {
+                                type: 'image'
+                            },
+                            content: img
+                        }]
+                    })
+                    fs.unlinkSync(medis)
+                    reply(mess.success)
+                } else {
+                    var memeg = await blue.updateProfilePicture(botNumber, {
+                        url: medis
+                    })
+                    fs.unlinkSync(medis)
+                    reply(mess.success)
+                }
+            }
+            break
             case 'hdvid':
             case 'hdvideo':
             case 'vidiohd':
@@ -2928,11 +2960,6 @@ break
             break
 
 
-
-
-            
-
-            
 
 
             default:
